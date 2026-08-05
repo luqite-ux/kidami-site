@@ -2,6 +2,7 @@
 import { Link, useLang, withLang } from "../i18n/core";
 import { products, articles as baseArticles, skills, comingSoon as baseComingSoon, WALMART_STORE, amazonCta } from "../data/products";
 import { ProductCard } from "../components/ProductCard";
+import { MagneticButton, FloatingParticles, GlowOrb } from "../components/Effects";
 import { Icon, Stars } from "../components/Icon";
 import { useSeo } from "../lib/seo";
 import { useReveal } from "../lib/reveal";
@@ -43,8 +44,10 @@ export function Home() {
     <>
       {/* ============ HERO: slogan + ratings + buy ============ */}
       <section className="relative overflow-hidden bg-brand-sand pt-28 lg:pt-36">
-        <div className="pointer-events-none absolute -left-32 top-20 h-96 w-96 rounded-full bg-brand-yellow/20 blur-3xl" />
-        <div className="pointer-events-none absolute -right-24 top-64 h-80 w-80 rounded-full bg-brand-sky blur-3xl" />
+        <FloatingParticles count={16} />
+        <GlowOrb color="#ffc92e" size={400} className="-left-40 top-10 animate-float-slow" />
+        <GlowOrb color="#2e6bf0" size={350} className="-right-32 top-40 animate-float" />
+        <GlowOrb color="#12b76a" size={250} className="left-1/3 -bottom-20 animate-float-gentle" />
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 pb-16 sm:px-6 lg:grid-cols-2 lg:gap-8 lg:px-8 lg:pb-24">
           <div>
@@ -61,13 +64,12 @@ export function Home() {
               {h.hero.subtitle}
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link
-                to="/products"
-                className="inline-flex items-center gap-2 rounded-full bg-brand-navy px-7 py-3.5 font-display text-base font-bold text-white shadow-lift transition-transform hover:-translate-y-0.5"
-              >
-                {h.hero.ctaExplore}
-                <Icon name="arrow" className="h-4 w-4" />
-              </Link>
+              <MagneticButton className="inline-flex items-center gap-2 rounded-full bg-brand-navy px-7 py-3.5 font-display text-base font-bold text-white shadow-lift hover-lift">
+                <Link to="/products" className="flex items-center gap-2">
+                  {h.hero.ctaExplore}
+                  <Icon name="arrow" className="h-4 w-4" />
+                </Link>
+              </MagneticButton>
               <a
                 href={amazonCta("hero")}
                 target="_blank"
@@ -106,13 +108,13 @@ export function Home() {
                 fetchPriority="high"
               />
             </div>
-            <div className="absolute -left-4 top-8 rotate-[-6deg] rounded-2xl bg-white px-4 py-3 shadow-lift sm:-left-8">
+            <div className="absolute -left-4 top-8 rotate-[-6deg] rounded-2xl bg-white px-4 py-3 shadow-lift sm:-left-8 animate-float-gentle">
               <div className="flex items-center gap-2">
                 <Icon name="metal" className="h-5 w-5 text-brand-blue" />
                 <span className="text-sm font-extrabold text-brand-navy">{h.hero.badgeMetal}</span>
               </div>
             </div>
-            <div className="absolute -right-3 bottom-10 rotate-[4deg] rounded-2xl bg-white px-4 py-3 shadow-lift sm:-right-6">
+            <div className="absolute -right-3 bottom-10 rotate-[4deg] rounded-2xl bg-white px-4 py-3 shadow-lift sm:-right-6 animate-float">
               <div className="flex items-center gap-2">
                 <Icon name="pullback" className="h-5 w-5 text-brand-orange" />
                 <span className="text-sm font-extrabold text-brand-navy">{h.hero.badgePull}</span>
@@ -235,13 +237,13 @@ export function Home() {
           {/* Die-cast cars */}
           <Link
             to="/products?cat=cars"
-            className="reveal group relative overflow-hidden rounded-[2.5rem] bg-brand-navy text-white shadow-lift"
+            className="reveal-left group relative overflow-hidden rounded-[2.5rem] bg-brand-navy text-white shadow-lift hover-lift"
           >
             <img
               src="/images/cars-collection.jpg"
               alt={h.cats.cars.alt}
               loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover opacity-45 transition-all duration-700 group-hover:scale-105 group-hover:opacity-55"
+              className="absolute inset-0 h-full w-full object-cover opacity-45 transition-all duration-700 group-hover:scale-105 group-hover:opacity-55 group-hover:filter group-hover:brightness-110"
             />
             <div className="relative flex min-h-[420px] flex-col justify-end p-8 sm:p-10">
               <span className="mb-4 inline-flex w-fit rounded-full bg-brand-blue px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-wider">
@@ -259,13 +261,13 @@ export function Home() {
           {/* Board games */}
           <Link
             to="/products?cat=games"
-            className="reveal group relative overflow-hidden rounded-[2.5rem] bg-brand-green text-white shadow-lift"
+            className="reveal-right group relative overflow-hidden rounded-[2.5rem] bg-brand-green text-white shadow-lift hover-lift"
           >
             <img
               src="/images/ludo-kids-play.jpg"
               alt={h.cats.games.alt}
               loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover opacity-45 transition-all duration-700 group-hover:scale-105 group-hover:opacity-55"
+              className="absolute inset-0 h-full w-full object-cover opacity-45 transition-all duration-700 group-hover:scale-105 group-hover:opacity-55 group-hover:filter group-hover:brightness-110"
             />
             <div className="relative flex min-h-[420px] flex-col justify-end p-8 sm:p-10">
               <span className="mb-4 inline-flex w-fit rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-wider text-brand-green">
@@ -339,8 +341,10 @@ export function Home() {
           </Link>
         </div>
         <div className="reveal mt-12 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((p) => (
-            <ProductCard key={p.slug} product={p} />
+          {featured.map((p, i) => (
+            <div key={p.slug} className={`reveal-delay-${i + 1}`}>
+              <ProductCard product={p} />
+            </div>
           ))}
         </div>
       </section>
@@ -438,14 +442,14 @@ export function Home() {
                 <Link
                   key={a.slug}
                   to="/learn"
-                  className="group overflow-hidden rounded-3xl bg-white shadow-soft transition-all hover:-translate-y-1.5 hover:shadow-lift"
+                  className="group overflow-hidden rounded-3xl bg-white shadow-soft transition-all hover:-translate-y-2 hover:shadow-lift hover-lift"
                 >
                   <div className="overflow-hidden">
                     <img
                       src={base?.image ?? "/images/cars-open-doors.jpg"}
                       alt={a.title}
                       loading="lazy"
-                      className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                   </div>
                   <div className="p-6">
@@ -468,8 +472,10 @@ export function Home() {
       {/* ============ FINAL: subscribe benefit + future + 3rd CTA ============ */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="reveal relative overflow-hidden rounded-[2.5rem] bg-brand-navy px-8 py-16 text-white shadow-lift sm:px-16">
-          <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-brand-yellow/20 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-brand-blue/30 blur-3xl" />
+          <FloatingParticles count={8} />
+          <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-brand-yellow/20 blur-3xl animate-float-slow" />
+          <div className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-brand-blue/30 blur-3xl animate-float" />
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-orange/10 blur-3xl animate-float-gentle" />
 
           <div className="relative mx-auto max-w-2xl text-center">
             <h2 className="font-display text-4xl font-extrabold leading-tight sm:text-5xl text-balance">

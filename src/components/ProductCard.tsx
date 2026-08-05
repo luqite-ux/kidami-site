@@ -15,13 +15,13 @@ export function ProductCard({ product }: { product: Product | SupaProduct }) {
   const badges = productBadges(product, pd?.badges);
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lift">
+    <article className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-soft transition-all duration-300 hover:-translate-y-2 hover:shadow-lift card-3d">
       <Link to={`/products/${product.slug}`} className="relative block overflow-hidden bg-brand-cream">
         <img
           src={productImage(product)}
           alt={name}
           loading="lazy"
-          className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <span
           className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-extrabold text-white ${
