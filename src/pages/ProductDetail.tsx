@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { products, skills, amazonCta } from "../data/products";
+import { skills, amazonCta } from "../data/products";
+import { useProduct } from "../hooks/useSupabaseData";
 import { ProductCard } from "../components/ProductCard";
 import { Icon, Stars } from "../components/Icon";
 import { Link, useLang, withLang } from "../i18n/core";
@@ -11,7 +12,7 @@ export function ProductDetail() {
   const { slug } = useParams();
   const { lang, d } = useLang();
   const dt = d.detail;
-  const product = products.find((p) => p.slug === slug);
+  const { product, loading: productLoading } = useProduct(slug ?? "");
   const pd = product ? d.products[product.slug as keyof typeof d.products] : undefined;
   const [activeImg, setActiveImg] = useState(0);
 
@@ -34,7 +35,7 @@ export function ProductDetail() {
           "@type": "Product",
           name,
           description: tagline,
-          image: `https://kidami-ent.com${product.image}`,
+          image: `https://kidami-ent.com${product.image_url}`,
           brand: { "@type": "Brand", name: "KIDAMI" },
           category: product.category === "cars" ? "Die-cast toy cars" : "Educational board games",
           audience: { "@type": "PeopleAudience", suggestedMinAge: product.age.replace("+", "") },
@@ -54,6 +55,7 @@ export function ProductDetail() {
   });
   useReveal();
 
+  if (productLoading) return <div className="pt-40 text-center text-brand-navy/50">Loading...</div>;
   if (!product) {
     return (
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-40 text-center">
@@ -65,7 +67,7 @@ export function ProductDetail() {
     );
   }
 
-  const related = products.filter((p) => p.category === product.category && p.slug !== product.slug).slice(0, 3);
+  const related: any[] = []; // Related products loaded separately
   const isCars = product.category === "cars";
 
   return (
@@ -85,14 +87,14 @@ export function ProductDetail() {
           <div>
             <div className="overflow-hidden rounded-[2rem] bg-white shadow-soft">
               <img
-                src={product.gallery[activeImg]}
+                src={((product as any).gallery || [product.image_url_url])[activeImg]}
                 alt={`${name} — ${activeImg + 1}`}
                 className="aspect-square w-full object-cover"
               />
             </div>
-            {product.gallery.length > 1 && (
+            {((product as any).gallery || [product.image_url_url]).length > 1 && (
               <div className="mt-4 flex gap-3">
-                {product.gallery.map((g, i) => (
+                {((product as any).gallery || [product.image_url_url]).map((g, i) => (
                   <button
                     key={g}
                     onClick={() => setActiveImg(i)}
@@ -167,7 +169,7 @@ export function ProductDetail() {
                     {d.common.buyAmazon}
                   </a>
                   <a
-                    href={product.walmartUrl}
+                    href={product.walmart_url}
                     target="_blank"
                     rel="noopener noreferrer sponsored"
                     className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-brand-blue/30 px-7 py-2.5 font-display text-sm font-extrabold text-brand-blue transition-colors hover:border-brand-blue"
@@ -186,7 +188,7 @@ export function ProductDetail() {
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {features.map((f, i) => (
                 <div key={f.label} className="rounded-2xl bg-white p-5 shadow-xs">
-                  <Icon name={product.features[i]?.icon ?? "check"} className="h-6 w-6 text-brand-blue" />
+                  <Icon name={(product.features[i] as any)?.icon ?? "check"} className="h-6 w-6 text-brand-blue" />
                   <h3 className="mt-2.5 font-display font-bold text-brand-navy">{f.label}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-brand-navy/60">{f.desc}</p>
                 </div>

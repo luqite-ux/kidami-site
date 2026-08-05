@@ -1,22 +1,23 @@
 import { Link, useLang } from "../i18n/core";
 import type { Product } from "../data/products";
+import type { Product as SupaProduct } from "../hooks/useSupabaseData";
 import { amazonCta } from "../data/products";
 import { Icon, Stars } from "./Icon";
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product }: { product: Product | SupaProduct }) {
   const { d } = useLang();
   const pd = d.products[product.slug as keyof typeof d.products];
   const isCars = product.category === "cars";
 
   const name = pd?.name ?? product.name;
   const tagline = pd?.tagline ?? product.tagline;
-  const badges = pd?.badges ?? product.badges;
+  const badges = pd?.badges ?? (product as any).badges ?? (product as any).features?.map((f: any) => f.label) ?? [];
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lift">
       <Link to={`/products/${product.slug}`} className="relative block overflow-hidden bg-brand-cream">
         <img
-          src={product.image}
+          src={(product as any).image_url || product.image}
           alt={name}
           loading="lazy"
           className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -34,7 +35,7 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="flex items-center gap-2">
           <Stars rating={product.rating} />
           <span className="text-xs font-bold text-brand-navy/50">
-            {product.rating} ({product.reviewCount})
+            {product.rating} ({(product as any).review_count ?? product.reviewCount})
           </span>
         </div>
         <h3 className="mt-2 font-display text-lg font-bold leading-snug text-brand-navy">

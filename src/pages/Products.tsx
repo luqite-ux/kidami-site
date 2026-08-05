@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { products, skills, type Category, type Skill } from "../data/products";
+import { skills, type Category, type Skill } from "../data/products";
+import { useProducts } from "../hooks/useSupabaseData";
 import { ProductCard } from "../components/ProductCard";
 import { Icon } from "../components/Icon";
 import { useLang, withLang } from "../i18n/core";
@@ -30,14 +31,13 @@ export function Products() {
     { key: "games", label: pp.catGames },
   ];
 
+  const { products: dbProducts, loading } = useProducts(cat === "all" ? undefined : cat);
   const list = useMemo(
     () =>
-      products.filter(
-        (p) =>
-          (cat === "all" || p.category === cat) &&
-          (!skill || p.skills.includes(skill))
+      dbProducts.filter(
+        (p) => !skill || (p.skills || []).includes(skill)
       ),
-    [cat, skill]
+    [dbProducts, skill]
   );
 
   const setParam = (key: string, value: string | null) => {
@@ -49,6 +49,7 @@ export function Products() {
 
   return (
     <div className="bg-brand-sand pt-28 lg:pt-32">
+      {loading && <p className="text-center text-brand-navy/50 mt-20">Loading products...</p>}
       <div className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <h1 className="font-display text-4xl font-extrabold text-brand-navy sm:text-5xl text-balance">
