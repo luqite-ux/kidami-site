@@ -95,7 +95,7 @@ export function Navbar() {
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[72px] lg:px-8">
         <Link to="/" className="flex items-center" aria-label="KIDAMI home">
-          <img src="/logo.png" alt="KIDAMI logo" className="h-10 w-auto object-contain" />
+          <img src="/logo.png" alt="KIDAMI logo" className="h-14 w-auto object-contain" />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">

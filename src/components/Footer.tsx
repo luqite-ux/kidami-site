@@ -12,7 +12,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-1">
             <div className="flex items-center">
-              <img src="/logo.png" alt="KIDAMI logo" className="h-10 w-auto object-contain" />
+              <img src="/logo.png" alt="KIDAMI logo" className="h-12 w-auto object-contain" />
             </div>
             <p className="mt-4 text-sm leading-relaxed text-white/60">{f.tagline}</p>
             <div className="mt-5 flex flex-wrap gap-2">

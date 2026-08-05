@@ -1,4 +1,4 @@
-import { useState } from "react";
+// Video player removed — no video file available
 import { Link, useLang, withLang } from "../i18n/core";
 import { products, articles as baseArticles, skills, comingSoon as baseComingSoon, WALMART_STORE, amazonCta } from "../data/products";
 import { ProductCard } from "../components/ProductCard";
@@ -37,7 +37,7 @@ export function Home() {
   useReveal();
 
   const featured = [products[0], products[1], products[3]];
-  const [videoFailed, setVideoFailed] = useState(false);
+
 
   return (
     <>
@@ -145,30 +145,16 @@ export function Home() {
         </div>
 
         <div className="reveal mt-12">
-          {!videoFailed ? (
-            <div className="relative mx-auto max-w-4xl overflow-hidden rounded-[2.5rem] bg-brand-ink shadow-lift">
-              <video
-                className="aspect-video w-full object-cover"
-                controls
-                preload="none"
-                poster="/images/cars-premium-dark.jpg"
-                onError={() => setVideoFailed(true)}
-                aria-label={h.video.videoAlt}
-              >
-                <source src="/videos/brand-video.mp4" type="video/mp4" />
-              </video>
-            </div>
-          ) : (
-            /* fallback: buyer-show wall while the brand video is being produced */
-            <div className="grid gap-5 sm:grid-cols-3">
-              {h.video.captions.map((caption, i) => (
-                <figure key={buyerImgs[i]} className="overflow-hidden rounded-3xl bg-white shadow-soft">
-                  <img src={buyerImgs[i]} alt={caption} loading="lazy" className="aspect-[4/3] w-full object-cover" />
-                  <figcaption className="p-5 text-sm font-bold leading-relaxed text-brand-navy/70">{caption}</figcaption>
-                </figure>
-              ))}
-            </div>
-          )}
+          {/* Buyer show gallery — video coming soon */}
+          <div className="grid gap-5 sm:grid-cols-3">
+            {h.video.captions.map((caption, i) => (
+              <figure key={buyerImgs[i]} className="overflow-hidden rounded-3xl bg-white shadow-soft">
+                <img src={buyerImgs[i]} alt={caption} loading="lazy" className="aspect-[4/3] w-full object-cover" />
+                <figcaption className="p-5 text-sm font-bold leading-relaxed text-brand-navy/70">{caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <p className="mt-6 text-center text-sm text-brand-navy/40">🎬 Brand video coming soon — subscribe for updates</p>
         </div>
       </section>
 
