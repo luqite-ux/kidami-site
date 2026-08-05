@@ -165,3 +165,24 @@ export function useSiteSetting(key: string): string {
 
   return value;
 }
+
+// GEO Settings
+export interface GeoData {
+  key: string;
+  value: Record<string, unknown>;
+}
+
+export function useGeoSettings() {
+  const [geo, setGeo] = useState<GeoData[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from(TABLES.geoSettings)
+      .select("*")
+      .then(({ data, error }) => {
+        if (!error && data) setGeo(data as GeoData[]);
+      });
+  }, []);
+
+  return geo;
+}

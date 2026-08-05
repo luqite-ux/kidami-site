@@ -149,6 +149,7 @@ export interface SeoSetting {
   priority: number;
   changefreq: string;
   is_active: boolean;
+  json_ld: Record<string, unknown> | null;
 }
 
 export function useSeoSettings() {
@@ -174,6 +175,18 @@ export function useGeoSettings() {
     setLoading(false);
   }, []);
 
+  const create = useCallback(async (item: Omit<GeoSetting, "id">) => {
+    const { data: res, error } = await supabase
+      .from(TABLES.geoSettings)
+      .insert(item as Record<string, unknown>)
+      .select()
+      .single();
+    if (!error && res) {
+      setData((prev) => [res as GeoSetting, ...prev]);
+    }
+    return !error;
+  }, []);
+
   const update = useCallback(async (key: string, value: Record<string, unknown>) => {
     const { error } = await supabase
       .from(TABLES.geoSettings)
@@ -183,8 +196,14 @@ export function useGeoSettings() {
     return !error;
   }, [fetch]);
 
+  const remove = useCallback(async (key: string) => {
+    const { error } = await supabase.from(TABLES.geoSettings).delete().eq("key", key);
+    if (!error) setData((prev) => prev.filter((d) => d.key !== key));
+    return !error;
+  }, []);
+
   useEffect(() => { fetch(); }, [fetch]);
-  return { data, loading, fetch, update };
+  return { data, loading, fetch, create, update, remove };
 }
 
 // Site Settings

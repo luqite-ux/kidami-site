@@ -1,5 +1,17 @@
 import { useState } from "react";
-import { useProducts, useArticles, useReviews, useSeoSettings, useGeoSettings, useSiteSettings, type Product, type Article, type SeoSetting } from "./hooks/useAdminData";
+import {
+  useProducts,
+  useArticles,
+  useReviews,
+  useSeoSettings,
+  useGeoSettings,
+  useSiteSettings,
+  type Product,
+  type Article,
+  type SeoSetting,
+  type GeoSetting,
+} from "./hooks/useAdminData";
+import { langCodes, langNames } from "../i18n/core";"../../i18n/core";
 
 // Admin password — change this in production via .env
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "kidami2024";
@@ -281,108 +293,539 @@ function ReviewsPanel() {
 }
 
 // ======== SEO PANEL ========
+const emptySeo: Partial<SeoSetting> = {
+  page_path: "/",
+  lang_code: "en",
+  title: "",
+  description: "",
+  keywords: [],
+  og_title: "",
+  og_description: "",
+  og_image_url: "",
+  canonical_url: "",
+  robots_meta: "index, follow",
+  priority: 0.5,
+  changefreq: "weekly",
+  is_active: true,
+  json_ld: null,
+};
+
+const CHANGEFREQ_OPTIONS = ["always", "hourly", "daily", "weekly", "monthly", "yearly", "never"];
+const ROBOTS_OPTIONS = ["index, follow", "noindex, follow", "index, nofollow", "noindex, nofollow", "index, follow, noarchive"];
+
+function TagInput({
+  value,
+  onChange,
+  placeholder,
+}: {
+  value: string[];
+  onChange: (v: string[]) => void;
+  placeholder?: string;
+}) {
+  const [input, setInput] = useState("");
+  const add = (text: string) => {
+    const t = text.trim();
+    if (t && !value.includes(t)) onChange([...value, t]);
+    setInput("");
+  };
+  return (
+    <div className="w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus-within:border-brand-blue">
+      <div className="flex flex-wrap gap-2">
+        {value.map((tag) => (
+          <span key={tag} className="inline-flex items-center gap-1 rounded-full bg-brand-sky px-2.5 py-1 text-xs font-bold text-brand-navy">
+            {tag}
+            <button onClick={() => onChange(value.filter((v) => v !== tag))} className="text-brand-navy/50 hover:text-red-500">×</button>
+          </span>
+        ))}
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === ",") {
+              e.preventDefault();
+              add(input);
+            }
+          }}
+          onBlur={() => add(input)}
+          placeholder={value.length === 0 ? placeholder : ""}
+          className="min-w-[120px] flex-1 bg-transparent py-1 text-sm outline-none"
+        />
+      </div>
+    </div>
+  );
+}
+
 function SeoPanel() {
-  const { data: settings, loading, update } = useSeoSettings();
+  const { data: settings, loading, create, update, remove } = useSeoSettings();
   const [editing, setEditing] = useState<Partial<SeoSetting> | null>(null);
+  const [isNew, setIsNew] = useState(false);
 
   const handleSave = async () => {
-    if (!editing?.id) return;
-    await update(editing.id, editing);
+    if (!editing) return;
+    if (isNew || !editing.id) {
+      await create(editing as Omit<SeoSetting, "id">);
+    } else {
+      await update(editing.id, editing);
+    }
     setEditing(null);
+    setIsNew(false);
+  };
+
+  const startNew = () => {
+    setEditing({ ...emptySeo });
+    setIsNew(true);
+  };
+
+  const startEdit = (s: SeoSetting) => {
+    setEditing({ ...s });
+    setIsNew(false);
   };
 
   if (loading) return <p className="text-brand-navy/50">Loading...</p>;
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-4">
-        {settings.map((s) => (
-          <div key={s.id} className="rounded-2xl bg-white p-5 shadow-soft">
-            <div className="flex items-center justify-between mb-3">
-              <p className="font-bold text-brand-navy">{s.page_path} ({s.lang_code})</p>
-              <button onClick={() => setEditing(s)} className="rounded-full bg-brand-sky px-4 py-2 text-xs font-bold text-brand-navy">Edit</button>
-            </div>
-            <p className="text-sm text-brand-navy/70 font-bold">{s.title}</p>
-            <p className="text-sm text-brand-navy/50">{s.description.slice(0, 120)}...</p>
-          </div>
-        ))}
+      <div className="flex items-center gap-4">
+        <button onClick={startNew}
+          className="rounded-full bg-brand-orange px-6 py-2.5 font-bold text-white shadow-soft hover:-translate-y-0.5 transition-transform">
+          + New SEO Setting
+        </button>
+        <p className="text-sm text-brand-navy/50">{settings.length} SEO records</p>
       </div>
 
       {editing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-2xl max-h-[90vh] overflow-auto rounded-3xl bg-white p-6 shadow-lift space-y-4">
-            <h2 className="font-display text-xl font-bold text-brand-navy">Edit SEO: {editing.page_path}</h2>
-            <input placeholder="Title" value={editing.title || ""} onChange={(e) => setEditing({ ...editing, title: e.target.value })}
-              className="w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
-            <textarea placeholder="Description" value={editing.description || ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })}
-              className="w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" rows={3} />
-            <input placeholder="OG Image URL" value={editing.og_image_url || ""} onChange={(e) => setEditing({ ...editing, og_image_url: e.target.value })}
-              className="w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
-            <input placeholder="Robots Meta" value={editing.robots_meta || ""} onChange={(e) => setEditing({ ...editing, robots_meta: e.target.value })}
-              className="w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
-            <div className="flex gap-3">
+          <div className="w-full max-w-3xl max-h-[92vh] overflow-auto rounded-3xl bg-white p-6 shadow-lift space-y-4">
+            <h2 className="font-display text-xl font-bold text-brand-navy">
+              {isNew ? "New SEO Setting" : `Edit SEO: ${editing.page_path}`}
+            </h2>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Page Path</label>
+                <input value={editing.page_path || ""} onChange={(e) => setEditing({ ...editing, page_path: e.target.value })}
+                  className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" placeholder="/ or /products" />
+              </div>
+              <div>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Language</label>
+                <select value={editing.lang_code || "en"} onChange={(e) => setEditing({ ...editing, lang_code: e.target.value })}
+                  className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none">
+                  {langCodes.map((code) => (
+                    <option key={code} value={code}>{langNames[code as keyof typeof langNames]} ({code})</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Title</label>
+              <input value={editing.title || ""} onChange={(e) => setEditing({ ...editing, title: e.target.value })}
+                className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
+            </div>
+
+            <div>
+              <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Description</label>
+              <textarea value={editing.description || ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })}
+                className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" rows={3} />
+            </div>
+
+            <div>
+              <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Keywords <span className="font-normal normal-case text-brand-navy/30">— press Enter or comma to add</span></label>
+              <div className="mt-1">
+                <TagInput value={editing.keywords || []} onChange={(v) => setEditing({ ...editing, keywords: v })} placeholder="e.g. toy cars, die cast..." />
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">OG Title</label>
+                <input value={editing.og_title || ""} onChange={(e) => setEditing({ ...editing, og_title: e.target.value })}
+                  className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
+              </div>
+              <div>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">OG Description</label>
+                <input value={editing.og_description || ""} onChange={(e) => setEditing({ ...editing, og_description: e.target.value })}
+                  className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">OG Image URL</label>
+                <input value={editing.og_image_url || ""} onChange={(e) => setEditing({ ...editing, og_image_url: e.target.value })}
+                  className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
+              </div>
+              <div>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Canonical URL</label>
+                <input value={editing.canonical_url || ""} onChange={(e) => setEditing({ ...editing, canonical_url: e.target.value })}
+                  className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" placeholder="Leave blank to auto-generate" />
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Robots Meta</label>
+                <select value={editing.robots_meta || "index, follow"} onChange={(e) => setEditing({ ...editing, robots_meta: e.target.value })}
+                  className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none">
+                  {ROBOTS_OPTIONS.map((r) => <option key={r} value={r}>{r}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Priority: {(editing.priority ?? 0.5).toFixed(1)}</label>
+                <input type="range" min={0} max={1} step={0.1} value={editing.priority ?? 0.5}
+                  onChange={(e) => setEditing({ ...editing, priority: parseFloat(e.target.value) })}
+                  className="mt-3 w-full accent-brand-blue" />
+              </div>
+              <div>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Changefreq</label>
+                <select value={editing.changefreq || "weekly"} onChange={(e) => setEditing({ ...editing, changefreq: e.target.value })}
+                  className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none">
+                  {CHANGEFREQ_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <label className="flex items-center gap-3 text-sm font-bold text-brand-navy">
+              <div className="relative inline-flex h-6 w-11 items-center rounded-full bg-brand-navy/10 transition-colors"
+                onClick={() => setEditing({ ...editing, is_active: !editing.is_active })}
+                style={{ backgroundColor: editing.is_active ? "#2e6bf0" : undefined }}>
+                <span className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${editing.is_active ? "translate-x-5" : "translate-x-0.5"}`} />
+              </div>
+              {editing.is_active ? "Active" : "Inactive"}
+            </label>
+
+            <div>
+              <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">JSON-LD Structured Data</label>
+              <textarea value={editing.json_ld ? JSON.stringify(editing.json_ld, null, 2) : ""}
+                onChange={(e) => {
+                  try {
+                    const parsed = e.target.value.trim() ? JSON.parse(e.target.value) : null;
+                    setEditing({ ...editing, json_ld: parsed });
+                  } catch {
+                    // allow invalid JSON while typing
+                    setEditing({ ...editing, json_ld: e.target.value as any });
+                  }
+                }}
+                className="mt-1 w-full rounded-2xl border border-brand-navy/10 bg-brand-ink px-4 py-3 font-mono text-xs text-green-400 focus:border-brand-blue focus:outline-none"
+                rows={8} placeholder='{ "@context": "https://schema.org", ... }' />
+            </div>
+
+            <div className="flex gap-3 pt-2">
               <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">Save</button>
-              <button onClick={() => setEditing(null)} className="rounded-full border border-brand-navy/20 px-6 py-2.5 font-bold text-brand-navy">Cancel</button>
+              <button onClick={() => { setEditing(null); setIsNew(false); }} className="rounded-full border border-brand-navy/20 px-6 py-2.5 font-bold text-brand-navy">Cancel</button>
             </div>
           </div>
         </div>
       )}
+
+      <div className="grid gap-4">
+        {settings.map((s) => (
+          <div key={s.id} className="rounded-2xl bg-white p-5 shadow-soft">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <span className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider ${s.is_active ? "bg-brand-mint text-brand-green" : "bg-gray-100 text-gray-500"}`}>
+                  {s.is_active ? "Active" : "Inactive"}
+                </span>
+                <p className="font-bold text-brand-navy">{s.page_path} <span className="text-brand-navy/40">({s.lang_code})</span></p>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={() => startEdit(s)} className="rounded-full bg-brand-sky px-4 py-2 text-xs font-bold text-brand-navy">Edit</button>
+                <button onClick={() => remove(s.id)} className="rounded-full bg-red-100 px-4 py-2 text-xs font-bold text-red-600">Delete</button>
+              </div>
+            </div>
+            <div className="grid gap-2 sm:grid-cols-2">
+              <p className="text-sm text-brand-navy/70 font-bold truncate">{s.title}</p>
+              <p className="text-sm text-brand-navy/50 truncate">{s.description}</p>
+              <p className="text-xs text-brand-navy/40">Robots: {s.robots_meta} · Priority: {s.priority} · Freq: {s.changefreq}</p>
+              <div className="flex flex-wrap gap-1">
+                {(s.keywords || []).slice(0, 6).map((k) => (
+                  <span key={k} className="rounded-full bg-brand-sky/50 px-2 py-0.5 text-[10px] font-bold text-brand-navy">{k}</span>
+                ))}
+                {(s.keywords || []).length > 6 && <span className="text-[10px] text-brand-navy/30">+{(s.keywords || []).length - 6}</span>}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
 // ======== GEO PANEL ========
+type GeoSection = "organization" | "localBusiness" | "hreflang";
+
 function GeoPanel() {
-  const { data, loading, update } = useGeoSettings();
-  const [editing, setEditing] = useState<string | null>(null);
-  const [jsonValue, setJsonValue] = useState("");
+  const { data, loading, update, create } = useGeoSettings();
+  const [activeSection, setActiveSection] = useState<GeoSection>("organization");
 
-  const startEdit = (item: typeof data[0]) => {
-    setEditing(item.key);
-    setJsonValue(JSON.stringify(item.value, null, 2));
-  };
-
-  const handleSave = async () => {
-    if (!editing) return;
-    try {
-      const parsed = JSON.parse(jsonValue);
-      await update(editing, parsed);
-      setEditing(null);
-    } catch (e) {
-      alert("Invalid JSON: " + (e as Error).message);
-    }
-  };
+  const getItem = (key: string) => data.find((d) => d.key === key);
 
   if (loading) return <p className="text-brand-navy/50">Loading...</p>;
 
   return (
-    <div className="space-y-4">
-      {data.map((g) => (
-        <div key={g.key} className="rounded-2xl bg-white p-5 shadow-soft">
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <p className="font-bold text-brand-navy">{g.key}</p>
-              <p className="text-xs text-brand-navy/40">{g.description}</p>
-            </div>
-            <button onClick={() => startEdit(g)} className="rounded-full bg-brand-sky px-4 py-2 text-xs font-bold text-brand-navy">Edit JSON</button>
-          </div>
-          {editing === g.key ? (
-            <div className="space-y-3">
-              <textarea value={jsonValue} onChange={(e) => setJsonValue(e.target.value)}
-                className="w-full rounded-2xl border border-brand-navy/10 bg-brand-ink px-4 py-3 font-mono text-xs text-green-400 focus:border-brand-blue focus:outline-none"
-                rows={15} />
-              <div className="flex gap-3">
-                <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">Save</button>
-                <button onClick={() => setEditing(null)} className="rounded-full border border-brand-navy/20 px-6 py-2.5 font-bold text-brand-navy">Cancel</button>
-              </div>
-            </div>
-          ) : (
-            <pre className="rounded-xl bg-brand-ink p-4 font-mono text-xs text-green-400 overflow-auto max-h-64">
-              {JSON.stringify(g.value, null, 2)}
-            </pre>
-          )}
+    <div className="space-y-6">
+      <div className="flex flex-wrap gap-2">
+        {(["organization", "localBusiness", "hreflang"] as GeoSection[]).map((s) => (
+          <button key={s} onClick={() => setActiveSection(s)}
+            className={`rounded-full px-5 py-2.5 text-sm font-bold transition-all ${
+              activeSection === s ? "bg-brand-navy text-white shadow-soft" : "bg-white text-brand-navy/60 hover:text-brand-navy"
+            }`}>
+            {s === "organization" ? "🏢 Organization" : s === "localBusiness" ? "🏪 Local Business" : "🌐 Hreflang"}
+          </button>
+        ))}
+      </div>
+
+      {activeSection === "organization" && (
+        <OrganizationEditor item={getItem("organization")} onSave={(v) => {
+          const existing = getItem("organization");
+          if (existing) update("organization", v);
+          else create({ key: "organization", value: v, description: "Organization structured data for Schema.org" });
+        }} />
+      )}
+      {activeSection === "localBusiness" && (
+        <LocalBusinessEditor item={getItem("localBusiness")} onSave={(v) => {
+          const existing = getItem("localBusiness");
+          if (existing) update("localBusiness", v);
+          else create({ key: "localBusiness", value: v, description: "LocalBusiness structured data for Schema.org" });
+        }} />
+      )}
+      {activeSection === "hreflang" && (
+        <HreflangEditor item={getItem("hreflang")} onSave={(v) => {
+          const existing = getItem("hreflang");
+          if (existing) update("hreflang", v);
+          else create({ key: "hreflang", value: v, description: "Hreflang alternate URLs for multilingual SEO" });
+        }} />
+      )}
+    </div>
+  );
+}
+
+function OrganizationEditor({ item, onSave }: { item?: GeoSetting; onSave: (v: Record<string, unknown>) => void }) {
+  const val = (item?.value ?? {}) as Record<string, unknown>;
+  const [form, setForm] = useState({
+    name: (val.name as string) || "KIDAMI",
+    url: (val.url as string) || "https://kidami-ent.com",
+    logo: (val.logo as string) || "https://kidami-ent.com/logo.png",
+    slogan: (val.slogan as string) || "",
+    description: (val.description as string) || "",
+    foundingDate: (val.foundingDate as string) || "2016",
+    sameAs: ((val.sameAs as string[]) || []).join("\n"),
+    contactEmail: ((val.contactPoint as Record<string, string>)?.email as string) || "",
+    contactPhone: ((val.contactPoint as Record<string, string>)?.telephone as string) || "",
+  });
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = () => {
+    const sameAs = form.sameAs.split("\n").map((s) => s.trim()).filter(Boolean);
+    onSave({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: form.name,
+      url: form.url,
+      logo: form.logo,
+      slogan: form.slogan || undefined,
+      description: form.description || undefined,
+      foundingDate: form.foundingDate || undefined,
+      sameAs: sameAs.length ? sameAs : undefined,
+      contactPoint: form.contactEmail || form.contactPhone
+        ? { "@type": "ContactPoint", email: form.contactEmail || undefined, telephone: form.contactPhone || undefined }
+        : undefined,
+    });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  return (
+    <div className="rounded-3xl bg-white p-6 shadow-soft space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="font-display text-lg font-bold text-brand-navy">Organization Schema</h3>
+        {saved && <span className="rounded-full bg-brand-mint px-3 py-1 text-xs font-bold text-brand-green">Saved!</span>}
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Name" value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
+        <Field label="URL" value={form.url} onChange={(v) => setForm({ ...form, url: v })} />
+        <Field label="Logo URL" value={form.logo} onChange={(v) => setForm({ ...form, logo: v })} />
+        <Field label="Founding Date" value={form.foundingDate} onChange={(v) => setForm({ ...form, foundingDate: v })} />
+        <Field label="Slogan" value={form.slogan} onChange={(v) => setForm({ ...form, slogan: v })} />
+      </div>
+      <div>
+        <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Description</label>
+        <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
+          className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" rows={3} />
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Contact Email" value={form.contactEmail} onChange={(v) => setForm({ ...form, contactEmail: v })} />
+        <Field label="Contact Phone" value={form.contactPhone} onChange={(v) => setForm({ ...form, contactPhone: v })} />
+      </div>
+      <div>
+        <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">SameAs (Social Profiles) <span className="font-normal normal-case text-brand-navy/30">— one per line</span></label>
+        <textarea value={form.sameAs} onChange={(e) => setForm({ ...form, sameAs: e.target.value })}
+          className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" rows={4} placeholder="https://facebook.com/...&#10;https://instagram.com/..." />
+      </div>
+      <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">Save Organization</button>
+    </div>
+  );
+}
+
+function LocalBusinessEditor({ item, onSave }: { item?: GeoSetting; onSave: (v: Record<string, unknown>) => void }) {
+  const val = (item?.value ?? {}) as Record<string, unknown>;
+  const addr = (val.address as Record<string, string>) || {};
+  const [form, setForm] = useState({
+    type: (val["@type"] as string) || "ToyStore",
+    description: (val.description as string) || "",
+    telephone: (val.telephone as string) || "",
+    email: (val.email as string) || "",
+    priceRange: (val.priceRange as string) || "$$",
+    paymentAccepted: (val.paymentAccepted as string) || "Cash, Credit Card, PayPal",
+    currenciesAccepted: (val.currenciesAccepted as string) || "USD",
+    street: addr.streetAddress || "",
+    city: addr.addressLocality || "",
+    state: addr.addressRegion || "",
+    zip: addr.postalCode || "",
+    country: addr.addressCountry || "US",
+  });
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = () => {
+    onSave({
+      "@context": "https://schema.org",
+      "@type": form.type,
+      description: form.description || undefined,
+      telephone: form.telephone || undefined,
+      email: form.email || undefined,
+      priceRange: form.priceRange || undefined,
+      paymentAccepted: form.paymentAccepted || undefined,
+      currenciesAccepted: form.currenciesAccepted || undefined,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: form.street || undefined,
+        addressLocality: form.city || undefined,
+        addressRegion: form.state || undefined,
+        postalCode: form.zip || undefined,
+        addressCountry: form.country || undefined,
+      },
+    });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  return (
+    <div className="rounded-3xl bg-white p-6 shadow-soft space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="font-display text-lg font-bold text-brand-navy">LocalBusiness Schema</h3>
+        {saved && <span className="rounded-full bg-brand-mint px-3 py-1 text-xs font-bold text-brand-green">Saved!</span>}
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Business Type</label>
+          <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}
+            className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none">
+            {["ToyStore", "Store", "OnlineStore", "Organization", "LocalBusiness"].map((t) => (
+              <option key={t} value={t}>{t}</option>
+            ))}
+          </select>
         </div>
-      ))}
+        <Field label="Price Range" value={form.priceRange} onChange={(v) => setForm({ ...form, priceRange: v })} />
+        <Field label="Telephone" value={form.telephone} onChange={(v) => setForm({ ...form, telephone: v })} />
+        <Field label="Email" value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
+        <Field label="Payment Accepted" value={form.paymentAccepted} onChange={(v) => setForm({ ...form, paymentAccepted: v })} />
+        <Field label="Currencies Accepted" value={form.currenciesAccepted} onChange={(v) => setForm({ ...form, currenciesAccepted: v })} />
+      </div>
+      <div>
+        <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Description</label>
+        <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
+          className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" rows={3} />
+      </div>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Street Address" value={form.street} onChange={(v) => setForm({ ...form, street: v })} />
+        <Field label="City" value={form.city} onChange={(v) => setForm({ ...form, city: v })} />
+        <Field label="State/Region" value={form.state} onChange={(v) => setForm({ ...form, state: v })} />
+        <Field label="Postal Code" value={form.zip} onChange={(v) => setForm({ ...form, zip: v })} />
+        <Field label="Country" value={form.country} onChange={(v) => setForm({ ...form, country: v })} />
+      </div>
+      <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">Save LocalBusiness</button>
+    </div>
+  );
+}
+
+function HreflangEditor({ item, onSave }: { item?: GeoSetting; onSave: (v: Record<string, unknown>) => void }) {
+  const val = (item?.value ?? {}) as Record<string, Record<string, string>>;
+  const [rows, setRows] = useState<{ path: string; langs: Record<string, string> }[]>(() => {
+    const entries = Object.entries(val);
+    if (entries.length === 0) return [{ path: "/", langs: { en: "https://kidami-ent.com/" } }];
+    return entries.map(([path, langs]) => ({ path, langs: { ...langs } }));
+  });
+  const [saved, setSaved] = useState(false);
+
+  const updateLang = (idx: number, code: string, url: string) => {
+    setRows((prev) => {
+      const next = [...prev];
+      next[idx] = { ...next[idx], langs: { ...next[idx].langs, [code]: url } };
+      return next;
+    });
+  };
+
+  const addRow = () => setRows([...rows, { path: "/", langs: { en: "" } }]);
+  const removeRow = (idx: number) => setRows(rows.filter((_, i) => i !== idx));
+
+  const handleSave = () => {
+    const out: Record<string, Record<string, string>> = {};
+    rows.forEach((r) => {
+      out[r.path] = r.langs;
+    });
+    onSave(out);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  return (
+    <div className="rounded-3xl bg-white p-6 shadow-soft space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="font-display text-lg font-bold text-brand-navy">Hreflang Alternate URLs</h3>
+        {saved && <span className="rounded-full bg-brand-mint px-3 py-1 text-xs font-bold text-brand-green">Saved!</span>}
+      </div>
+      <p className="text-sm text-brand-navy/50">Define the full URL for each language version of a page path.</p>
+
+      <div className="space-y-4">
+        {rows.map((row, idx) => (
+          <div key={idx} className="rounded-2xl border border-brand-navy/10 p-4 space-y-3">
+            <div className="flex items-center gap-3">
+              <input value={row.path} onChange={(e) => {
+                const next = [...rows];
+                next[idx].path = e.target.value;
+                setRows(next);
+              }} placeholder="Page path e.g. /products"
+                className="flex-1 rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
+              <button onClick={() => removeRow(idx)} className="rounded-full bg-red-100 px-3 py-2 text-xs font-bold text-red-600">Remove</button>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {langCodes.map((code) => (
+                <div key={code}>
+                  <label className="text-[10px] font-extrabold uppercase tracking-wider text-brand-navy/40">{langNames[code]} ({code})</label>
+                  <input value={row.langs[code] || ""} onChange={(e) => updateLang(idx, code, e.target.value)}
+                    placeholder={`https://kidami-ent.com/${code === "en" ? "" : code + "/"}...`}
+                    className="mt-1 w-full rounded-xl border border-brand-navy/10 px-3 py-2 text-xs focus:border-brand-blue focus:outline-none" />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex gap-3">
+        <button onClick={addRow} className="rounded-full bg-brand-sky px-5 py-2 text-sm font-bold text-brand-navy">+ Add Path</button>
+        <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">Save Hreflang</button>
+      </div>
+    </div>
+  );
+}
+
+function Field({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+  return (
+    <div>
+      <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">{label}</label>
+      <input value={value} onChange={(e) => onChange(e.target.value)}
+        className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
     </div>
   );
 }
