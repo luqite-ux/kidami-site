@@ -2,6 +2,7 @@ import { Link, useLang } from "../i18n/core";
 import type { Product } from "../data/products";
 import type { Product as SupaProduct } from "../hooks/useSupabaseData";
 import { amazonCta } from "../data/products";
+import { productBadges, productImage, productPriceHint, productReviewCount } from "../lib/productFields";
 import { Icon, Stars } from "./Icon";
 
 export function ProductCard({ product }: { product: Product | SupaProduct }) {
@@ -11,13 +12,13 @@ export function ProductCard({ product }: { product: Product | SupaProduct }) {
 
   const name = pd?.name ?? product.name;
   const tagline = pd?.tagline ?? product.tagline;
-  const badges = pd?.badges ?? (product as any).badges ?? (product as any).features?.map((f: any) => f.label) ?? [];
+  const badges = productBadges(product, pd?.badges);
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lift">
       <Link to={`/products/${product.slug}`} className="relative block overflow-hidden bg-brand-cream">
         <img
-          src={(product as any).image_url || product.image}
+          src={productImage(product)}
           alt={name}
           loading="lazy"
           className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -35,7 +36,7 @@ export function ProductCard({ product }: { product: Product | SupaProduct }) {
         <div className="flex items-center gap-2">
           <Stars rating={product.rating} />
           <span className="text-xs font-bold text-brand-navy/50">
-            {product.rating} ({(product as any).review_count ?? product.reviewCount})
+            {product.rating} ({productReviewCount(product)})
           </span>
         </div>
         <h3 className="mt-2 font-display text-lg font-bold leading-snug text-brand-navy">
@@ -54,7 +55,7 @@ export function ProductCard({ product }: { product: Product | SupaProduct }) {
         </div>
 
         <div className="mt-auto flex items-center justify-between pt-5">
-          <span className="text-sm font-extrabold text-brand-navy">{product.priceHint}</span>
+          <span className="text-sm font-extrabold text-brand-navy">{productPriceHint(product)}</span>
           <a
             href={amazonCta(product.slug)}
             target="_blank"

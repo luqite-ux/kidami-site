@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useProducts, useArticles, useReviews, useSeoSettings, useGeoSettings, useSiteSettings, type Product, type Article, type Review, type SeoSetting } from "./hooks/useAdminData";
+import { useProducts, useArticles, useReviews, useSeoSettings, useGeoSettings, useSiteSettings, type Product, type Article, type SeoSetting } from "./hooks/useAdminData";
 
 // Admin password — change this in production via .env
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "kidami2024";

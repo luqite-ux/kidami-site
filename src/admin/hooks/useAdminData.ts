@@ -23,7 +23,7 @@ export function useTable<T extends { id: string }>(tableName: string) {
     async (item: Omit<T, "id">) => {
       const { data: res, error: err } = await supabase
         .from(tableName)
-        .insert(item)
+        .insert(item as Record<string, unknown>)
         .select()
         .single();
       if (err) {
@@ -40,7 +40,7 @@ export function useTable<T extends { id: string }>(tableName: string) {
     async (id: string, updates: Partial<T>) => {
       const { data: res, error: err } = await supabase
         .from(tableName)
-        .update(updates)
+        .update(updates as Record<string, unknown>)
         .eq("id", id)
         .select()
         .single();

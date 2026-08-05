@@ -7,6 +7,7 @@ import { Icon, Stars } from "../components/Icon";
 import { Link, useLang, withLang } from "../i18n/core";
 import { useSeo } from "../lib/seo";
 import { useReveal } from "../lib/reveal";
+import { productBadges, productGallery, productImage, productPriceHint, productReviewCount } from "../lib/productFields";
 
 export function ProductDetail() {
   const { slug } = useParams();
@@ -18,7 +19,7 @@ export function ProductDetail() {
 
   const name = pd?.name ?? product?.name ?? "Product";
   const tagline = pd?.tagline ?? product?.tagline ?? "";
-  const badges = pd?.badges ?? product?.badges ?? [];
+  const badges = product ? productBadges(product, pd?.badges) : [];
   const features = pd?.features ?? product?.features ?? [];
   const specs = pd?.specs ?? product?.specs ?? [];
   const education = pd?.education ?? product?.education ?? "";
@@ -35,14 +36,14 @@ export function ProductDetail() {
           "@type": "Product",
           name,
           description: tagline,
-          image: `https://kidami-ent.com${product.image_url}`,
+          image: `https://kidami-ent.com${productImage(product)}`,
           brand: { "@type": "Brand", name: "KIDAMI" },
           category: product.category === "cars" ? "Die-cast toy cars" : "Educational board games",
           audience: { "@type": "PeopleAudience", suggestedMinAge: product.age.replace("+", "") },
           aggregateRating: {
             "@type": "AggregateRating",
             ratingValue: product.rating,
-            reviewCount: product.reviewCount,
+            reviewCount: productReviewCount(product),
           },
           offers: {
             "@type": "Offer",
@@ -69,6 +70,7 @@ export function ProductDetail() {
 
   const related: any[] = []; // Related products loaded separately
   const isCars = product.category === "cars";
+  const gallery = productGallery(product);
 
   return (
     <div className="bg-brand-sand pt-24 lg:pt-28">
@@ -87,14 +89,14 @@ export function ProductDetail() {
           <div>
             <div className="overflow-hidden rounded-[2rem] bg-white shadow-soft">
               <img
-                src={((product as any).gallery || [product.image_url_url])[activeImg]}
+                src={gallery[activeImg]}
                 alt={`${name} — ${activeImg + 1}`}
                 className="aspect-square w-full object-cover"
               />
             </div>
-            {((product as any).gallery || [product.image_url_url]).length > 1 && (
+            {gallery.length > 1 && (
               <div className="mt-4 flex gap-3">
-                {((product as any).gallery || [product.image_url_url]).map((g, i) => (
+                {gallery.map((g: string, i: number) => (
                   <button
                     key={g}
                     onClick={() => setActiveImg(i)}
@@ -121,12 +123,12 @@ export function ProductDetail() {
             <div className="mt-3 flex items-center gap-2.5">
               <Stars rating={product.rating} className="h-5 w-5" />
               <span className="font-extrabold text-brand-navy">{product.rating}</span>
-              <span className="text-sm text-brand-navy/50">· {product.reviewCount} {dt.reviews}</span>
+              <span className="text-sm text-brand-navy/50">· {productReviewCount(product)} {dt.reviews}</span>
             </div>
             <p className="mt-5 text-lg leading-relaxed text-brand-navy/70">{tagline}</p>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              {badges.map((b) => (
+              {badges.map((b: string) => (
                 <span key={b} className="rounded-full bg-brand-sky px-3.5 py-1.5 text-xs font-extrabold text-brand-navy">
                   {b}
                 </span>
@@ -146,7 +148,7 @@ export function ProductDetail() {
                     className="inline-flex items-center gap-1.5 rounded-full border border-brand-navy/10 px-3 py-1 text-xs font-extrabold text-brand-navy/70 transition-colors hover:border-brand-blue hover:text-brand-blue"
                   >
                     <Icon name={info.icon} className="h-3.5 w-3.5" />
-                    {d.skills[sk].name}
+                    {d.skills[sk as keyof typeof d.skills].name}
                   </Link>
                 );
               })}
@@ -156,7 +158,7 @@ export function ProductDetail() {
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wider text-brand-navy/40">{dt.typicalPrice}</p>
-                  <p className="font-display text-2xl font-extrabold text-brand-navy">{product.priceHint}</p>
+                  <p className="font-display text-2xl font-extrabold text-brand-navy">{productPriceHint(product)}</p>
                 </div>
                 <div className="flex flex-col gap-2.5">
                   <a
@@ -245,7 +247,7 @@ export function ProductDetail() {
           className="flex items-center justify-center gap-2 rounded-full bg-brand-orange py-3.5 font-display font-extrabold text-white"
         >
           <Icon name="cart" className="h-5 w-5" />
-          {d.common.buyAmazon} · {product.priceHint}
+          {d.common.buyAmazon} · {productPriceHint(product)}
         </a>
       </div>
     </div>
