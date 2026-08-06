@@ -11,20 +11,20 @@ import {
   type SeoSetting,
   type GeoSetting,
 } from "./hooks/useAdminData";
-import { langCodes, langNames } from "../i18n/core";"../../i18n/core";
+import { langCodes, langNames } from "../i18n/core";
 
-// Admin password — change this in production via .env
+// 管理员密码 — 生产环境请通过 .env 设置
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "kidami2024";
 
 type Tab = "products" | "articles" | "reviews" | "seo" | "geo" | "settings";
 
 const tabs: { key: Tab; label: string; icon: string }[] = [
-  { key: "products", label: "Products", icon: "🚗" },
-  { key: "articles", label: "Articles", icon: "📝" },
-  { key: "reviews", label: "Reviews", icon: "⭐" },
-  { key: "seo", label: "SEO", icon: "🔍" },
-  { key: "geo", label: "GEO", icon: "📍" },
-  { key: "settings", label: "Settings", icon: "⚙️" },
+  { key: "products", label: "产品管理", icon: "🚗" },
+  { key: "articles", label: "文章管理", icon: "📝" },
+  { key: "reviews", label: "评论审核", icon: "⭐" },
+  { key: "seo", label: "SEO 设置", icon: "🔍" },
+  { key: "geo", label: "GEO 设置", icon: "📍" },
+  { key: "settings", label: "站点设置", icon: "⚙️" },
 ];
 
 export default function AdminApp() {
@@ -42,7 +42,7 @@ export default function AdminApp() {
       localStorage.setItem("kidami_admin", "1");
       setIsLoggedIn(true);
     } else {
-      setError("Incorrect password. Please try again.");
+      setError("密码错误，请重试");
     }
   };
 
@@ -58,25 +58,25 @@ export default function AdminApp() {
         <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-lift">
           <div className="text-center">
             <img src="/logo.png" alt="KIDAMI" className="mx-auto h-16 w-auto" />
-            <h1 className="mt-4 font-display text-2xl font-extrabold text-brand-navy">KIDAMI Admin</h1>
-            <p className="mt-1 text-sm text-brand-navy/50">Enter password to manage content</p>
+            <h1 className="mt-4 font-display text-2xl font-extrabold text-brand-navy">KIDAMI 管理后台</h1>
+            <p className="mt-1 text-sm text-brand-navy/50">请输入密码进入管理</p>
           </div>
           <form onSubmit={handleLogin} className="mt-8 space-y-4">
             <div>
-              <label className="text-sm font-extrabold text-brand-navy">Password</label>
+              <label className="text-sm font-extrabold text-brand-navy">密码</label>
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 w-full rounded-2xl border border-brand-navy/10 bg-white px-4 py-3 text-sm focus:border-brand-blue focus:outline-none"
-                placeholder="Enter admin password"
+                placeholder="请输入管理员密码"
                 autoFocus
               />
             </div>
             {error && <p className="text-sm font-bold text-red-500">{error}</p>}
             <button type="submit" className="w-full rounded-full bg-brand-navy py-3 font-display font-bold text-white shadow-soft transition-transform hover:-translate-y-0.5">
-              Sign In
+              登录
             </button>
           </form>
         </div>
@@ -89,7 +89,7 @@ export default function AdminApp() {
       <aside className="w-64 shrink-0 bg-brand-navy text-white">
         <div className="p-6">
           <img src="/logo.png" alt="KIDAMI" className="h-12 w-auto" />
-          <p className="mt-2 text-xs text-white/50">Admin Dashboard</p>
+          <p className="mt-2 text-xs text-white/50">管理控制台</p>
         </div>
         <nav className="px-3 pb-6">
           {tabs.map((t) => (
@@ -103,7 +103,7 @@ export default function AdminApp() {
         </nav>
         <div className="border-t border-white/10 px-6 py-4">
           <button onClick={handleLogout}
-            className="text-sm font-bold text-white/50 hover:text-white">Sign Out</button>
+            className="text-sm font-bold text-white/50 hover:text-white">退出登录</button>
         </div>
       </aside>
 
@@ -124,7 +124,7 @@ export default function AdminApp() {
   );
 }
 
-// ======== PRODUCTS PANEL ========
+// ======== 产品管理 ========
 function ProductsPanel() {
   const { data: products, loading, create, update, remove } = useProducts();
   const [editing, setEditing] = useState<Partial<Product> | null>(null);
@@ -139,39 +139,39 @@ function ProductsPanel() {
     setEditing(null);
   };
 
-  if (loading) return <p className="text-brand-navy/50">Loading...</p>;
+  if (loading) return <p className="text-brand-navy/50">加载中...</p>;
 
   return (
     <div className="space-y-6">
       <button onClick={() => setEditing({ slug: "", name: "", category: "cars", skills: [], age: "3+", tagline: "", keywords: [], price_hint: "", image_url: "", rating: 0, review_count: 0, features: [], specs: [], education: "", amazon_url: "", walmart_url: "", is_active: true, sort_order: 0 })}
         className="rounded-full bg-brand-orange px-6 py-2.5 font-bold text-white shadow-soft hover:-translate-y-0.5 transition-transform">
-        + New Product
+        + 新建产品
       </button>
 
       {editing && (
         <div className="rounded-3xl bg-white p-6 shadow-soft space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <input placeholder="Slug" value={editing.slug || ""} onChange={(e) => setEditing({ ...editing, slug: e.target.value })}
+            <input placeholder="URL 标识 (slug)" value={editing.slug || ""} onChange={(e) => setEditing({ ...editing, slug: e.target.value })}
               className="rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
-            <input placeholder="Name" value={editing.name || ""} onChange={(e) => setEditing({ ...editing, name: e.target.value })}
+            <input placeholder="产品名称" value={editing.name || ""} onChange={(e) => setEditing({ ...editing, name: e.target.value })}
               className="rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
             <select value={editing.category} onChange={(e) => setEditing({ ...editing, category: e.target.value as "cars" | "games" })}
               className="rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none">
-              <option value="cars">Cars</option>
-              <option value="games">Games</option>
+              <option value="cars">玩具车</option>
+              <option value="games">桌游</option>
             </select>
-            <input placeholder="Age" value={editing.age || ""} onChange={(e) => setEditing({ ...editing, age: e.target.value })}
+            <input placeholder="适用年龄" value={editing.age || ""} onChange={(e) => setEditing({ ...editing, age: e.target.value })}
               className="rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
-            <input placeholder="Price Hint" value={editing.price_hint || ""} onChange={(e) => setEditing({ ...editing, price_hint: e.target.value })}
+            <input placeholder="价格提示" value={editing.price_hint || ""} onChange={(e) => setEditing({ ...editing, price_hint: e.target.value })}
               className="rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
-            <input placeholder="Image URL" value={editing.image_url || ""} onChange={(e) => setEditing({ ...editing, image_url: e.target.value })}
+            <input placeholder="图片 URL" value={editing.image_url || ""} onChange={(e) => setEditing({ ...editing, image_url: e.target.value })}
               className="rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
           </div>
-          <textarea placeholder="Tagline" value={editing.tagline || ""} onChange={(e) => setEditing({ ...editing, tagline: e.target.value })}
+          <textarea placeholder="一句话简介" value={editing.tagline || ""} onChange={(e) => setEditing({ ...editing, tagline: e.target.value })}
             className="w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" rows={2} />
           <div className="flex gap-3">
-            <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">Save</button>
-            <button onClick={() => setEditing(null)} className="rounded-full border border-brand-navy/20 px-6 py-2.5 font-bold text-brand-navy">Cancel</button>
+            <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">保存</button>
+            <button onClick={() => setEditing(null)} className="rounded-full border border-brand-navy/20 px-6 py-2.5 font-bold text-brand-navy">取消</button>
           </div>
         </div>
       )}
@@ -182,11 +182,11 @@ function ProductsPanel() {
             <img src={p.image_url} alt={p.name} className="h-16 w-16 rounded-xl object-cover" />
             <div className="flex-1 min-w-0">
               <p className="font-bold text-brand-navy truncate">{p.name}</p>
-              <p className="text-sm text-brand-navy/50">{p.category} · {p.age} · {p.price_hint} · ★{p.rating}</p>
+              <p className="text-sm text-brand-navy/50">{p.category === "cars" ? "玩具车" : "桌游"} · {p.age} · {p.price_hint} · ★{p.rating}</p>
             </div>
             <div className="flex gap-2">
-              <button onClick={() => setEditing(p)} className="rounded-full bg-brand-sky px-4 py-2 text-xs font-bold text-brand-navy">Edit</button>
-              <button onClick={() => remove(p.id)} className="rounded-full bg-red-100 px-4 py-2 text-xs font-bold text-red-600">Delete</button>
+              <button onClick={() => setEditing(p)} className="rounded-full bg-brand-sky px-4 py-2 text-xs font-bold text-brand-navy">编辑</button>
+              <button onClick={() => remove(p.id)} className="rounded-full bg-red-100 px-4 py-2 text-xs font-bold text-red-600">删除</button>
             </div>
           </div>
         ))}
@@ -195,7 +195,7 @@ function ProductsPanel() {
   );
 }
 
-// ======== ARTICLES PANEL ========
+// ======== 文章管理 ========
 function ArticlesPanel() {
   const { data: articles, loading, create, update, remove } = useArticles();
   const [editing, setEditing] = useState<Partial<Article> | null>(null);
@@ -207,36 +207,36 @@ function ArticlesPanel() {
     setEditing(null);
   };
 
-  if (loading) return <p className="text-brand-navy/50">Loading...</p>;
+  if (loading) return <p className="text-brand-navy/50">加载中...</p>;
 
   return (
     <div className="space-y-6">
       <button onClick={() => setEditing({ slug: "", title: "", category: "", minutes: 5, excerpt: "", content: "", image_url: "", is_published: false })}
         className="rounded-full bg-brand-orange px-6 py-2.5 font-bold text-white shadow-soft hover:-translate-y-0.5 transition-transform">
-        + New Article
+        + 新建文章
       </button>
 
       {editing && (
         <div className="rounded-3xl bg-white p-6 shadow-soft space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <input placeholder="Slug" value={editing.slug || ""} onChange={(e) => setEditing({ ...editing, slug: e.target.value })}
+            <input placeholder="URL 标识 (slug)" value={editing.slug || ""} onChange={(e) => setEditing({ ...editing, slug: e.target.value })}
               className="rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
-            <input placeholder="Title" value={editing.title || ""} onChange={(e) => setEditing({ ...editing, title: e.target.value })}
+            <input placeholder="标题" value={editing.title || ""} onChange={(e) => setEditing({ ...editing, title: e.target.value })}
               className="rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
-            <input placeholder="Category" value={editing.category || ""} onChange={(e) => setEditing({ ...editing, category: e.target.value })}
+            <input placeholder="分类" value={editing.category || ""} onChange={(e) => setEditing({ ...editing, category: e.target.value })}
               className="rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
-            <input placeholder="Image URL" value={editing.image_url || ""} onChange={(e) => setEditing({ ...editing, image_url: e.target.value })}
+            <input placeholder="图片 URL" value={editing.image_url || ""} onChange={(e) => setEditing({ ...editing, image_url: e.target.value })}
               className="rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
           </div>
-          <textarea placeholder="Excerpt" value={editing.excerpt || ""} onChange={(e) => setEditing({ ...editing, excerpt: e.target.value })}
+          <textarea placeholder="摘要" value={editing.excerpt || ""} onChange={(e) => setEditing({ ...editing, excerpt: e.target.value })}
             className="w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" rows={2} />
           <label className="flex items-center gap-2 text-sm font-bold text-brand-navy">
             <input type="checkbox" checked={editing.is_published || false} onChange={(e) => setEditing({ ...editing, is_published: e.target.checked })} />
-            Published
+            已发布
           </label>
           <div className="flex gap-3">
-            <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">Save</button>
-            <button onClick={() => setEditing(null)} className="rounded-full border border-brand-navy/20 px-6 py-2.5 font-bold text-brand-navy">Cancel</button>
+            <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">保存</button>
+            <button onClick={() => setEditing(null)} className="rounded-full border border-brand-navy/20 px-6 py-2.5 font-bold text-brand-navy">取消</button>
           </div>
         </div>
       )}
@@ -246,11 +246,11 @@ function ArticlesPanel() {
           <div key={a.id} className="flex items-center gap-4 rounded-2xl bg-white p-4 shadow-soft">
             <div className="flex-1 min-w-0">
               <p className="font-bold text-brand-navy truncate">{a.title}</p>
-              <p className="text-sm text-brand-navy/50">{a.category} · {a.minutes} min read · {a.is_published ? "✅ Published" : "📝 Draft"}</p>
+              <p className="text-sm text-brand-navy/50">{a.category} · {a.minutes} 分钟阅读 · {a.is_published ? "✅ 已发布" : "📝 草稿"}</p>
             </div>
             <div className="flex gap-2">
-              <button onClick={() => setEditing(a)} className="rounded-full bg-brand-sky px-4 py-2 text-xs font-bold text-brand-navy">Edit</button>
-              <button onClick={() => remove(a.id)} className="rounded-full bg-red-100 px-4 py-2 text-xs font-bold text-red-600">Delete</button>
+              <button onClick={() => setEditing(a)} className="rounded-full bg-brand-sky px-4 py-2 text-xs font-bold text-brand-navy">编辑</button>
+              <button onClick={() => remove(a.id)} className="rounded-full bg-red-100 px-4 py-2 text-xs font-bold text-red-600">删除</button>
             </div>
           </div>
         ))}
@@ -259,7 +259,7 @@ function ArticlesPanel() {
   );
 }
 
-// ======== REVIEWS PANEL ========
+// ======== 评论审核 ========
 function ReviewsPanel() {
   const { data: reviews, loading, update } = useReviews();
 
@@ -267,7 +267,7 @@ function ReviewsPanel() {
     await update(id, { is_approved: !current });
   };
 
-  if (loading) return <p className="text-brand-navy/50">Loading...</p>;
+  if (loading) return <p className="text-brand-navy/50">加载中...</p>;
 
   return (
     <div className="grid gap-4">
@@ -283,7 +283,7 @@ function ReviewsPanel() {
               className={`shrink-0 rounded-full px-4 py-2 text-xs font-bold ${
                 r.is_approved ? "bg-brand-mint text-brand-green" : "bg-yellow-100 text-yellow-700"
               }`}>
-              {r.is_approved ? "✅ Approved" : "⏳ Pending"}
+              {r.is_approved ? "✅ 已通过" : "⏳ 待审核"}
             </button>
           </div>
         </div>
@@ -292,7 +292,7 @@ function ReviewsPanel() {
   );
 }
 
-// ======== SEO PANEL ========
+// ======== SEO 设置 ========
 const emptySeo: Partial<SeoSetting> = {
   page_path: "/",
   lang_code: "en",
@@ -381,33 +381,33 @@ function SeoPanel() {
     setIsNew(false);
   };
 
-  if (loading) return <p className="text-brand-navy/50">Loading...</p>;
+  if (loading) return <p className="text-brand-navy/50">加载中...</p>;
 
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
         <button onClick={startNew}
           className="rounded-full bg-brand-orange px-6 py-2.5 font-bold text-white shadow-soft hover:-translate-y-0.5 transition-transform">
-          + New SEO Setting
+          + 新建 SEO 设置
         </button>
-        <p className="text-sm text-brand-navy/50">{settings.length} SEO records</p>
+        <p className="text-sm text-brand-navy/50">共 {settings.length} 条 SEO 记录</p>
       </div>
 
       {editing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="w-full max-w-3xl max-h-[92vh] overflow-auto rounded-3xl bg-white p-6 shadow-lift space-y-4">
             <h2 className="font-display text-xl font-bold text-brand-navy">
-              {isNew ? "New SEO Setting" : `Edit SEO: ${editing.page_path}`}
+              {isNew ? "新建 SEO 设置" : `编辑 SEO: ${editing.page_path}`}
             </h2>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Page Path</label>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">页面路径</label>
                 <input value={editing.page_path || ""} onChange={(e) => setEditing({ ...editing, page_path: e.target.value })}
-                  className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" placeholder="/ or /products" />
+                  className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" placeholder="/ 或 /products" />
               </div>
               <div>
-                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Language</label>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">语言</label>
                 <select value={editing.lang_code || "en"} onChange={(e) => setEditing({ ...editing, lang_code: e.target.value })}
                   className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none">
                   {langCodes.map((code) => (
@@ -418,32 +418,32 @@ function SeoPanel() {
             </div>
 
             <div>
-              <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Title</label>
+              <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">页面标题 (Title)</label>
               <input value={editing.title || ""} onChange={(e) => setEditing({ ...editing, title: e.target.value })}
                 className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
             </div>
 
             <div>
-              <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Description</label>
+              <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">页面描述 (Description)</label>
               <textarea value={editing.description || ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })}
                 className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" rows={3} />
             </div>
 
             <div>
-              <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Keywords <span className="font-normal normal-case text-brand-navy/30">— press Enter or comma to add</span></label>
+              <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">关键词 <span className="font-normal normal-case text-brand-navy/30">— 按回车或逗号添加</span></label>
               <div className="mt-1">
-                <TagInput value={editing.keywords || []} onChange={(v) => setEditing({ ...editing, keywords: v })} placeholder="e.g. toy cars, die cast..." />
+                <TagInput value={editing.keywords || []} onChange={(v) => setEditing({ ...editing, keywords: v })} placeholder="如：玩具车, 合金车, ..." />
               </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">OG Title</label>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">OG 标题</label>
                 <input value={editing.og_title || ""} onChange={(e) => setEditing({ ...editing, og_title: e.target.value })}
                   className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
               </div>
               <div>
-                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">OG Description</label>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">OG 描述</label>
                 <input value={editing.og_description || ""} onChange={(e) => setEditing({ ...editing, og_description: e.target.value })}
                   className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
               </div>
@@ -451,14 +451,14 @@ function SeoPanel() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">OG Image URL</label>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">OG 图片 URL</label>
                 <input value={editing.og_image_url || ""} onChange={(e) => setEditing({ ...editing, og_image_url: e.target.value })}
                   className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
               </div>
               <div>
                 <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Canonical URL</label>
                 <input value={editing.canonical_url || ""} onChange={(e) => setEditing({ ...editing, canonical_url: e.target.value })}
-                  className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" placeholder="Leave blank to auto-generate" />
+                  className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" placeholder="留空则自动生成" />
               </div>
             </div>
 
@@ -471,13 +471,13 @@ function SeoPanel() {
                 </select>
               </div>
               <div>
-                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Priority: {(editing.priority ?? 0.5).toFixed(1)}</label>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">优先级: {(editing.priority ?? 0.5).toFixed(1)}</label>
                 <input type="range" min={0} max={1} step={0.1} value={editing.priority ?? 0.5}
                   onChange={(e) => setEditing({ ...editing, priority: parseFloat(e.target.value) })}
                   className="mt-3 w-full accent-brand-blue" />
               </div>
               <div>
-                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Changefreq</label>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">更新频率</label>
                 <select value={editing.changefreq || "weekly"} onChange={(e) => setEditing({ ...editing, changefreq: e.target.value })}
                   className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none">
                   {CHANGEFREQ_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -491,18 +491,17 @@ function SeoPanel() {
                 style={{ backgroundColor: editing.is_active ? "#2e6bf0" : undefined }}>
                 <span className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${editing.is_active ? "translate-x-5" : "translate-x-0.5"}`} />
               </div>
-              {editing.is_active ? "Active" : "Inactive"}
+              {editing.is_active ? "已启用" : "已禁用"}
             </label>
 
             <div>
-              <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">JSON-LD Structured Data</label>
+              <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">JSON-LD 结构化数据</label>
               <textarea value={editing.json_ld ? JSON.stringify(editing.json_ld, null, 2) : ""}
                 onChange={(e) => {
                   try {
                     const parsed = e.target.value.trim() ? JSON.parse(e.target.value) : null;
                     setEditing({ ...editing, json_ld: parsed });
                   } catch {
-                    // allow invalid JSON while typing
                     setEditing({ ...editing, json_ld: e.target.value as any });
                   }
                 }}
@@ -511,8 +510,8 @@ function SeoPanel() {
             </div>
 
             <div className="flex gap-3 pt-2">
-              <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">Save</button>
-              <button onClick={() => { setEditing(null); setIsNew(false); }} className="rounded-full border border-brand-navy/20 px-6 py-2.5 font-bold text-brand-navy">Cancel</button>
+              <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">保存</button>
+              <button onClick={() => { setEditing(null); setIsNew(false); }} className="rounded-full border border-brand-navy/20 px-6 py-2.5 font-bold text-brand-navy">取消</button>
             </div>
           </div>
         </div>
@@ -524,19 +523,19 @@ function SeoPanel() {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
                 <span className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider ${s.is_active ? "bg-brand-mint text-brand-green" : "bg-gray-100 text-gray-500"}`}>
-                  {s.is_active ? "Active" : "Inactive"}
+                  {s.is_active ? "已启用" : "已禁用"}
                 </span>
                 <p className="font-bold text-brand-navy">{s.page_path} <span className="text-brand-navy/40">({s.lang_code})</span></p>
               </div>
               <div className="flex gap-2">
-                <button onClick={() => startEdit(s)} className="rounded-full bg-brand-sky px-4 py-2 text-xs font-bold text-brand-navy">Edit</button>
-                <button onClick={() => remove(s.id)} className="rounded-full bg-red-100 px-4 py-2 text-xs font-bold text-red-600">Delete</button>
+                <button onClick={() => startEdit(s)} className="rounded-full bg-brand-sky px-4 py-2 text-xs font-bold text-brand-navy">编辑</button>
+                <button onClick={() => remove(s.id)} className="rounded-full bg-red-100 px-4 py-2 text-xs font-bold text-red-600">删除</button>
               </div>
             </div>
             <div className="grid gap-2 sm:grid-cols-2">
               <p className="text-sm text-brand-navy/70 font-bold truncate">{s.title}</p>
               <p className="text-sm text-brand-navy/50 truncate">{s.description}</p>
-              <p className="text-xs text-brand-navy/40">Robots: {s.robots_meta} · Priority: {s.priority} · Freq: {s.changefreq}</p>
+              <p className="text-xs text-brand-navy/40">Robots: {s.robots_meta} · 优先级: {s.priority} · 频率: {s.changefreq}</p>
               <div className="flex flex-wrap gap-1">
                 {(s.keywords || []).slice(0, 6).map((k) => (
                   <span key={k} className="rounded-full bg-brand-sky/50 px-2 py-0.5 text-[10px] font-bold text-brand-navy">{k}</span>
@@ -551,7 +550,7 @@ function SeoPanel() {
   );
 }
 
-// ======== GEO PANEL ========
+// ======== GEO 设置 ========
 type GeoSection = "organization" | "localBusiness" | "hreflang";
 
 function GeoPanel() {
@@ -560,7 +559,7 @@ function GeoPanel() {
 
   const getItem = (key: string) => data.find((d) => d.key === key);
 
-  if (loading) return <p className="text-brand-navy/50">Loading...</p>;
+  if (loading) return <p className="text-brand-navy/50">加载中...</p>;
 
   return (
     <div className="space-y-6">
@@ -570,7 +569,7 @@ function GeoPanel() {
             className={`rounded-full px-5 py-2.5 text-sm font-bold transition-all ${
               activeSection === s ? "bg-brand-navy text-white shadow-soft" : "bg-white text-brand-navy/60 hover:text-brand-navy"
             }`}>
-            {s === "organization" ? "🏢 Organization" : s === "localBusiness" ? "🏪 Local Business" : "🌐 Hreflang"}
+            {s === "organization" ? "🏢 组织机构" : s === "localBusiness" ? "🏪 本地商家" : "🌐 Hreflang"}
           </button>
         ))}
       </div>
@@ -638,31 +637,31 @@ function OrganizationEditor({ item, onSave }: { item?: GeoSetting; onSave: (v: R
   return (
     <div className="rounded-3xl bg-white p-6 shadow-soft space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="font-display text-lg font-bold text-brand-navy">Organization Schema</h3>
-        {saved && <span className="rounded-full bg-brand-mint px-3 py-1 text-xs font-bold text-brand-green">Saved!</span>}
+        <h3 className="font-display text-lg font-bold text-brand-navy">组织机构 Schema (Organization)</h3>
+        {saved && <span className="rounded-full bg-brand-mint px-3 py-1 text-xs font-bold text-brand-green">已保存!</span>}
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Name" value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
-        <Field label="URL" value={form.url} onChange={(v) => setForm({ ...form, url: v })} />
+        <Field label="名称" value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
+        <Field label="网址" value={form.url} onChange={(v) => setForm({ ...form, url: v })} />
         <Field label="Logo URL" value={form.logo} onChange={(v) => setForm({ ...form, logo: v })} />
-        <Field label="Founding Date" value={form.foundingDate} onChange={(v) => setForm({ ...form, foundingDate: v })} />
-        <Field label="Slogan" value={form.slogan} onChange={(v) => setForm({ ...form, slogan: v })} />
+        <Field label="成立日期" value={form.foundingDate} onChange={(v) => setForm({ ...form, foundingDate: v })} />
+        <Field label="口号" value={form.slogan} onChange={(v) => setForm({ ...form, slogan: v })} />
       </div>
       <div>
-        <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Description</label>
+        <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">描述</label>
         <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
           className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" rows={3} />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Contact Email" value={form.contactEmail} onChange={(v) => setForm({ ...form, contactEmail: v })} />
-        <Field label="Contact Phone" value={form.contactPhone} onChange={(v) => setForm({ ...form, contactPhone: v })} />
+        <Field label="联系邮箱" value={form.contactEmail} onChange={(v) => setForm({ ...form, contactEmail: v })} />
+        <Field label="联系电话" value={form.contactPhone} onChange={(v) => setForm({ ...form, contactPhone: v })} />
       </div>
       <div>
-        <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">SameAs (Social Profiles) <span className="font-normal normal-case text-brand-navy/30">— one per line</span></label>
+        <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">社交主页 (SameAs) <span className="font-normal normal-case text-brand-navy/30">— 每行一个链接</span></label>
         <textarea value={form.sameAs} onChange={(e) => setForm({ ...form, sameAs: e.target.value })}
           className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" rows={4} placeholder="https://facebook.com/...&#10;https://instagram.com/..." />
       </div>
-      <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">Save Organization</button>
+      <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">保存组织机构</button>
     </div>
   );
 }
@@ -712,12 +711,12 @@ function LocalBusinessEditor({ item, onSave }: { item?: GeoSetting; onSave: (v: 
   return (
     <div className="rounded-3xl bg-white p-6 shadow-soft space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="font-display text-lg font-bold text-brand-navy">LocalBusiness Schema</h3>
-        {saved && <span className="rounded-full bg-brand-mint px-3 py-1 text-xs font-bold text-brand-green">Saved!</span>}
+        <h3 className="font-display text-lg font-bold text-brand-navy">本地商家 Schema (LocalBusiness)</h3>
+        {saved && <span className="rounded-full bg-brand-mint px-3 py-1 text-xs font-bold text-brand-green">已保存!</span>}
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Business Type</label>
+          <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">商家类型</label>
           <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}
             className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none">
             {["ToyStore", "Store", "OnlineStore", "Organization", "LocalBusiness"].map((t) => (
@@ -725,25 +724,25 @@ function LocalBusinessEditor({ item, onSave }: { item?: GeoSetting; onSave: (v: 
             ))}
           </select>
         </div>
-        <Field label="Price Range" value={form.priceRange} onChange={(v) => setForm({ ...form, priceRange: v })} />
-        <Field label="Telephone" value={form.telephone} onChange={(v) => setForm({ ...form, telephone: v })} />
-        <Field label="Email" value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
-        <Field label="Payment Accepted" value={form.paymentAccepted} onChange={(v) => setForm({ ...form, paymentAccepted: v })} />
-        <Field label="Currencies Accepted" value={form.currenciesAccepted} onChange={(v) => setForm({ ...form, currenciesAccepted: v })} />
+        <Field label="价格区间" value={form.priceRange} onChange={(v) => setForm({ ...form, priceRange: v })} />
+        <Field label="电话" value={form.telephone} onChange={(v) => setForm({ ...form, telephone: v })} />
+        <Field label="邮箱" value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
+        <Field label="支付方式" value={form.paymentAccepted} onChange={(v) => setForm({ ...form, paymentAccepted: v })} />
+        <Field label="接受货币" value={form.currenciesAccepted} onChange={(v) => setForm({ ...form, currenciesAccepted: v })} />
       </div>
       <div>
-        <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">Description</label>
+        <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">描述</label>
         <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
           className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" rows={3} />
       </div>
       <div className="grid gap-4 sm:grid-cols-3">
-        <Field label="Street Address" value={form.street} onChange={(v) => setForm({ ...form, street: v })} />
-        <Field label="City" value={form.city} onChange={(v) => setForm({ ...form, city: v })} />
-        <Field label="State/Region" value={form.state} onChange={(v) => setForm({ ...form, state: v })} />
-        <Field label="Postal Code" value={form.zip} onChange={(v) => setForm({ ...form, zip: v })} />
-        <Field label="Country" value={form.country} onChange={(v) => setForm({ ...form, country: v })} />
+        <Field label="街道地址" value={form.street} onChange={(v) => setForm({ ...form, street: v })} />
+        <Field label="城市" value={form.city} onChange={(v) => setForm({ ...form, city: v })} />
+        <Field label="州/省" value={form.state} onChange={(v) => setForm({ ...form, state: v })} />
+        <Field label="邮编" value={form.zip} onChange={(v) => setForm({ ...form, zip: v })} />
+        <Field label="国家" value={form.country} onChange={(v) => setForm({ ...form, country: v })} />
       </div>
-      <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">Save LocalBusiness</button>
+      <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">保存本地商家</button>
     </div>
   );
 }
@@ -781,10 +780,10 @@ function HreflangEditor({ item, onSave }: { item?: GeoSetting; onSave: (v: Recor
   return (
     <div className="rounded-3xl bg-white p-6 shadow-soft space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="font-display text-lg font-bold text-brand-navy">Hreflang Alternate URLs</h3>
-        {saved && <span className="rounded-full bg-brand-mint px-3 py-1 text-xs font-bold text-brand-green">Saved!</span>}
+        <h3 className="font-display text-lg font-bold text-brand-navy">Hreflang 多语言链接</h3>
+        {saved && <span className="rounded-full bg-brand-mint px-3 py-1 text-xs font-bold text-brand-green">已保存!</span>}
       </div>
-      <p className="text-sm text-brand-navy/50">Define the full URL for each language version of a page path.</p>
+      <p className="text-sm text-brand-navy/50">为每个页面路径配置各语言版本的完整 URL。</p>
 
       <div className="space-y-4">
         {rows.map((row, idx) => (
@@ -794,9 +793,9 @@ function HreflangEditor({ item, onSave }: { item?: GeoSetting; onSave: (v: Recor
                 const next = [...rows];
                 next[idx].path = e.target.value;
                 setRows(next);
-              }} placeholder="Page path e.g. /products"
+              }} placeholder="页面路径，如 /products"
                 className="flex-1 rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
-              <button onClick={() => removeRow(idx)} className="rounded-full bg-red-100 px-3 py-2 text-xs font-bold text-red-600">Remove</button>
+              <button onClick={() => removeRow(idx)} className="rounded-full bg-red-100 px-3 py-2 text-xs font-bold text-red-600">删除</button>
             </div>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {langCodes.map((code) => (
@@ -813,8 +812,8 @@ function HreflangEditor({ item, onSave }: { item?: GeoSetting; onSave: (v: Recor
       </div>
 
       <div className="flex gap-3">
-        <button onClick={addRow} className="rounded-full bg-brand-sky px-5 py-2 text-sm font-bold text-brand-navy">+ Add Path</button>
-        <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">Save Hreflang</button>
+        <button onClick={addRow} className="rounded-full bg-brand-sky px-5 py-2 text-sm font-bold text-brand-navy">+ 添加路径</button>
+        <button onClick={handleSave} className="rounded-full bg-brand-navy px-6 py-2.5 font-bold text-white">保存 Hreflang</button>
       </div>
     </div>
   );
@@ -830,7 +829,7 @@ function Field({ label, value, onChange }: { label: string; value: string; onCha
   );
 }
 
-// ======== SETTINGS PANEL ========
+// ======== 站点设置 ========
 function SettingsPanel() {
   const { data, update } = useSiteSettings();
 
