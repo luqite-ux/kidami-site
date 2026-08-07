@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { skills, type Category, type Skill } from "../data/products";
+import { products, skills, type Category, type Skill } from "../data/products";
 import { useProducts } from "../hooks/useSupabaseData";
 import { ProductCard } from "../components/ProductCard";
 import { Icon } from "../components/Icon";
@@ -22,6 +22,27 @@ export function Products() {
         ? "Browse KIDAMI pull back cars with opening doors, 1:64 diecast toy car gift sets (ages 3+) and magnetic travel board games like ludo and snakes and ladders (ages 6+). ASTM F963 & CPC certified, on Amazon & Walmart."
         : pp.sub,
     path: withLang("/products", lang),
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://kidami-ent.com/" },
+          { "@type": "ListItem", position: 2, name: "Products", item: "https://kidami-ent.com/products" },
+        ],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "KIDAMI Products",
+        itemListElement: products.map((p, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: p.name,
+          url: `https://kidami-ent.com/products/${p.slug}`,
+        })),
+      },
+    ],
   });
   useReveal();
 

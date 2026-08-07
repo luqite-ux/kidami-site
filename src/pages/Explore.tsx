@@ -19,6 +19,28 @@ export function Explore() {
         ? "Explore KIDAMI toys by what they teach: hands-on skills, outdoor adventure, early learning and family time. Die cast metal toy cars and magnetic board games for every kind of growing up."
         : ex.sub,
     path: withLang("/explore", lang),
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://kidami-ent.com/" },
+          { "@type": "ListItem", position: 2, name: "Explore", item: "https://kidami-ent.com/explore" },
+        ],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        name: "Inspiration Library — Shop Toys by Play Skill",
+        description: "Explore KIDAMI toys by what they teach: hands-on skills, outdoor adventure, early learning and family time.",
+        hasPart: skills.map((s) => ({
+          "@type": "WebPage",
+          name: s.name,
+          description: s.tagline,
+          url: `https://kidami-ent.com/explore?skill=${s.key}`,
+        })),
+      },
+    ],
   });
   useReveal();
 

@@ -10,6 +10,8 @@ import { Explore } from "./pages/Explore";
 import { About } from "./pages/About";
 import { Learn } from "./pages/Learn";
 import { Contact } from "./pages/Contact";
+import { Privacy } from "./pages/Privacy";
+import { Terms } from "./pages/Terms";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -27,6 +29,8 @@ const pages: { path: string; el: ReactElement }[] = [
   { path: "/about", el: <About /> },
   { path: "/learn", el: <Learn /> },
   { path: "/contact", el: <Contact /> },
+  { path: "/privacy", el: <Privacy /> },
+  { path: "/terms", el: <Terms /> },
 ];
 
 // "" = English (no prefix), then one prefix per non-English language

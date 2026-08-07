@@ -9,7 +9,7 @@ export function Footer() {
   return (
     <footer className="bg-brand-ink text-white">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-4">
+        <div className="grid gap-10 md:grid-cols-5">
           <div className="md:col-span-1">
             <div className="flex items-center">
               <img src="/logo.png" alt="KIDAMI logo" className="h-12 w-auto object-contain" />
@@ -50,6 +50,14 @@ export function Footer() {
               <li><Link to="/learn" className="hover:text-white">{f.discoverLearn}</Link></li>
               <li><Link to="/contact" className="hover:text-white">{f.discoverContact}</Link></li>
               <li><a href="mailto:support@kidami-ent.com" className="hover:text-white">support@kidami-ent.com</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-display text-sm font-bold uppercase tracking-wider text-brand-yellow">Legal</h3>
+            <ul className="mt-4 space-y-2.5 text-sm text-white/70">
+              <li><Link to="/privacy" className="hover:text-white">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="hover:text-white">Terms of Service</Link></li>
             </ul>
           </div>
 

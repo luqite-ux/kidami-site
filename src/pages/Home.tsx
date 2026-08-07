@@ -26,14 +26,76 @@ export function Home() {
         ? "KIDAMI crafts die cast metal toy cars (ages 3+) — pull back cars with opening doors, 1:64 diecast gift sets — and magnetic travel board games (ages 6+). ASTM F963 & CPC certified. On Amazon & Walmart."
         : h.hero.subtitle,
     path: withLang("/", lang),
-    jsonLd: {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      name: "KIDAMI",
-      url: "https://kidami-ent.com/",
-      description:
-        "Official KIDAMI brand site — die cast metal toy cars (3+) and magnetic educational board games (6+), available on Amazon and Walmart.",
-    },
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "KIDAMI",
+        url: "https://kidami-ent.com/",
+        description:
+          "Official KIDAMI brand site — die cast metal toy cars (3+) and magnetic educational board games (6+), available on Amazon and Walmart.",
+        potentialAction: {
+          "@type": "SearchAction",
+          target: "https://kidami-ent.com/products?q={search_term_string}",
+          "query-input": "required name=search_term_string",
+        },
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "KIDAMI",
+        alternateName: "KIDAMI Toys",
+        url: "https://kidami-ent.com",
+        logo: "https://kidami-ent.com/logo.png",
+        slogan: "A Companion of Childhood, A Keeper of Memories",
+        description:
+          "KIDAMI crafts premium die cast metal toy cars and magnetic educational board games for kids. Founded in 2016, ASTM F963 & CPC certified.",
+        foundingDate: "2016",
+        sameAs: [
+          "https://www.amazon.com/stores/KIDAMI/page/546B9750-2336-4B85-8F2F-2C57C2997542",
+        ],
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "Customer Support",
+          email: "support@kidami-ent.com",
+          availableLanguage: ["English", "Spanish", "Portuguese", "French", "German", "Japanese", "Russian", "Italian", "Korean"],
+        },
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        name: "KIDAMI",
+        description: "Premium die cast metal toy cars and magnetic board games for children.",
+        url: "https://kidami-ent.com",
+        priceRange: "$$",
+        paymentAccepted: "Credit Card, PayPal, Amazon Pay",
+        currenciesAccepted: "USD",
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "KIDAMI Products",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Product",
+                name: "Die Cast Metal Toy Cars",
+                description: "Pull back cars with opening doors for ages 3+",
+                audience: { "@type": "PeopleAudience", suggestedMinAge: "3" },
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Product",
+                name: "Magnetic Board Games",
+                description: "Travel board games like Ludo and Snakes & Ladders for ages 6+",
+                audience: { "@type": "PeopleAudience", suggestedMinAge: "6" },
+              },
+            },
+          ],
+        },
+      },
+    ],
   });
   useReveal();
 

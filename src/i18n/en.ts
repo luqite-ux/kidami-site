@@ -258,6 +258,12 @@ export const en = {
       { q: "What if a toy breaks or arrives damaged?", a: "Every product is individually inspected before leaving our factory. If a quality issue ever slips through, contact us or the marketplace customer service for a no-questions-asked replacement or refund." },
       { q: "Do the cars need batteries?", a: "No. All KIDAMI die-cast cars use a pull-back friction motor — pull back, release, and they race. No batteries, no charging, no noise." },
       { q: "Are the board games good for travel?", a: "That's exactly what they're designed for. The boards fold flat, and the magnetic pieces stay in place on planes, trains and restaurant tables." },
+      { q: "What is KIDAMI?", a: "KIDAMI is a toy brand founded in 2016 that specializes in die cast metal toy cars and magnetic educational board games for children. The name comes from 'Kid' + 'Ami' (French for friend). All products are ASTM F963 and CPC certified." },
+      { q: "What age are KIDAMI die cast cars for?", a: "KIDAMI die cast metal toy cars are designed for children ages 3 and up. The pull-back friction motor requires no batteries, and the metal construction withstands drops and tumbles. Each car features opening doors for interactive play." },
+      { q: "What age are KIDAMI board games for?", a: "KIDAMI magnetic board games like Ludo and Snakes & Ladders are designed for children ages 6 and up. The magnetic pieces stay on the folding board during travel, making them ideal for planes, trains, and family game nights." },
+      { q: "Are KIDAMI toys educational?", a: "Yes. KIDAMI toys are designed around play-based learning principles. Die cast cars build fine motor skills and spatial reasoning. Board games teach counting, probability, turn-taking, and social skills. All products are grounded in child-development research." },
+      { q: "How do I contact KIDAMI customer service?", a: "You can reach KIDAMI support via email at support@kidami-ent.com, or through the contact form on this page. For order-specific questions, Amazon customer service is available 24/7. We typically respond within 2 business days." },
+      { q: "What makes KIDAMI die cast cars different from plastic toy cars?", a: "KIDAMI die cast cars are made from zinc alloy metal, giving them real weight and durability. They feature pull-back friction motors (no batteries), opening doors, and chip-resistant paint. Unlike plastic cars, they survive years of active play." },
     ],
   },
   skills: {

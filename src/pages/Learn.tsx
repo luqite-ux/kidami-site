@@ -15,6 +15,29 @@ export function Learn() {
         ? "Articles and guides on play-based learning: how die-cast cars build fine motor skills, why board games teach logic and probability, and how to choose screen-free travel toys."
         : l.sub,
     path: withLang("/learn", lang),
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://kidami-ent.com/" },
+          { "@type": "ListItem", position: 2, name: "Learn", item: "https://kidami-ent.com/learn" },
+        ],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        name: "KIDAMI Learning Hub",
+        description: "STEM & Learning — Play Ideas Backed by Child-Development Science",
+        blogPost: baseArticles.map((a) => ({
+          "@type": "BlogPosting",
+          headline: a.title,
+          description: a.excerpt,
+          image: `https://kidami-ent.com${a.image}`,
+          url: `https://kidami-ent.com/learn#${a.slug}`,
+        })),
+      },
+    ],
   });
   useReveal();
 

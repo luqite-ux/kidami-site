@@ -17,6 +17,23 @@ export function About() {
         ? "Founded in 2016, KIDAMI ('Kid' + 'Ami', French for friend) crafts premium, safe, educational toys. Discover our mission, values and the quality commitments behind every die-cast car and board game."
         : a.text,
     path: withLang("/about", lang),
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      name: a.title,
+      description: a.text,
+      mainEntity: {
+        "@type": "Organization",
+        name: "KIDAMI",
+        description: a.text,
+        foundingDate: "2016",
+        url: "https://kidami-ent.com",
+        logo: "https://kidami-ent.com/logo.png",
+        sameAs: [
+          "https://www.amazon.com/stores/KIDAMI/page/546B9750-2336-4B85-8F2F-2C57C2997542",
+        ],
+      },
+    },
   });
   useReveal();
 

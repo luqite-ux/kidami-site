@@ -31,27 +31,45 @@ export function ProductDetail() {
       : "KIDAMI product",
     path: withLang(`/products/${slug}`, lang),
     jsonLd: product
-      ? {
-          "@context": "https://schema.org",
-          "@type": "Product",
-          name,
-          description: tagline,
-          image: `https://kidami-ent.com${productImage(product)}`,
-          brand: { "@type": "Brand", name: "KIDAMI" },
-          category: product.category === "cars" ? "Die-cast toy cars" : "Educational board games",
-          audience: { "@type": "PeopleAudience", suggestedMinAge: product.age.replace("+", "") },
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: product.rating,
-            reviewCount: productReviewCount(product),
+      ? [
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://kidami-ent.com/" },
+              { "@type": "ListItem", position: 2, name: "Products", item: "https://kidami-ent.com/products" },
+              { "@type": "ListItem", position: 3, name, item: `https://kidami-ent.com/products/${product.slug}` },
+            ],
           },
-          offers: {
-            "@type": "Offer",
-            url: amazonCta(product.slug),
-            availability: "https://schema.org/InStock",
-            seller: { "@type": "Organization", name: "Amazon" },
+          {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name,
+            description: tagline,
+            image: `https://kidami-ent.com${productImage(product)}`,
+            brand: { "@type": "Brand", name: "KIDAMI" },
+            category: product.category === "cars" ? "Die-cast toy cars" : "Educational board games",
+            audience: { "@type": "PeopleAudience", suggestedMinAge: product.age.replace("+", "") },
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: product.rating,
+              reviewCount: productReviewCount(product),
+            },
+            offers: {
+              "@type": "Offer",
+              url: amazonCta(product.slug),
+              availability: "https://schema.org/InStock",
+              seller: { "@type": "Organization", name: "Amazon" },
+              priceCurrency: "USD",
+            },
+            review: d.reviews.slice(0, 3).map((r) => ({
+              "@type": "Review",
+              author: { "@type": "Person", name: r.name },
+              reviewRating: { "@type": "Rating", ratingValue: r.stars },
+              reviewBody: r.text,
+            })),
           },
-        }
+        ]
       : undefined,
   });
   useReveal();
