@@ -12,6 +12,7 @@ import { Learn } from "./pages/Learn";
 import { Contact } from "./pages/Contact";
 import { Privacy } from "./pages/Privacy";
 import { Terms } from "./pages/Terms";
+import { NotFound } from "./pages/NotFound";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -51,7 +52,7 @@ export default function App() {
       <main>
         <Routes>
           {allRoutes}
-          <Route path="*" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
