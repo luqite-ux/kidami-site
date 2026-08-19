@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link, NavLink, useLang, langCodes, langNames, stripLang, withLang, type LangCode } from "../i18n/core";
 import { Icon } from "./Icon";
@@ -64,6 +64,34 @@ function LanguageMenu() {
   );
 }
 
+function SearchBox({ className = "", onDone }: { className?: string; onDone?: () => void }) {
+  const { lang, d } = useLang();
+  const navigate = useNavigate();
+  const [q, setQ] = useState("");
+
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    const query = q.trim();
+    navigate(withLang(query ? `/products?q=${encodeURIComponent(query)}` : "/products", lang));
+    setQ("");
+    onDone?.();
+  };
+
+  return (
+    <form onSubmit={submit} role="search" className={`flex items-center overflow-hidden rounded-full border border-brand-navy/12 bg-brand-sand focus-within:border-brand-blue ${className}`}>
+      <Icon name="search" className="ml-3.5 h-4 w-4 shrink-0 text-brand-navy/40" />
+      <input
+        type="search"
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder={d.nav.searchPh}
+        aria-label={d.nav.search}
+        className="w-full bg-transparent px-2.5 py-2 text-sm font-bold text-brand-navy placeholder:text-brand-navy/35 focus:outline-none"
+      />
+    </form>
+  );
+}
+
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -88,60 +116,73 @@ export function Navbar() {
   useEffect(() => setOpen(false), [location.pathname]);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/90 shadow-soft backdrop-blur-md" : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[72px] lg:px-8">
-        <Link to="/" className="flex items-center" aria-label="KIDAMI home">
-          <img src="/logo.png" alt="KIDAMI logo" className="h-14 w-auto object-contain" />
-        </Link>
-
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
-          {links.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              className={({ isActive }) =>
-                `rounded-full px-4 py-2 text-[15px] font-bold transition-colors ${
-                  isActive ? "bg-brand-sky text-brand-navy" : "text-brand-navy/70 hover:bg-brand-sky/60 hover:text-brand-navy"
-                }`
-              }
-            >
-              {l.label}
-            </NavLink>
+    <header className="fixed inset-x-0 top-0 z-50">
+      {/* announcement bar */}
+      <div className="bg-brand-navy text-white">
+        <div className="mx-auto flex h-9 max-w-7xl items-center justify-center gap-x-8 gap-y-1 overflow-hidden px-4 text-[11px] font-bold uppercase tracking-wider sm:px-6 lg:px-8">
+          {d.topBar.map((t, i) => (
+            <span key={t} className={`flex items-center gap-1.5 ${i > 0 ? "hidden sm:flex" : ""}`}>
+              <Icon name={["shield", "check", "gift"][i] ?? "check"} className="h-3 w-3 text-brand-yellow" />
+              {t}
+            </span>
           ))}
-        </nav>
+        </div>
+      </div>
 
-        <div className="flex items-center gap-1 sm:gap-2">
-          <div className="hidden sm:block">
-            <LanguageMenu />
+      {/* main nav — always solid for visibility */}
+      <div className={`bg-white transition-shadow duration-300 ${scrolled || open ? "shadow-soft" : "shadow-xs"}`}>
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:h-[72px] lg:px-8">
+          <Link to="/" className="flex shrink-0 items-center" aria-label="KIDAMI home">
+            <img src="/logo.png" alt="KIDAMI logo" className="h-14 w-auto object-contain" />
+          </Link>
+
+          <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+            {links.map((l) => (
+              <NavLink
+                key={l.to}
+                to={l.to}
+                className={({ isActive }) =>
+                  `rounded-full px-4 py-2.5 text-[15px] font-extrabold transition-colors ${
+                    isActive ? "bg-brand-navy text-white" : "text-brand-navy/75 hover:bg-brand-sky hover:text-brand-navy"
+                  }`
+                }
+              >
+                {l.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <SearchBox className="hidden w-44 lg:w-56 xl:block" />
+            <div className="hidden sm:block">
+              <LanguageMenu />
+            </div>
+            <a
+              href={AMAZON_STORE}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              className="hidden items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 text-sm font-extrabold text-white shadow-soft transition-transform hover:-translate-y-0.5 hover:shadow-lift sm:inline-flex"
+            >
+              <Icon name="cart" className="h-4 w-4" />
+              {d.nav.buy}
+            </a>
+            <button
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-brand-navy md:hidden"
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+              aria-expanded={open}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6">
+                {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+              </svg>
+            </button>
           </div>
-          <a
-            href={AMAZON_STORE}
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="hidden items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 text-sm font-extrabold text-white shadow-soft transition-transform hover:-translate-y-0.5 hover:shadow-lift sm:inline-flex"
-          >
-            <Icon name="cart" className="h-4 w-4" />
-            {d.nav.buy}
-          </a>
-          <button
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-brand-navy md:hidden"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
-            aria-expanded={open}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6">
-              {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
-            </svg>
-          </button>
         </div>
       </div>
 
       {open && (
         <nav className="border-t border-brand-navy/10 bg-white px-4 py-4 md:hidden" aria-label="Mobile navigation">
+          <SearchBox className="mb-3" onDone={() => setOpen(false)} />
           {links.map((l) => (
             <NavLink
               key={l.to}

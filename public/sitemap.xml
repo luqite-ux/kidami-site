@@ -58,6 +58,11 @@
   <url><loc>https://kidami-ent.com/ja/learn</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://kidami-ent.com/it/learn</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
 
+  <!-- Articles -->
+  <url><loc>https://kidami-ent.com/learn/die-cast-cars-fine-motor-stem</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/learn/family-game-night-magnetic-ludo</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/learn/travel-games-screen-free</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+
   <!-- Contact -->
   <url><loc>https://kidami-ent.com/contact</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://kidami-ent.com/es/contact</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>

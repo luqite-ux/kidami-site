@@ -78,7 +78,7 @@ export function Explore() {
               }`}
             >
               <Icon name={s.icon} className="h-4 w-4" />
-              {d.skills[s.key as keyof typeof d.skills].name} · {s.zh}
+              {d.skills[s.key as keyof typeof d.skills].name}
             </Link>
           ))}
         </div>
@@ -99,7 +99,7 @@ export function Explore() {
                   </span>
                   <div>
                     <h2 className="font-display text-3xl font-extrabold text-brand-navy">
-                      {sd.name} <span className="text-brand-navy/40">· {s.zh}</span>
+                      {sd.name}
                     </h2>
                     <p className="mt-1 text-sm text-brand-navy/60">{sd.tagline}</p>
                   </div>
@@ -137,7 +137,7 @@ export function Explore() {
                   </span>
                 </div>
                 <h3 className="mt-4 font-display text-xl font-bold text-brand-navy/70">
-                  {c.name} <span className="text-brand-navy/35">· {baseComingSoon[i].zh}</span>
+                  {c.name}
                 </h3>
                 <p className="mt-2 text-sm text-brand-navy/50">{c.note}</p>
               </div>

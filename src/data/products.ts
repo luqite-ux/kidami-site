@@ -1,10 +1,19 @@
 export type Category = "cars" | "games";
 export type Skill = "hands-on" | "outdoor" | "early-learning" | "family-time";
 
+/** Shop-by-audience entrances — images are stable assets, copy lives in i18n */
+export type Audience = "parents" | "grandparents" | "family" | "luxury";
+export const audiences: { key: Audience; img: string }[] = [
+  { key: "parents", img: "/images/scene-play-indoor.jpg" },
+  { key: "grandparents", img: "/images/scene-grandparents-gift.jpg" },
+  { key: "family", img: "/images/scene-picnic.jpg" },
+  { key: "luxury", img: "/images/scene-collector-display.jpg" },
+];
+
 /** Real storefronts */
 export const AMAZON_STORE =
   "https://www.amazon.com/stores/KIDAMI/page/546B9750-2336-4B85-8F2F-2C57C2997542";
-export const WALMART_STORE = "https://www.walmart.com/ip/seort/20538824770";
+export const WALMART_STORE = "https://www.walmart.com/seller/10003181114";
 
 export function amazonCta(content: string): string {
   return `${AMAZON_STORE}?utm_source=kidami_site&utm_medium=cta&utm_campaign=brand_portal&utm_content=${content}`;
@@ -265,6 +274,13 @@ export const articles = [
     excerpt:
       "Pushing, steering and parking tiny cars is more than play — it's precision training for small hands and a first course in physics.",
     image: "/images/cars-open-doors.jpg",
+    body: [
+      "Watch a toddler with a die cast car and you'll see a tiny engineer at work. Gripping the body, aiming it at a ramp, steering around obstacles — every motion is a repetition that strengthens the small muscles of the hand and wrist. Occupational therapists call this fine motor practice, and it is the same foundation children later need for holding a pencil, using scissors and buttoning a coat.",
+      "Die cast metal cars add something plastic cars can't: real weight. The heft of a zinc-alloy body gives a child's hand richer sensory feedback, so the brain learns to calibrate grip pressure — squeeze too little and the car slips, too much and steering suffers. That constant, playful calibration is exactly how precise motor control develops.",
+      "Pull-back friction motors turn play into a first physics lesson. Children quickly discover cause and effect: pull further, go faster. They begin predicting distances, comparing which car travels furthest, and adjusting their technique — hypothesis, test, result. Without hearing the words, they are practicing the scientific method.",
+      "Opening doors, hoods and trunks invite a different kind of exploration: understanding how parts relate to wholes. Kids learn that mechanisms have order — a door opens outward, not upward — and they rehearse real-world schemas they see in the family car every day.",
+      "The simplest way to support this learning is to play alongside: build parking lots from blocks, draw roads with tape, sort cars by color or size, and narrate what your child is doing. The toy does the teaching; your attention makes it stick.",
+    ],
   },
   {
     slug: "family-game-night-magnetic-ludo",
@@ -274,6 +290,13 @@ export const articles = [
     excerpt:
       "Fifteen minutes, four players, zero screens. Here's the research on why simple race games create the strongest family rituals.",
     image: "/images/ludo-kids-play.jpg",
+    body: [
+      "Family therapists often point to shared rituals as the glue of strong families — and few rituals are easier to keep than a weekly game night. The best games for it share three traits: rules a six-year-old can explain, a play time under thirty minutes, and enough luck that kids regularly beat the adults.",
+      "Ludo checks every box. The rules fit on an index card, a round lasts fifteen to twenty minutes, and the dice keep every game winnable until the final stretch. That balance of luck and choice matters more than it seems: children stay engaged because victory is always possible, while adults stay engaged because the decisions — which pawn to move, when to play it safe — are genuinely interesting.",
+      "Underneath the laughter, a ludo board game is quiet training. Kids count spaces, weigh risks, practice waiting for their turn, and learn to lose without melting down. Psychologists call this emotional regulation, and research on play-based learning consistently finds that games teach it better than lectures ever could.",
+      "Why magnetic? Because family night doesn't always happen at home. A magnetic travel board game keeps its pieces exactly where they land — on a train tray, a restaurant table, or a blanket at the park. No lost pawns, no interrupted games, no 'we'll finish it later' that never happens.",
+      "Start simple: pick one evening, keep snacks easy, let the kids choose the game, and put every phone in another room. After a few weeks you won't be scheduling family night — your kids will be reminding you.",
+    ],
   },
   {
     slug: "travel-games-screen-free",
@@ -283,6 +306,13 @@ export const articles = [
     excerpt:
       "Magnetic pieces, folding boards and games under 30 minutes — the checklist for travel toys that get played with, not lost.",
     image: "/images/boardgame-gift.jpg",
+    body: [
+      "Every parent knows the pattern: you pack a bag of 'travel toys', and by the end of the trip half the pieces are under an airplane seat. The problem usually isn't the child — it's the toy. Travel play has its own rules, and most toys simply weren't designed for it.",
+      "The checklist is short. First, pieces must stay put: magnetic boards and pieces survive turbulence, bumpy back seats and wobbly café tables. Second, the game must fold small enough to disappear into a carry-on or glove box. Third, a round should finish in under thirty minutes, matching the real attention windows of travel — boarding calls, meal carts, and naps.",
+      "Games also beat screens on trips for a subtler reason: they keep kids connected to the people around them. A travel board game turns a delay into a shared memory instead of two hours of silent scrolling. Siblings negotiate, grandparents join in, and the journey itself becomes part of the vacation.",
+      "Our favorites for the road: a magnetic ludo board game for ages 6+, snakes and ladders for quick ten-minute rounds, and a small die cast car or two for imaginative play at rest stops. That kit weighs less than a tablet — and unlike a tablet, it never runs out of battery.",
+      "One practical tip: introduce the game at home before the trip. Kids who already know the rules reach for the game themselves, which is the difference between a toy that gets played with and one that gets packed home untouched.",
+    ],
   },
 ];
 

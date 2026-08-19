@@ -9,6 +9,7 @@ import { ProductDetail } from "./pages/ProductDetail";
 import { Explore } from "./pages/Explore";
 import { About } from "./pages/About";
 import { Learn } from "./pages/Learn";
+import { Article } from "./pages/Article";
 import { Contact } from "./pages/Contact";
 import { Privacy } from "./pages/Privacy";
 import { Terms } from "./pages/Terms";
@@ -29,6 +30,7 @@ const pages: { path: string; el: ReactElement }[] = [
   { path: "/explore", el: <Explore /> },
   { path: "/about", el: <About /> },
   { path: "/learn", el: <Learn /> },
+  { path: "/learn/:slug", el: <Article /> },
   { path: "/contact", el: <Contact /> },
   { path: "/privacy", el: <Privacy /> },
   { path: "/terms", el: <Terms /> },

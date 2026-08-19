@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { skills, amazonCta } from "../data/products";
+import { skills, amazonCta, WALMART_STORE } from "../data/products";
 import { useProduct } from "../hooks/useSupabaseData";
 import { ProductCard } from "../components/ProductCard";
 import { Icon, Stars } from "../components/Icon";
@@ -55,13 +55,22 @@ export function ProductDetail() {
               ratingValue: product.rating,
               reviewCount: productReviewCount(product),
             },
-            offers: {
-              "@type": "Offer",
-              url: amazonCta(product.slug),
-              availability: "https://schema.org/InStock",
-              seller: { "@type": "Organization", name: "Amazon" },
-              priceCurrency: "USD",
-            },
+            offers: [
+              {
+                "@type": "Offer",
+                url: amazonCta(product.slug),
+                availability: "https://schema.org/InStock",
+                seller: { "@type": "Organization", name: "Amazon" },
+                priceCurrency: "USD",
+              },
+              {
+                "@type": "Offer",
+                url: WALMART_STORE,
+                availability: "https://schema.org/InStock",
+                seller: { "@type": "Organization", name: "Walmart" },
+                priceCurrency: "USD",
+              },
+            ],
             review: d.reviews.slice(0, 3).map((r) => ({
               "@type": "Review",
               author: { "@type": "Person", name: r.name },
@@ -74,7 +83,7 @@ export function ProductDetail() {
   });
   useReveal();
 
-  if (productLoading) return <div className="pt-40 text-center text-brand-navy/50">Loading...</div>;
+  if (productLoading && !product) return <div className="pt-40 text-center text-brand-navy/50">Loading...</div>;
   if (!product) {
     return (
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-40 text-center">
@@ -91,7 +100,7 @@ export function ProductDetail() {
   const gallery = productGallery(product);
 
   return (
-    <div className="bg-brand-sand pt-24 lg:pt-28">
+    <div className="bg-brand-sand pt-28 lg:pt-32">
       <div className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         {/* breadcrumb */}
         <nav className="py-4 text-sm font-bold text-brand-navy/50" aria-label="Breadcrumb">
@@ -189,7 +198,7 @@ export function ProductDetail() {
                     {d.common.buyAmazon}
                   </a>
                   <a
-                    href={product.walmart_url}
+                    href={WALMART_STORE}
                     target="_blank"
                     rel="noopener noreferrer sponsored"
                     className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-brand-blue/30 px-7 py-2.5 font-display text-sm font-extrabold text-brand-blue transition-colors hover:border-brand-blue"

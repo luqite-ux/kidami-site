@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import { TABLES } from "../lib/supabase";
+import { products as staticProducts } from "../data/products";
 
 // Products
 export interface Product {
@@ -24,14 +25,23 @@ export interface Product {
 }
 
 export function useProducts(category?: string) {
-  const [products, setProducts] = useState<Product[]>([]);
+  // Seed with static catalog so pages render instantly; Supabase data replaces it.
+  const fallback = (category
+    ? staticProducts.filter((p) => p.category === category)
+    : staticProducts) as unknown as Product[];
+  const [products, setProducts] = useState<Product[]>(fallback);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const seed = (category
+      ? staticProducts.filter((p) => p.category === category)
+      : staticProducts) as unknown as Product[];
+    setProducts(seed);
+    setLoading(true);
     let q = supabase.from(TABLES.products).select("*").eq("is_active", true).order("sort_order");
     if (category) q = q.eq("category", category);
     q.then(({ data, error }) => {
-      if (!error && data) setProducts(data as Product[]);
+      if (!error && data && data.length > 0) setProducts(data as Product[]);
       setLoading(false);
     });
   }, [category]);
@@ -40,10 +50,14 @@ export function useProducts(category?: string) {
 }
 
 export function useProduct(slug: string) {
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<Product | null>(
+    () => (staticProducts.find((p) => p.slug === slug) as unknown as Product) ?? null
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setProduct((staticProducts.find((p) => p.slug === slug) as unknown as Product) ?? null);
+    setLoading(true);
     supabase
       .from(TABLES.products)
       .select("*")

@@ -34,7 +34,7 @@ export function Learn() {
           headline: a.title,
           description: a.excerpt,
           image: `https://kidami-ent.com${a.image}`,
-          url: `https://kidami-ent.com/learn#${a.slug}`,
+          url: `https://kidami-ent.com/learn/${a.slug}`,
         })),
       },
     ],
@@ -69,8 +69,9 @@ export function Learn() {
           {d.articles.map((a) => {
             const base = baseArticles.find((b) => b.slug === a.slug);
             return (
-              <article
+              <Link
                 key={a.slug}
+                to={`/learn/${a.slug}`}
                 className="reveal group flex flex-col overflow-hidden rounded-3xl bg-white shadow-soft transition-all hover:-translate-y-1.5 hover:shadow-lift"
               >
                 <div className="overflow-hidden">
@@ -95,7 +96,7 @@ export function Learn() {
                     <Icon name="arrow" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </div>
-              </article>
+              </Link>
             );
           })}
         </div>
