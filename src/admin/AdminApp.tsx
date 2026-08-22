@@ -12,11 +12,18 @@ import {
   type GeoSetting,
 } from "./hooks/useAdminData";
 import { langCodes, langNames } from "../i18n/core";
+import { supabase, TABLES } from "../lib/supabase";
+import {
+  isAdminSession,
+  passwordMatches,
+  setAdminSession,
+  setLocalPasswordHash,
+  getLocalPasswordHash,
+  SETTINGS_KEY,
+  sha256,
+} from "./auth";
 
-// 管理员密码 — 生产环境请通过 .env 设置
-const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "kidami2024";
-
-type Tab = "products" | "articles" | "reviews" | "seo" | "geo" | "settings";
+type Tab = "products" | "articles" | "reviews" | "seo" | "geo" | "settings" | "password";
 
 const tabs: { key: Tab; label: string; icon: string }[] = [
   { key: "products", label: "产品管理", icon: "🚗" },
@@ -25,21 +32,27 @@ const tabs: { key: Tab; label: string; icon: string }[] = [
   { key: "seo", label: "SEO 设置", icon: "🔍" },
   { key: "geo", label: "GEO 设置", icon: "📍" },
   { key: "settings", label: "站点设置", icon: "⚙️" },
+  { key: "password", label: "修改密码", icon: "🔐" },
 ];
 
 export default function AdminApp() {
   const [activeTab, setActiveTab] = useState<Tab>("products");
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("kidami_admin") === "1";
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(() => isAdminSession());
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (password === ADMIN_PASSWORD) {
-      localStorage.setItem("kidami_admin", "1");
+    const { data: res } = await supabase
+      .from(TABLES.siteSettings)
+      .select("value")
+      .eq("key", SETTINGS_KEY)
+      .maybeSingle();
+    const storedHash = res?.value || getLocalPasswordHash();
+    if (await passwordMatches(password, storedHash)) {
+      if (storedHash) setLocalPasswordHash(storedHash);
+      setAdminSession(true);
       setIsLoggedIn(true);
     } else {
       setError("密码错误，请重试");
@@ -47,7 +60,7 @@ export default function AdminApp() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("kidami_admin");
+    setAdminSession(false);
     setIsLoggedIn(false);
     setPassword("");
   };
@@ -118,6 +131,7 @@ export default function AdminApp() {
           {activeTab === "seo" && <SeoPanel />}
           {activeTab === "geo" && <GeoPanel />}
           {activeTab === "settings" && <SettingsPanel />}
+          {activeTab === "password" && <PasswordPanel />}
         </div>
       </main>
     </div>
@@ -832,10 +846,12 @@ function Field({ label, value, onChange }: { label: string; value: string; onCha
 // ======== 站点设置 ========
 function SettingsPanel() {
   const { data, update } = useSiteSettings();
+  const visible = Object.entries(data).filter(([key]) => key !== SETTINGS_KEY);
 
   return (
     <div className="space-y-4">
-      {Object.entries(data).map(([key, value]) => (
+      {visible.length === 0 && <p className="text-sm text-brand-navy/50">暂无站点配置</p>}
+      {visible.map(([key, value]) => (
         <div key={key} className="flex items-center gap-4 rounded-2xl bg-white p-4 shadow-soft">
           <div className="w-40 shrink-0">
             <p className="text-sm font-bold text-brand-navy">{key.replace(/_/g, " ")}</p>
@@ -845,5 +861,94 @@ function SettingsPanel() {
         </div>
       ))}
     </div>
+  );
+}
+
+function PasswordPanel() {
+  const { data, upsert } = useSiteSettings();
+  const [current, setCurrent] = useState("");
+  const [next, setNext] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [message, setMessage] = useState("");
+  const [ok, setOk] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMessage("");
+    setOk(false);
+    if (next.length < 6) {
+      setMessage("新密码至少 6 位");
+      return;
+    }
+    if (next !== confirm) {
+      setMessage("两次输入的新密码不一致");
+      return;
+    }
+    const storedHash = data[SETTINGS_KEY] || getLocalPasswordHash();
+    if (!(await passwordMatches(current, storedHash))) {
+      setMessage("当前密码不正确");
+      return;
+    }
+    setSaving(true);
+    const hash = await sha256(next);
+    setLocalPasswordHash(hash);
+    const synced = await upsert(SETTINGS_KEY, hash);
+    setSaving(false);
+    setOk(true);
+    setCurrent("");
+    setNext("");
+    setConfirm("");
+    setMessage(synced ? "管理员密码已更新，下次登录请使用新密码。" : "密码已在本浏览器更新。若数据库同步失败，其他设备仍可能使用旧密码。");
+  };
+
+  return (
+    <form onSubmit={handleSave} className="max-w-lg space-y-4 rounded-3xl bg-white p-8 shadow-soft">
+      <p className="text-sm leading-relaxed text-brand-navy/60">
+        修改后立即生效。请妥善保管新密码；默认初始密码来自环境变量，改过之后以这里保存的为准。
+      </p>
+      <div>
+        <label className="text-sm font-extrabold text-brand-navy">当前密码</label>
+        <input
+          type="password"
+          required
+          value={current}
+          onChange={(e) => setCurrent(e.target.value)}
+          className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-3 text-sm focus:border-brand-blue focus:outline-none"
+        />
+      </div>
+      <div>
+        <label className="text-sm font-extrabold text-brand-navy">新密码</label>
+        <input
+          type="password"
+          required
+          minLength={6}
+          value={next}
+          onChange={(e) => setNext(e.target.value)}
+          className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-3 text-sm focus:border-brand-blue focus:outline-none"
+          placeholder="至少 6 位"
+        />
+      </div>
+      <div>
+        <label className="text-sm font-extrabold text-brand-navy">确认新密码</label>
+        <input
+          type="password"
+          required
+          value={confirm}
+          onChange={(e) => setConfirm(e.target.value)}
+          className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-3 text-sm focus:border-brand-blue focus:outline-none"
+        />
+      </div>
+      {message && (
+        <p className={`text-sm font-bold ${ok ? "text-brand-green" : "text-red-500"}`}>{message}</p>
+      )}
+      <button
+        type="submit"
+        disabled={saving}
+        className="rounded-full bg-brand-navy px-8 py-3 font-display font-bold text-white shadow-soft transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+      >
+        {saving ? "保存中..." : "保存新密码"}
+      </button>
+    </form>
   );
 }

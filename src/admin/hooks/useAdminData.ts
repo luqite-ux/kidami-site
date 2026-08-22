@@ -225,6 +225,21 @@ export function useSiteSettings() {
     return !error;
   }, []);
 
+  const upsert = useCallback(async (key: string, value: string) => {
+    const { data: existing } = await supabase.from(TABLES.siteSettings).select("key").eq("key", key).maybeSingle();
+    if (existing) {
+      const ok = await update(key, value);
+      return ok;
+    }
+    const { error } = await supabase.from(TABLES.siteSettings).insert({
+      key,
+      value,
+      description: "Admin password hash",
+    });
+    if (!error) setData((prev) => ({ ...prev, [key]: value }));
+    return !error;
+  }, [update]);
+
   useEffect(() => { fetch(); }, [fetch]);
-  return { data, fetch, update };
+  return { data, fetch, update, upsert };
 }
