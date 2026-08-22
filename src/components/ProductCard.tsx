@@ -1,9 +1,9 @@
 import { Link, useLang } from "../i18n/core";
 import type { Product } from "../data/products";
 import type { Product as SupaProduct } from "../hooks/useSupabaseData";
-import { amazonCta } from "../data/products";
-import { productBadges, productImage, productPriceHint, productReviewCount } from "../lib/productFields";
-import { Icon, Stars } from "./Icon";
+import { StoreButtons } from "./StoreButtons";
+import { productBadges, productImage, productReviewCount } from "../lib/productFields";
+import { Stars } from "./Icon";
 
 export function ProductCard({ product }: { product: Product | SupaProduct }) {
   const { d } = useLang();
@@ -54,17 +54,8 @@ export function ProductCard({ product }: { product: Product | SupaProduct }) {
           ))}
         </div>
 
-        <div className="mt-auto flex items-center justify-between pt-5">
-          <span className="text-sm font-extrabold text-brand-navy">{productPriceHint(product)}</span>
-          <a
-            href={amazonCta(product.slug)}
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="inline-flex items-center gap-1.5 rounded-full bg-brand-orange px-4 py-2 text-xs font-extrabold text-white transition-transform hover:scale-105"
-          >
-            <Icon name="cart" className="h-3.5 w-3.5" />
-            {d.common.buyAmazon}
-          </a>
+        <div className="mt-auto pt-5">
+          <StoreButtons content={`card-${product.slug}`} size="sm" />
         </div>
       </div>
     </article>

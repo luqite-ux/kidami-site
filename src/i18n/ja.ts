@@ -8,6 +8,7 @@ export const ja: Dict = {
     learn: "STEM・学び",
     about: "私たちの物語",
     contact: "ヘルプセンター",
+    faq: "FAQ",
     buy: "Amazonで購入",
     search: "検索",
     searchPh: "ミニカー、ボードゲームを検索…",
@@ -15,7 +16,7 @@ export const ja: Dict = {
     soon: "近日公開",
     langNote: "言語をお選びください — サイト全体が10か国語に対応しています。",
   },
-  topBar: ["EN71 · ASTM F963認証", "正規品保証", "30日間簡単返品"],
+  topBar: ["EN71 · ASTM F963認証", "正規品保証", "Amazon / Walmartで30日返品"],
   footer: {
     tagline: "子ども時代の友であり、思い出の番人。上質なダイキャストメタルの玩具車と教育用マグネットボードゲームを、2016年から丁寧に作り続けています。",
     badges: ["ASTM F963", "CPC認証", "BPAフリー"],
@@ -29,6 +30,7 @@ export const ja: Dict = {
     discoverStory: "私たちの物語",
     discoverLearn: "STEM・学び",
     discoverContact: "お問い合わせ・ご感想",
+    discoverFaq: "FAQ",
     newsTitle: "最新情報を受け取る",
     newsText: "新商品、遊びのアイデア、子育てのコツ — 月1回、スパムなし。",
     newsPlaceholder: "メールアドレス",
@@ -301,6 +303,74 @@ export const ja: Dict = {
       { q: "おもちゃが壊れたり、破損して届いた場合は?", a: "すべての商品は工場を出る前に個別検査されています。万が一品質問題があれば、私たちまたはマーケットプレイスのカスタマーサービスにご連絡ください。問答無用で交換または返金いたします。" },
       { q: "車に電池は必要ですか?", a: "いいえ。すべてのKIDAMIダイキャストカーはプルバック摩擦モーターを使用 — 引いて、離せば、走ります。電池も充電も音もありません。" },
       { q: "ボードゲームは旅行に適していますか?", a: "まさにそのために設計されています。ボードは平らに折りたため、マグネットのピースは飛行機、電車、レストランのテーブルでもずれません。" },
+    ],
+  },
+  faqPage: {
+    eyebrow: "Help Center",
+    title: "FAQ",
+    sub: "Materials, size, age, after-sales, buying tips, certificates and common questions — search or browse by topic.",
+    searchPh: "Search materials, size, age, returns, certificates…",
+    catAll: "All topics",
+    noMatch: "No matching answers. Try another keyword, or shop on Amazon / Walmart.",
+    shopTitle: "Need to order?",
+    shopText: "Official listings with tracking and returns live on Amazon and Walmart.",
+    sections: [
+      {
+        key: "materials",
+        title: "Materials",
+        items: [
+          { q: "What are the cars made of?", a: "KIDAMI die-cast cars use zinc-alloy metal bodies with durable, BPA-free plastic details. Paint is chip-resistant for everyday play." },
+          { q: "Are the board games magnetic?", a: "Yes. Travel games use magnetic pieces and folding boards so they stay in place on planes, trains and restaurant tables." },
+        ],
+      },
+      {
+        key: "size",
+        title: "Size",
+        items: [
+          { q: "How big are the die-cast cars?", a: "Most cars are 1:64 scale — pocket-sized for small hands, gift boxes and travel bags. Exact measurements are listed on each product page and Amazon / Walmart listing." },
+          { q: "Do the board games fold?", a: "Yes. Boards fold flat for backpacks and carry-on luggage." },
+        ],
+      },
+      {
+        key: "age",
+        title: "Age",
+        items: [
+          { q: "What age are the toy cars for?", a: "Die-cast cars are designed for ages 3+. Pull-back motors need no batteries." },
+          { q: "What age are the board games for?", a: "Magnetic games such as Ludo and Snakes & Ladders are designed for ages 6+." },
+        ],
+      },
+      {
+        key: "aftersales",
+        title: "After-sales",
+        items: [
+          { q: "How do returns work?", a: "30-day returns via Amazon / Walmart — use the order page on the store where you purchased. Marketplace support is available 24/7 for shipping and refunds." },
+          { q: "What if a toy arrives damaged?", a: "Contact Amazon or Walmart customer service for the order, or email support@kidami-ent.com. We inspect every unit before it ships." },
+        ],
+      },
+      {
+        key: "buying",
+        title: "Buying tips",
+        items: [
+          { q: "Where should I buy?", a: "Buy from the official Amazon store or Walmart seller page using the buttons on this site — that keeps tracking, returns and authentic product protection." },
+          { q: "Cars or board games as a first gift?", a: "Ages 3–5: start with die-cast cars. Ages 6+: magnetic board games are great for travel and family nights. Use the Products page to filter by type." },
+        ],
+      },
+      {
+        key: "certificates",
+        title: "Certificates",
+        items: [
+          { q: "Which safety standards do you meet?", a: "Products are tested to ASTM F963 and issued CPC certificates by accredited labs. Certificate copies can be requested at support@kidami-ent.com." },
+          { q: "Where can I view certificates?", a: "Email support@kidami-ent.com with the product name or Amazon / Walmart order ID and we will send the matching lab report." },
+        ],
+      },
+      {
+        key: "common",
+        title: "Common questions",
+        items: [
+          { q: "Do the cars need batteries?", a: "No. Pull back, release, and they go." },
+          { q: "Is this the official KIDAMI site?", a: "Yes. kidami-ent.com is the brand site. Shopping and returns happen on Amazon and Walmart." },
+        ],
+      },
     ],
   },
   skills: {

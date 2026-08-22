@@ -8,6 +8,7 @@ export const pt: Dict = {
     learn: "STEM e Aprendizagem",
     about: "Nossa História",
     contact: "Central de Ajuda",
+    faq: "FAQ",
     buy: "Comprar na Amazon",
     search: "Buscar",
     searchPh: "Busque carrinhos, jogos de tabuleiro…",
@@ -15,7 +16,7 @@ export const pt: Dict = {
     soon: "Em breve",
     langNote: "Escolha seu idioma — todo o site está disponível em 10 idiomas.",
   },
-  topBar: ["Certificado EN71 · ASTM F963", "Garantia de Produto Original", "Devolução Fácil em 30 Dias"],
+  topBar: ["Certificado EN71 · ASTM F963", "Garantia de Produto Original", "Devolução em 30 dias via Amazon / Walmart"],
   footer: {
     tagline:
       "Um companheiro da infância, um guardião de memórias. Carrinhos de metal fundido premium e jogos de tabuleiro magnéticos educativos, feitos com carinho desde 2016.",
@@ -30,6 +31,7 @@ export const pt: Dict = {
     discoverStory: "Nossa História",
     discoverLearn: "STEM e Aprendizagem",
     discoverContact: "Contato e Feedback",
+    discoverFaq: "FAQ",
     newsTitle: "Fique por dentro",
     newsText: "Lançamentos, ideias de brincadeiras e dicas para pais — uma vez por mês, sem spam.",
     newsPlaceholder: "Seu e-mail",
@@ -310,6 +312,74 @@ export const pt: Dict = {
       { q: "E se um brinquedo quebrar ou chegar danificado?", a: "Cada produto é inspecionado individualmente antes de sair da fábrica. Se um problema de qualidade escapar, fale conosco ou com o atendimento da plataforma para substituição ou reembolso sem perguntas." },
       { q: "Os carrinhos precisam de pilhas?", a: "Não. Todos os carrinhos de metal KIDAMI usam motor de fricção — puxe para trás, solte e eles correm. Sem pilhas, sem recarga, sem barulho." },
       { q: "Os jogos de tabuleiro são bons para viagem?", a: "É exatamente para isso que foram projetados. Os tabuleiros dobram-se planos e as peças magnéticas ficam no lugar em aviões, trens e mesas de restaurante." },
+    ],
+  },
+  faqPage: {
+    eyebrow: "Help Center",
+    title: "FAQ",
+    sub: "Materials, size, age, after-sales, buying tips, certificates and common questions — search or browse by topic.",
+    searchPh: "Search materials, size, age, returns, certificates…",
+    catAll: "All topics",
+    noMatch: "No matching answers. Try another keyword, or shop on Amazon / Walmart.",
+    shopTitle: "Need to order?",
+    shopText: "Official listings with tracking and returns live on Amazon and Walmart.",
+    sections: [
+      {
+        key: "materials",
+        title: "Materials",
+        items: [
+          { q: "What are the cars made of?", a: "KIDAMI die-cast cars use zinc-alloy metal bodies with durable, BPA-free plastic details. Paint is chip-resistant for everyday play." },
+          { q: "Are the board games magnetic?", a: "Yes. Travel games use magnetic pieces and folding boards so they stay in place on planes, trains and restaurant tables." },
+        ],
+      },
+      {
+        key: "size",
+        title: "Size",
+        items: [
+          { q: "How big are the die-cast cars?", a: "Most cars are 1:64 scale — pocket-sized for small hands, gift boxes and travel bags. Exact measurements are listed on each product page and Amazon / Walmart listing." },
+          { q: "Do the board games fold?", a: "Yes. Boards fold flat for backpacks and carry-on luggage." },
+        ],
+      },
+      {
+        key: "age",
+        title: "Age",
+        items: [
+          { q: "What age are the toy cars for?", a: "Die-cast cars are designed for ages 3+. Pull-back motors need no batteries." },
+          { q: "What age are the board games for?", a: "Magnetic games such as Ludo and Snakes & Ladders are designed for ages 6+." },
+        ],
+      },
+      {
+        key: "aftersales",
+        title: "After-sales",
+        items: [
+          { q: "How do returns work?", a: "30-day returns via Amazon / Walmart — use the order page on the store where you purchased. Marketplace support is available 24/7 for shipping and refunds." },
+          { q: "What if a toy arrives damaged?", a: "Contact Amazon or Walmart customer service for the order, or email support@kidami-ent.com. We inspect every unit before it ships." },
+        ],
+      },
+      {
+        key: "buying",
+        title: "Buying tips",
+        items: [
+          { q: "Where should I buy?", a: "Buy from the official Amazon store or Walmart seller page using the buttons on this site — that keeps tracking, returns and authentic product protection." },
+          { q: "Cars or board games as a first gift?", a: "Ages 3–5: start with die-cast cars. Ages 6+: magnetic board games are great for travel and family nights. Use the Products page to filter by type." },
+        ],
+      },
+      {
+        key: "certificates",
+        title: "Certificates",
+        items: [
+          { q: "Which safety standards do you meet?", a: "Products are tested to ASTM F963 and issued CPC certificates by accredited labs. Certificate copies can be requested at support@kidami-ent.com." },
+          { q: "Where can I view certificates?", a: "Email support@kidami-ent.com with the product name or Amazon / Walmart order ID and we will send the matching lab report." },
+        ],
+      },
+      {
+        key: "common",
+        title: "Common questions",
+        items: [
+          { q: "Do the cars need batteries?", a: "No. Pull back, release, and they go." },
+          { q: "Is this the official KIDAMI site?", a: "Yes. kidami-ent.com is the brand site. Shopping and returns happen on Amazon and Walmart." },
+        ],
+      },
     ],
   },
   skills: {

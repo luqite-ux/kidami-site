@@ -14,6 +14,7 @@ import { Contact } from "./pages/Contact";
 import { Privacy } from "./pages/Privacy";
 import { Terms } from "./pages/Terms";
 import { NotFound } from "./pages/NotFound";
+import { Faq } from "./pages/Faq";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -32,6 +33,7 @@ const pages: { path: string; el: ReactElement }[] = [
   { path: "/learn", el: <Learn /> },
   { path: "/learn/:slug", el: <Article /> },
   { path: "/contact", el: <Contact /> },
+  { path: "/faq", el: <Faq /> },
   { path: "/privacy", el: <Privacy /> },
   { path: "/terms", el: <Terms /> },
 ];

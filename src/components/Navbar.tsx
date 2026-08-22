@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Link, NavLink, useLang, langCodes, langNames, stripLang, withLang, type LangCode } from "../i18n/core";
 import { Icon } from "./Icon";
 import { AMAZON_STORE } from "../data/products";
+import { StoreButtons } from "./StoreButtons";
 
 function LanguageMenu() {
   const [open, setOpen] = useState(false);
@@ -72,7 +73,12 @@ function SearchBox({ className = "", onDone }: { className?: string; onDone?: ()
   const submit = (e: FormEvent) => {
     e.preventDefault();
     const query = q.trim();
-    navigate(withLang(query ? `/products?q=${encodeURIComponent(query)}` : "/products", lang));
+    const faqHit = /faq|return|age|size|material|certificat|售后|材质|尺寸|年龄/i.test(query);
+    if (faqHit) {
+      navigate(withLang(query ? `/faq?q=${encodeURIComponent(query)}` : "/faq", lang));
+    } else {
+      navigate(withLang(query ? `/products?q=${encodeURIComponent(query)}` : "/products", lang));
+    }
     setQ("");
     onDone?.();
   };
@@ -102,6 +108,7 @@ export function Navbar() {
     { to: "/products", label: d.nav.products },
     { to: "/explore", label: d.nav.inspiration },
     { to: "/learn", label: d.nav.learn },
+    { to: "/faq", label: d.nav.faq },
     { to: "/about", label: d.nav.about },
     { to: "/contact", label: d.nav.contact },
   ];
@@ -153,15 +160,24 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <SearchBox className="hidden w-44 lg:w-56 xl:block" />
+            <SearchBox className="hidden w-40 md:flex lg:w-56" />
+            <Link
+              to="/faq"
+              className="hidden rounded-full px-3 py-2 text-sm font-extrabold text-brand-navy/70 hover:bg-brand-sky hover:text-brand-navy lg:inline-flex"
+            >
+              {d.nav.faq}
+            </Link>
             <div className="hidden sm:block">
               <LanguageMenu />
+            </div>
+            <div className="hidden w-64 xl:block">
+              <StoreButtons content="nav" size="sm" />
             </div>
             <a
               href={AMAZON_STORE}
               target="_blank"
               rel="noopener noreferrer sponsored"
-              className="hidden items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 text-sm font-extrabold text-white shadow-soft transition-transform hover:-translate-y-0.5 hover:shadow-lift sm:inline-flex"
+              className="hidden items-center gap-2 rounded-full bg-brand-orange px-4 py-2.5 text-sm font-extrabold text-white shadow-soft xl:hidden sm:inline-flex"
             >
               <Icon name="cart" className="h-4 w-4" />
               {d.nav.buy}
@@ -195,15 +211,7 @@ export function Navbar() {
           <div className="mt-2 flex justify-center">
             <LanguageMenu />
           </div>
-          <a
-            href={AMAZON_STORE}
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-brand-orange px-4 py-3 font-extrabold text-white"
-          >
-            <Icon name="cart" className="h-4 w-4" />
-            {d.nav.buy}
-          </a>
+          <StoreButtons content="nav-mobile" className="mt-3" />
         </nav>
       )}
     </header>

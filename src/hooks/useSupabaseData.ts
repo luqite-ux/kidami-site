@@ -111,6 +111,7 @@ export interface Review {
   stars: number;
   text: string;
   product_name: string;
+  image_url?: string;
 }
 
 export function useReviews() {

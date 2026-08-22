@@ -1,20 +1,18 @@
-import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
 import { Link, useLang, withLang } from "../i18n/core";
-import { products, audiences, WALMART_STORE, amazonCta } from "../data/products";
+import { products, audiences, amazonCta, WALMART_STORE } from "../data/products";
 import { ProductCard } from "../components/ProductCard";
+import { StoreButtons } from "../components/StoreButtons";
 import { Icon, Stars } from "../components/Icon";
 import { useSeo } from "../lib/seo";
 import { useReveal } from "../lib/reveal";
+import { useReviews } from "../hooks/useSupabaseData";
 
-const trustIcons = ["shield", "family", "leaf", "check"];
 const beliefIcons = ["shield", "metal", "award"];
 
 export function Home() {
   const { lang, d } = useLang();
   const h = d.home;
-  const navigate = useNavigate();
-  const [q, setQ] = useState("");
+  const liveReviews = useReviews();
 
   useSeo({
     title:
@@ -100,107 +98,50 @@ export function Home() {
   });
   useReveal();
 
-  const onSearch = (e: FormEvent) => {
-    e.preventDefault();
-    const query = q.trim();
-    navigate(withLang(query ? `/products?q=${encodeURIComponent(query)}` : "/products", lang));
-  };
-
   const hot = [products[0], products[1], products[2], products[3]];
+  const reviewPhotos = [
+    "/images/scene-play-indoor.jpg",
+    "/images/scene-family-table.jpg",
+    "/images/scene-picnic.jpg",
+    "/images/scene-grandparents-gift.jpg",
+  ];
+  const displayReviews =
+    liveReviews.length > 0
+      ? liveReviews.slice(0, 4).map((r, i) => ({
+          name: r.name,
+          stars: r.stars,
+          text: r.text,
+          product: r.product_name,
+          photo: r.image_url || reviewPhotos[i % reviewPhotos.length],
+        }))
+      : d.reviews.map((r, i) => ({
+          ...r,
+          photo: reviewPhotos[i % reviewPhotos.length],
+        }));
+  const avgRating =
+    displayReviews.reduce((sum, r) => sum + r.stars, 0) / Math.max(displayReviews.length, 1);
 
   return (
     <>
-      {/* ============ HERO: full-bleed image + slogan + search + CTA ============ */}
-      <section className="relative overflow-hidden pt-36 pb-20 lg:pt-48 lg:pb-28">
+      {/* ============ HERO: slogan only — search lives in the top bar ============ */}
+      <section className="relative overflow-hidden pt-36 pb-24 lg:pt-48 lg:pb-32">
         <img
           src="/images/scene-family-table.jpg"
           alt={h.hero.imgAlt}
           fetchPriority="high"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-ink/85 via-brand-ink/60 to-brand-ink/25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-ink/80 via-brand-ink/45 to-brand-ink/15" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest text-white backdrop-blur">
-              <Icon name="shield" className="h-4 w-4 text-brand-yellow" />
-              {h.hero.badge}
-            </div>
-            <h1 className="mt-6 font-display text-5xl font-extrabold leading-[1.08] tracking-tight text-white text-balance sm:text-6xl">
+          <div className="max-w-xl">
+            <h1 className="font-display text-5xl font-extrabold leading-[1.08] tracking-tight text-white text-balance sm:text-6xl">
               {h.hero.titleA} <span className="text-brand-yellow">{h.hero.titleB}</span>
               <br />
               {h.hero.titleC} <span className="text-brand-yellow">{h.hero.titleD}</span>
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/80">{h.hero.subtitle}</p>
-
-            {/* search */}
-            <form onSubmit={onSearch} role="search" className="mt-8 flex max-w-lg overflow-hidden rounded-full bg-white p-1.5 shadow-lift">
-              <input
-                type="search"
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder={d.nav.searchPh}
-                aria-label={d.nav.search}
-                className="w-full bg-transparent px-5 text-sm font-bold text-brand-navy placeholder:text-brand-navy/40 focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="inline-flex shrink-0 items-center gap-2 rounded-full bg-brand-orange px-6 py-3 font-display text-sm font-extrabold text-white transition-transform hover:scale-105"
-              >
-                <Icon name="search" className="h-4 w-4" />
-                {d.nav.search}
-              </button>
-            </form>
-
-            {/* dual CTA + stores */}
-            <div className="mt-6 flex flex-wrap items-center gap-4">
-              <Link
-                to="/explore"
-                className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 font-display text-base font-bold text-brand-navy shadow-lift transition-transform hover:-translate-y-0.5"
-              >
-                {h.hero.ctaExplore}
-              </Link>
-              <Link
-                to="/products"
-                className="inline-flex items-center gap-2 rounded-full bg-brand-orange px-7 py-3.5 font-display text-base font-bold text-white shadow-lift transition-transform hover:-translate-y-0.5"
-              >
-                {h.hero.ctaBrowse}
-                <Icon name="arrow" className="h-4 w-4" />
-              </Link>
-            </div>
-            <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3">
-              <a
-                href={amazonCta("hero")}
-                target="_blank"
-                rel="noopener noreferrer sponsored"
-                className="flex items-center gap-2 text-sm font-bold text-white/85 transition-colors hover:text-brand-yellow"
-              >
-                <Stars rating={5} className="h-4 w-4" />
-                {h.hero.ratingAmazon} · {h.hero.ratingReviews}
-              </a>
-              <a
-                href={WALMART_STORE}
-                target="_blank"
-                rel="noopener noreferrer sponsored"
-                className="flex items-center gap-1.5 text-sm font-bold text-white/70 transition-colors hover:text-brand-yellow"
-              >
-                <Icon name="cart" className="h-4 w-4" />
-                {h.hero.alsoWalmart}
-                <Icon name="arrow" className="h-3.5 w-3.5" />
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* trust strip */}
-        <div className="relative mt-14 border-t border-white/15 bg-brand-ink/40 backdrop-blur">
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-4 py-4 sm:px-6 lg:px-8">
-            {h.trust.map((text, i) => (
-              <div key={text} className="flex items-center gap-2 text-sm font-bold text-white/85">
-                <Icon name={trustIcons[i]} className="h-4 w-4 text-brand-yellow" />
-                {text}
-              </div>
-            ))}
+            <p className="mt-5 max-w-md text-lg leading-relaxed text-white/80">{h.hero.subtitle}</p>
+            <StoreButtons content="home-hero" className="mt-8 max-w-md" />
           </div>
         </div>
       </section>
@@ -231,19 +172,24 @@ export function Home() {
             <h2 className="mt-3 font-display text-4xl font-extrabold text-brand-navy sm:text-5xl text-balance">
               {h.reviewsSec.title}
             </h2>
-            <p className="mt-4 text-brand-navy/60">{h.reviewsSec.sub}</p>
+            <p className="mt-4 text-brand-navy/60">
+              {h.reviewsSec.sub} · {avgRating.toFixed(1)} / 5
+            </p>
           </div>
           <div className="reveal mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {d.reviews.map((r) => (
-              <figure key={r.name} className="flex flex-col rounded-3xl border border-brand-navy/8 bg-white p-6 shadow-soft">
-                <Stars rating={r.stars} />
-                <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-brand-navy/75">
-                  “{r.text}”
-                </blockquote>
-                <figcaption className="mt-5 border-t border-brand-navy/8 pt-4">
-                  <p className="text-sm font-extrabold text-brand-navy">{r.name}</p>
-                  <p className="mt-0.5 text-xs text-brand-navy/50">{d.common.verified} · {r.product}</p>
-                </figcaption>
+            {displayReviews.map((r) => (
+              <figure key={r.name + r.product} className="flex flex-col overflow-hidden rounded-3xl border border-brand-navy/8 bg-white shadow-soft">
+                <img src={r.photo} alt="" className="h-36 w-full object-cover" loading="lazy" />
+                <div className="flex flex-1 flex-col p-6">
+                  <Stars rating={r.stars} />
+                  <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-brand-navy/75">
+                    “{r.text}”
+                  </blockquote>
+                  <figcaption className="mt-5 border-t border-brand-navy/8 pt-4">
+                    <p className="text-sm font-extrabold text-brand-navy">{r.name}</p>
+                    <p className="mt-0.5 text-xs text-brand-navy/50">{d.common.verified} · {r.product}</p>
+                  </figcaption>
+                </div>
               </figure>
             ))}
           </div>
@@ -263,9 +209,11 @@ export function Home() {
           {audiences.map((a, i) => {
             const card = h.audiences.cards[i];
             return (
-              <Link
+              <a
                 key={a.key}
-                to={`/products?for=${a.key}`}
+                href={amazonCta(`audience-${a.key}`)}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
                 className="group overflow-hidden rounded-3xl bg-white shadow-soft transition-all hover:-translate-y-1.5 hover:shadow-lift"
               >
                 <div className="overflow-hidden">
@@ -291,7 +239,7 @@ export function Home() {
                     <Icon name="arrow" className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                   </span>
                 </div>
-              </Link>
+              </a>
             );
           })}
         </div>

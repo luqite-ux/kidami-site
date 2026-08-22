@@ -19,6 +19,10 @@ export function amazonCta(content: string): string {
   return `${AMAZON_STORE}?utm_source=kidami_site&utm_medium=cta&utm_campaign=brand_portal&utm_content=${content}`;
 }
 
+export function walmartCta(content: string): string {
+  return `${WALMART_STORE}?utm_source=kidami_site&utm_medium=cta&utm_campaign=brand_portal&utm_content=${content}`;
+}
+
 export interface SkillInfo {
   key: Skill;
   name: string;

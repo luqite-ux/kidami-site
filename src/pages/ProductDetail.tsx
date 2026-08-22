@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { skills, amazonCta, WALMART_STORE } from "../data/products";
+import { skills, amazonCta, walmartCta } from "../data/products";
+import { StoreButtons } from "../components/StoreButtons";
 import { useProduct } from "../hooks/useSupabaseData";
 import { ProductCard } from "../components/ProductCard";
 import { Icon, Stars } from "../components/Icon";
@@ -65,7 +66,7 @@ export function ProductDetail() {
               },
               {
                 "@type": "Offer",
-                url: WALMART_STORE,
+                url: walmartCta(product.slug),
                 availability: "https://schema.org/InStock",
                 seller: { "@type": "Organization", name: "Walmart" },
                 priceCurrency: "USD",
@@ -187,24 +188,8 @@ export function ProductDetail() {
                   <p className="text-xs font-bold uppercase tracking-wider text-brand-navy/40">{dt.typicalPrice}</p>
                   <p className="font-display text-2xl font-extrabold text-brand-navy">{productPriceHint(product)}</p>
                 </div>
-                <div className="flex flex-col gap-2.5">
-                  <a
-                    href={amazonCta(product.slug)}
-                    target="_blank"
-                    rel="noopener noreferrer sponsored"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-orange px-7 py-3.5 font-display font-extrabold text-white shadow-lift transition-transform hover:-translate-y-0.5"
-                  >
-                    <Icon name="cart" className="h-5 w-5" />
-                    {d.common.buyAmazon}
-                  </a>
-                  <a
-                    href={WALMART_STORE}
-                    target="_blank"
-                    rel="noopener noreferrer sponsored"
-                    className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-brand-blue/30 px-7 py-2.5 font-display text-sm font-extrabold text-brand-blue transition-colors hover:border-brand-blue"
-                  >
-                    {d.common.alsoWalmart}
-                  </a>
+                <div className="w-full sm:w-auto sm:min-w-[280px]">
+                  <StoreButtons content={`pdp-${product.slug}`} />
                 </div>
               </div>
               <p className="mt-4 flex items-center gap-2 text-xs font-bold text-brand-navy/50">
@@ -267,15 +252,7 @@ export function ProductDetail() {
 
       {/* mobile sticky CTA */}
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-brand-navy/10 bg-white/95 p-3 backdrop-blur lg:hidden">
-        <a
-          href={amazonCta(product.slug)}
-          target="_blank"
-          rel="noopener noreferrer sponsored"
-          className="flex items-center justify-center gap-2 rounded-full bg-brand-orange py-3.5 font-display font-extrabold text-white"
-        >
-          <Icon name="cart" className="h-5 w-5" />
-          {d.common.buyAmazon} · {productPriceHint(product)}
-        </a>
+        <StoreButtons content={`pdp-sticky-${product.slug}`} />
       </div>
     </div>
   );

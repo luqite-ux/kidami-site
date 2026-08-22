@@ -117,20 +117,42 @@ export function Products() {
             {pp.title}
           </h1>
           <p className="mt-4 text-lg text-brand-navy/60">{pp.sub}</p>
-          {q && (
-            <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-sky px-4 py-2 text-sm font-extrabold text-brand-navy">
-              <Icon name="search" className="h-4 w-4" />
-              {pp.resultsFor} “{params.get("q")}”
-              <button
-                onClick={() => setParam("q", null)}
-                aria-label="Clear search"
-                className="ml-1 rounded-full px-1 text-brand-navy/40 hover:text-brand-navy"
-              >
-                ✕
-              </button>
-            </p>
-          )}
         </div>
+
+        <div className="mt-10 grid gap-5 sm:grid-cols-2">
+          {[
+            { key: "cars" as const, label: pp.catCars, img: "/images/scene-play-indoor.jpg" },
+            { key: "games" as const, label: pp.catGames, img: "/images/scene-picnic.jpg" },
+          ].map((c) => (
+            <button
+              key={c.key}
+              onClick={() => setParam("cat", cat === c.key ? null : c.key)}
+              className={`group overflow-hidden rounded-[2rem] text-left shadow-soft transition-all hover:-translate-y-1 ${
+                cat === c.key ? "ring-4 ring-brand-orange" : "bg-white"
+              }`}
+            >
+              <img src={c.img} alt="" className="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div className="bg-white p-5">
+                <p className="font-display text-xl font-extrabold text-brand-navy">{c.label}</p>
+                <p className="mt-1 text-sm font-bold text-brand-navy/50">{pp.bySkill}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {q && (
+          <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-sky px-4 py-2 text-sm font-extrabold text-brand-navy">
+            <Icon name="search" className="h-4 w-4" />
+            {pp.resultsFor} “{params.get("q")}”
+            <button
+              onClick={() => setParam("q", null)}
+              aria-label="Clear search"
+              className="ml-1 rounded-full px-1 text-brand-navy/40 hover:text-brand-navy"
+            >
+              ✕
+            </button>
+          </p>
+        )}
 
         {/* category filter */}
         <div className="mt-10 flex flex-wrap gap-3" role="tablist" aria-label="Product categories">
@@ -182,12 +204,6 @@ export function Products() {
         {list.length === 0 && (
           <p className="mt-16 text-center text-brand-navy/50">{pp.noMatch}</p>
         )}
-
-        <div className="reveal mt-16 flex flex-col items-center gap-4 rounded-[2rem] bg-brand-sky p-8 text-center sm:p-10">
-          <Icon name="shield" className="h-8 w-8 text-brand-blue" />
-          <h2 className="font-display text-2xl font-extrabold text-brand-navy">{pp.certTitle}</h2>
-          <p className="max-w-xl text-sm leading-relaxed text-brand-navy/60">{pp.certText}</p>
-        </div>
       </div>
     </div>
   );
