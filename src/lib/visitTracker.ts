@@ -57,19 +57,24 @@ export function VisitTracker() {
     const referrer = document.referrer || "";
     const path = (location.pathname + location.search).slice(0, 240);
 
-    const t = window.setTimeout(() => {
-      void supabase.from(TABLES.visits).insert({
-        path,
-        referrer: referrer.slice(0, 400),
-        source: classifySource(referrer, utm_source),
-        utm_source,
-        utm_medium,
-        utm_campaign,
-        session_id: sessionId(),
-      });
-    }, 400);
+    const send = () => {
+      void supabase
+        .from(TABLES.visits)
+        .insert({
+          path,
+          referrer: referrer.slice(0, 400),
+          source: classifySource(referrer, utm_source),
+          utm_source,
+          utm_medium,
+          utm_campaign,
+          session_id: sessionId(),
+        })
+        .then(({ error }) => {
+          if (error) console.warn("[KIDAMI stats]", error.message);
+        });
+    };
 
-    return () => window.clearTimeout(t);
+    send();
   }, [location.pathname, location.search]);
 
   return null;
