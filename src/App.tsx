@@ -15,6 +15,7 @@ import { Privacy } from "./pages/Privacy";
 import { Terms } from "./pages/Terms";
 import { NotFound } from "./pages/NotFound";
 import { Faq } from "./pages/Faq";
+import { VisitTracker } from "./lib/visitTracker";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -52,6 +53,7 @@ export default function App() {
   return (
     <LangProvider>
       <ScrollToTop />
+      <VisitTracker />
       <Navbar />
       <main>
         <Routes>

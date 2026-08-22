@@ -15,6 +15,7 @@ export const TABLES = {
   seoSettings: "kidami_seo_settings",
   geoSettings: "kidami_geo_settings",
   siteSettings: "kidami_site_settings",
+  visits: "kidami_visits",
 } as const;
 
 // Admin client with service role (for server-side operations)

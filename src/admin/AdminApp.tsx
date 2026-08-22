@@ -6,6 +6,7 @@ import {
   useSeoSettings,
   useGeoSettings,
   useSiteSettings,
+  useVisits,
   type Product,
   type Article,
   type SeoSetting,
@@ -23,7 +24,7 @@ import {
   sha256,
 } from "./auth";
 
-type Tab = "products" | "articles" | "reviews" | "seo" | "geo" | "settings" | "password";
+type Tab = "products" | "articles" | "reviews" | "seo" | "geo" | "stats" | "settings" | "password";
 
 const tabs: { key: Tab; label: string; icon: string }[] = [
   { key: "products", label: "产品管理", icon: "🚗" },
@@ -31,6 +32,7 @@ const tabs: { key: Tab; label: string; icon: string }[] = [
   { key: "reviews", label: "评论审核", icon: "⭐" },
   { key: "seo", label: "SEO 设置", icon: "🔍" },
   { key: "geo", label: "GEO 设置", icon: "📍" },
+  { key: "stats", label: "访问统计", icon: "📊" },
   { key: "settings", label: "站点设置", icon: "⚙️" },
   { key: "password", label: "修改密码", icon: "🔐" },
 ];
@@ -130,6 +132,7 @@ export default function AdminApp() {
           {activeTab === "reviews" && <ReviewsPanel />}
           {activeTab === "seo" && <SeoPanel />}
           {activeTab === "geo" && <GeoPanel />}
+          {activeTab === "stats" && <StatsPanel />}
           {activeTab === "settings" && <SettingsPanel />}
           {activeTab === "password" && <PasswordPanel />}
         </div>
@@ -839,6 +842,126 @@ function Field({ label, value, onChange }: { label: string; value: string; onCha
       <label className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/50">{label}</label>
       <input value={value} onChange={(e) => onChange(e.target.value)}
         className="mt-1 w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
+    </div>
+  );
+}
+
+function countBy<T>(rows: T[], keyFn: (row: T) => string, limit = 8) {
+  const map = new Map<string, number>();
+  for (const row of rows) {
+    const k = keyFn(row) || "(空)";
+    map.set(k, (map.get(k) || 0) + 1);
+  }
+  return [...map.entries()].sort((a, b) => b[1] - a[1]).slice(0, limit);
+}
+
+function StatsPanel() {
+  const { rows, loading, error, fetchVisits } = useVisits(30);
+  const now = Date.now();
+  const day = 24 * 60 * 60 * 1000;
+  const today = rows.filter((r) => now - new Date(r.created_at).getTime() < day);
+  const week = rows.filter((r) => now - new Date(r.created_at).getTime() < 7 * day);
+  const sessions = (list: typeof rows) => new Set(list.map((r) => r.session_id).filter(Boolean)).size;
+  const sources = countBy(week, (r) => r.source);
+  const pages = countBy(week, (r) => r.path);
+  const maxSource = sources[0]?.[1] || 1;
+
+  if (loading) return <p className="text-brand-navy/50">加载中...</p>;
+  if (error) {
+    return (
+      <div className="rounded-3xl bg-white p-8 shadow-soft">
+        <p className="font-extrabold text-brand-navy">统计表尚未创建</p>
+        <p className="mt-2 text-sm text-brand-navy/60">
+          请到 Supabase → SQL Editor 执行项目里的 <code className="rounded bg-brand-sand px-1">supabase/kidami-visits.sql</code>，然后刷新本页。
+        </p>
+        <p className="mt-4 text-xs text-red-500">{error}</p>
+        <button onClick={fetchVisits} className="mt-6 rounded-full bg-brand-navy px-5 py-2 text-sm font-bold text-white">
+          重新加载
+        </button>
+      </div>
+    );
+  }
+
+  const cards = [
+    { label: "今日浏览", value: today.length },
+    { label: "今日访客", value: sessions(today) },
+    { label: "近 7 天浏览", value: week.length },
+    { label: "近 7 天访客", value: sessions(week) },
+  ];
+
+  return (
+    <div className="space-y-8">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm text-brand-navy/55">统计前台访问次数与来路（不含后台）。数据从接入之日起开始累计。</p>
+        <button onClick={fetchVisits} className="rounded-full border border-brand-navy/15 px-4 py-2 text-xs font-extrabold text-brand-navy">
+          刷新
+        </button>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {cards.map((c) => (
+          <div key={c.label} className="rounded-3xl bg-white p-6 shadow-soft">
+            <p className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/40">{c.label}</p>
+            <p className="mt-2 font-display text-4xl font-extrabold text-brand-navy">{c.value}</p>
+          </div>
+        ))}
+      </div>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="rounded-3xl bg-white p-6 shadow-soft">
+          <h2 className="font-display text-xl font-extrabold text-brand-navy">访客来路（近 7 天）</h2>
+          <p className="mt-1 text-xs text-brand-navy/45">含搜索引擎、社交、广告 UTM 与直接打开</p>
+          <ul className="mt-5 space-y-3">
+            {sources.length === 0 && <li className="text-sm text-brand-navy/50">暂无数据，有人访问前台后会出现在这里。</li>}
+            {sources.map(([name, n]) => (
+              <li key={name}>
+                <div className="flex items-center justify-between text-sm font-bold text-brand-navy">
+                  <span>{name}</span>
+                  <span>{n}</span>
+                </div>
+                <div className="mt-1 h-2 overflow-hidden rounded-full bg-brand-sand">
+                  <div className="h-full rounded-full bg-brand-blue" style={{ width: `${Math.max(8, (n / maxSource) * 100)}%` }} />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="rounded-3xl bg-white p-6 shadow-soft">
+          <h2 className="font-display text-xl font-extrabold text-brand-navy">热门页面（近 7 天）</h2>
+          <ul className="mt-5 space-y-2">
+            {pages.length === 0 && <li className="text-sm text-brand-navy/50">暂无数据</li>}
+            {pages.map(([name, n]) => (
+              <li key={name} className="flex items-center justify-between gap-4 rounded-2xl bg-brand-sand px-4 py-2.5 text-sm">
+                <span className="truncate font-bold text-brand-navy">{name}</span>
+                <span className="shrink-0 font-extrabold text-brand-blue">{n}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className="rounded-3xl bg-white p-6 shadow-soft">
+        <h2 className="font-display text-xl font-extrabold text-brand-navy">最近访问</h2>
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="text-xs font-extrabold uppercase tracking-wider text-brand-navy/40">
+                <th className="pb-2">时间</th>
+                <th className="pb-2">页面</th>
+                <th className="pb-2">来路</th>
+                <th className="pb-2">UTM</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.slice(0, 20).map((r) => (
+                <tr key={r.id} className="border-t border-brand-navy/8">
+                  <td className="py-2.5 text-brand-navy/60">{new Date(r.created_at).toLocaleString("zh-CN")}</td>
+                  <td className="py-2.5 font-bold text-brand-navy">{r.path}</td>
+                  <td className="py-2.5">{r.source}</td>
+                  <td className="py-2.5 text-brand-navy/50">{[r.utm_source, r.utm_medium, r.utm_campaign].filter(Boolean).join(" / ") || "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

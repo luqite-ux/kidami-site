@@ -243,3 +243,42 @@ export function useSiteSettings() {
   useEffect(() => { fetch(); }, [fetch]);
   return { data, fetch, update, upsert };
 }
+
+export type VisitRow = {
+  id: string;
+  created_at: string;
+  path: string;
+  referrer: string;
+  source: string;
+  utm_source: string;
+  utm_medium: string;
+  utm_campaign: string;
+  session_id: string;
+};
+
+export function useVisits(days = 30) {
+  const [rows, setRows] = useState<VisitRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchVisits = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
+    const { data, error: err } = await supabase
+      .from(TABLES.visits)
+      .select("*")
+      .gte("created_at", since)
+      .order("created_at", { ascending: false })
+      .limit(5000);
+    if (err) setError(err.message);
+    else setRows((data as VisitRow[]) ?? []);
+    setLoading(false);
+  }, [days]);
+
+  useEffect(() => {
+    fetchVisits();
+  }, [fetchVisits]);
+
+  return { rows, loading, error, fetchVisits };
+}
