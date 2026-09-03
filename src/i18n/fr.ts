@@ -32,6 +32,8 @@ export const fr: Dict = {
     discoverLearn: "STEM & Apprentissage",
     discoverContact: "Contact & Avis",
     discoverFaq: "FAQ",
+    discoverWholesale: "Custom & Bulk Orders",
+    discoverVideo: "Brand Video",
     newsTitle: "Restez informé",
     newsText: "Nouveautés, idées de jeux et conseils pour parents — une fois par mois, sans spam.",
     newsPlaceholder: "Votre e-mail",
@@ -127,11 +129,16 @@ export const fr: Dict = {
       title: "Voyez les sourires en action",
       sub: "Trente secondes de joie spontanée — filmées dans des salons et des jardins, pas en studio.",
       videoAlt: "Vidéo de marque KIDAMI — enfants jouant avec des voitures en métal et des jeux de société",
+      pageCta: "Open the video page",
       captions: [
         "« Elle bat son frère au Ludo à chaque fois. » — Priya, maman de deux enfants",
         "« Les portes s'ouvrent encore après un an de cascades. » — Jessica, acheteuse vérifiée",
         "« Le cadeau avec lequel on a joué avant même de couper le gâteau. » — Tom & Elena",
       ],
+    },
+    gallery: {
+      eyebrow: "More moments",
+      title: "Play that looks this good",
     },
     library: {
       eyebrow: "Bibliothèque d'Inspiration",
@@ -404,6 +411,37 @@ export const fr: Dict = {
     { slug: "family-game-night-magnetic-ludo", title: "Les meilleurs jeux de société pour la soirée en famille : pourquoi le Ludo magnétique gagne toujours", category: "Guide d'achat", minutes: 5, excerpt: "Quinze minutes, quatre joueurs, zéro écran. Ce que dit la recherche sur les jeux de course simples et les rituels familiaux les plus solides." },
     { slug: "travel-games-screen-free", title: "Jeux de société de voyage pour enfants : du plaisir sans écran qui survit vraiment au trajet", category: "Parentalité", minutes: 4, excerpt: "Pièces magnétiques, plateaux pliants et parties de moins de 30 minutes — la check-list des jouets de voyage avec lesquels on joue vraiment." },
   ],
+  videoPage: {
+    eyebrow: "Brand film",
+    title: "Watch KIDAMI in motion",
+    sub: "A dedicated page for our brand film — share it, replay it, or start shopping the toys you just saw.",
+    ctaProducts: "Shop products",
+    ctaHome: "Back to home",
+  },
+  wholesale: {
+    eyebrow: "B2B & special requests",
+    title: "Custom designs & large-volume orders",
+    sub: "Need branded gift sets, retailer packs, or a large quantity for events and schools? We support custom SKUs and bulk fulfillment.",
+    cards: [
+      {
+        title: "Custom designs",
+        text: "Colorways, packaging, gift-box layouts and limited editions tailored to your brand or campaign.",
+        points: ["Custom paint & packaging", "Gift-ready assortments", "Seasonal / campaign editions"],
+      },
+      {
+        title: "Large-volume orders",
+        text: "Wholesale pricing and coordinated shipping for retailers, distributors, schools and corporate gifting.",
+        points: ["MOQ-friendly quotes", "Mixed cartons available", "Amazon / Walmart replenishment support"],
+      },
+    ],
+    ctaTitle: "Tell us what you need",
+    ctaText: "Email a short brief — quantity, timeline, destination market — and our team will reply with options.",
+    email: "support@kidami-ent.com",
+    emailSubject: "KIDAMI custom / bulk order inquiry",
+    orShop: "Or shop retail packs now:",
+    contactLink: "Prefer a form? Visit Contact →",
+  },
+
   products: {
     "offroad-6x6-set": {
       name: "Voitures Tout-Terrain 6x6 en Métal Moulé à Rétrofriction (Pack de 4)",

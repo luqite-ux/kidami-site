@@ -50,6 +50,8 @@ export function Footer() {
               <li><Link to="/learn" className="hover:text-white">{f.discoverLearn}</Link></li>
               <li><Link to="/contact" className="hover:text-white">{f.discoverContact}</Link></li>
               <li><Link to="/faq" className="hover:text-white">{f.discoverFaq}</Link></li>
+              <li><Link to="/wholesale" className="hover:text-white">{f.discoverWholesale}</Link></li>
+              <li><Link to="/video" className="hover:text-white">{f.discoverVideo}</Link></li>
               <li><a href="mailto:support@kidami-ent.com" className="hover:text-white">support@kidami-ent.com</a></li>
             </ul>
           </div>

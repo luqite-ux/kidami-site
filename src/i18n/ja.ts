@@ -31,6 +31,8 @@ export const ja: Dict = {
     discoverLearn: "STEM・学び",
     discoverContact: "お問い合わせ・ご感想",
     discoverFaq: "FAQ",
+    discoverWholesale: "Custom & Bulk Orders",
+    discoverVideo: "Brand Video",
     newsTitle: "最新情報を受け取る",
     newsText: "新商品、遊びのアイデア、子育てのコツ — 月1回、スパムなし。",
     newsPlaceholder: "メールアドレス",
@@ -124,11 +126,16 @@ export const ja: Dict = {
       title: "笑顔の瞬間を動画で",
       sub: "台本のない30秒の喜び — スタジオではなく、リビングと裏庭で撮影。",
       videoAlt: "KIDAMIブランド動画 — ダイキャストカーとボードゲームで遊ぶ子どもたち",
+      pageCta: "Open the video page",
       captions: [
         "「ルドーで毎回お兄ちゃんに勝つの。」— 2児の母、プリヤさん",
         "「1年間ぶつけてもドアはまだ開きます。」— 認証済み購入者ジェシカさん",
         "「ケーキを切る前に遊ばれていたプレゼント。」— トム&エレナ",
       ],
+    },
+    gallery: {
+      eyebrow: "More moments",
+      title: "Play that looks this good",
     },
     library: {
       eyebrow: "インスピレーションライブラリ",
@@ -395,6 +402,37 @@ export const ja: Dict = {
     { slug: "family-game-night-magnetic-ludo", title: "ファミリーナイトに最適なボードゲーム:マグネットルドーが常に勝つ理由", category: "購入ガイド", minutes: 5, excerpt: "15分、4人、スクリーンゼロ。シンプルなレースゲームが最強の家族の習慣を生むという研究をご紹介。" },
     { slug: "travel-games-screen-free", title: "子ども向け旅行ボードゲーム:旅に本当に耐えるスクリーンフリーの楽しさ", category: "子育て", minutes: 4, excerpt: "マグネットピース、折りたたみボード、30分以内のゲーム — 失くさず遊ばれる旅行用おもちゃのチェックリスト。" },
   ],
+  videoPage: {
+    eyebrow: "Brand film",
+    title: "Watch KIDAMI in motion",
+    sub: "A dedicated page for our brand film — share it, replay it, or start shopping the toys you just saw.",
+    ctaProducts: "Shop products",
+    ctaHome: "Back to home",
+  },
+  wholesale: {
+    eyebrow: "B2B & special requests",
+    title: "Custom designs & large-volume orders",
+    sub: "Need branded gift sets, retailer packs, or a large quantity for events and schools? We support custom SKUs and bulk fulfillment.",
+    cards: [
+      {
+        title: "Custom designs",
+        text: "Colorways, packaging, gift-box layouts and limited editions tailored to your brand or campaign.",
+        points: ["Custom paint & packaging", "Gift-ready assortments", "Seasonal / campaign editions"],
+      },
+      {
+        title: "Large-volume orders",
+        text: "Wholesale pricing and coordinated shipping for retailers, distributors, schools and corporate gifting.",
+        points: ["MOQ-friendly quotes", "Mixed cartons available", "Amazon / Walmart replenishment support"],
+      },
+    ],
+    ctaTitle: "Tell us what you need",
+    ctaText: "Email a short brief — quantity, timeline, destination market — and our team will reply with options.",
+    email: "support@kidami-ent.com",
+    emailSubject: "KIDAMI custom / bulk order inquiry",
+    orShop: "Or shop retail packs now:",
+    contactLink: "Prefer a form? Visit Contact →",
+  },
+
   products: {
     "offroad-6x6-set": {
       name: "6x6オフロード プルバック ダイキャストメタル玩具車(4台セット)",

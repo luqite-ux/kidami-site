@@ -32,6 +32,8 @@ export const pt: Dict = {
     discoverLearn: "STEM e Aprendizagem",
     discoverContact: "Contato e Feedback",
     discoverFaq: "FAQ",
+    discoverWholesale: "Custom & Bulk Orders",
+    discoverVideo: "Brand Video",
     newsTitle: "Fique por dentro",
     newsText: "Lançamentos, ideias de brincadeiras e dicas para pais — uma vez por mês, sem spam.",
     newsPlaceholder: "Seu e-mail",
@@ -127,11 +129,16 @@ export const pt: Dict = {
       title: "Veja os sorrisos em ação",
       sub: "Trinta segundos de alegria sem roteiro — filmados em salas de estar e quintais, não em estúdios.",
       videoAlt: "Vídeo da marca KIDAMI — crianças brincando com carrinhos de metal e jogos de tabuleiro",
+      pageCta: "Open the video page",
       captions: [
         "“Ela ganha do irmão no Ludo todas as vezes.” — Priya, mãe de dois",
         "“As portas ainda abrem depois de um ano de batidas.” — Jessica, compradora verificada",
         "“O presente com que brincaram antes de cortar o bolo.” — Tom e Elena",
       ],
+    },
+    gallery: {
+      eyebrow: "More moments",
+      title: "Play that looks this good",
     },
     library: {
       eyebrow: "Biblioteca de Inspiração",
@@ -404,6 +411,37 @@ export const pt: Dict = {
     { slug: "family-game-night-magnetic-ludo", title: "Os melhores jogos de tabuleiro para a noite em família: por que o Ludo magnético sempre vence", category: "Guia de compra", minutes: 5, excerpt: "Quinze minutos, quatro jogadores, zero telas. Veja o que a pesquisa diz sobre por que jogos de corrida simples criam os rituais familiares mais fortes." },
     { slug: "travel-games-screen-free", title: "Jogos de tabuleiro de viagem para crianças: diversão sem telas que realmente sobrevive à viagem", category: "Paternidade", minutes: 4, excerpt: "Peças magnéticas, tabuleiros dobráveis e partidas de menos de 30 minutos — a lista para brinquedos de viagem que são usados, não perdidos." },
   ],
+  videoPage: {
+    eyebrow: "Brand film",
+    title: "Watch KIDAMI in motion",
+    sub: "A dedicated page for our brand film — share it, replay it, or start shopping the toys you just saw.",
+    ctaProducts: "Shop products",
+    ctaHome: "Back to home",
+  },
+  wholesale: {
+    eyebrow: "B2B & special requests",
+    title: "Custom designs & large-volume orders",
+    sub: "Need branded gift sets, retailer packs, or a large quantity for events and schools? We support custom SKUs and bulk fulfillment.",
+    cards: [
+      {
+        title: "Custom designs",
+        text: "Colorways, packaging, gift-box layouts and limited editions tailored to your brand or campaign.",
+        points: ["Custom paint & packaging", "Gift-ready assortments", "Seasonal / campaign editions"],
+      },
+      {
+        title: "Large-volume orders",
+        text: "Wholesale pricing and coordinated shipping for retailers, distributors, schools and corporate gifting.",
+        points: ["MOQ-friendly quotes", "Mixed cartons available", "Amazon / Walmart replenishment support"],
+      },
+    ],
+    ctaTitle: "Tell us what you need",
+    ctaText: "Email a short brief — quantity, timeline, destination market — and our team will reply with options.",
+    email: "support@kidami-ent.com",
+    emailSubject: "KIDAMI custom / bulk order inquiry",
+    orShop: "Or shop retail packs now:",
+    contactLink: "Prefer a form? Visit Contact →",
+  },
+
   products: {
     "offroad-6x6-set": {
       name: "Carrinhos Off-Road 6x6 de Metal Fundido com Fricção (Pack de 4)",

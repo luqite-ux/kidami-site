@@ -15,6 +15,8 @@ import { Privacy } from "./pages/Privacy";
 import { Terms } from "./pages/Terms";
 import { NotFound } from "./pages/NotFound";
 import { Faq } from "./pages/Faq";
+import { VideoPage } from "./pages/VideoPage";
+import { Wholesale } from "./pages/Wholesale";
 import { VisitTracker } from "./lib/visitTracker";
 
 function ScrollToTop() {
@@ -35,6 +37,8 @@ const pages: { path: string; el: ReactElement }[] = [
   { path: "/learn/:slug", el: <Article /> },
   { path: "/contact", el: <Contact /> },
   { path: "/faq", el: <Faq /> },
+  { path: "/video", el: <VideoPage /> },
+  { path: "/wholesale", el: <Wholesale /> },
   { path: "/privacy", el: <Privacy /> },
   { path: "/terms", el: <Terms /> },
 ];

@@ -5,7 +5,13 @@ import { StoreButtons } from "./StoreButtons";
 import { productBadges, productImage, productReviewCount } from "../lib/productFields";
 import { Stars } from "./Icon";
 
-export function ProductCard({ product }: { product: Product | SupaProduct }) {
+export function ProductCard({
+  product,
+  hideBuy = false,
+}: {
+  product: Product | SupaProduct;
+  hideBuy?: boolean;
+}) {
   const { d } = useLang();
   const pd = d.products[product.slug as keyof typeof d.products];
   const isCars = product.category === "cars";
@@ -54,9 +60,11 @@ export function ProductCard({ product }: { product: Product | SupaProduct }) {
           ))}
         </div>
 
-        <div className="mt-auto pt-5">
-          <StoreButtons content={`card-${product.slug}`} size="sm" />
-        </div>
+        {!hideBuy && (
+          <div className="mt-auto pt-5">
+            <StoreButtons content={`card-${product.slug}`} size="sm" />
+          </div>
+        )}
       </div>
     </article>
   );

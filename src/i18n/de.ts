@@ -31,6 +31,8 @@ export const de: Dict = {
     discoverLearn: "STEM & Lernen",
     discoverContact: "Kontakt & Feedback",
     discoverFaq: "FAQ",
+    discoverWholesale: "Custom & Bulk Orders",
+    discoverVideo: "Brand Video",
     newsTitle: "Bleib auf dem Laufenden",
     newsText: "Neuerscheinungen, Spielideen und Erziehungstipps — einmal im Monat, kein Spam.",
     newsPlaceholder: "Deine E-Mail",
@@ -119,11 +121,16 @@ export const de: Dict = {
       title: "Sieh das Lächeln in Aktion",
       sub: "Dreißig Sekunden ungespielte Freude — gefilmt in Wohnzimmern und Gärten, nicht in Studios.",
       videoAlt: "KIDAMI-Markenvideo — Kinder spielen mit Die-Cast-Autos und Brettspielen",
+      pageCta: "Open the video page",
       captions: [
         "‚Sie schlägt ihren Bruder jedes Mal bei Ludo.‘ — Priya, Mutter von zwei Kindern",
         "‚Die Türen öffnen sich nach einem Jahr Crashes immer noch.‘ — Jessica, verifizierte Käuferin",
         "‚Das Geschenk, mit dem gespielt wurde, bevor der Kuchen angeschnitten war.‘ — Tom & Elena",
       ],
+    },
+    gallery: {
+      eyebrow: "More moments",
+      title: "Play that looks this good",
     },
     library: {
       eyebrow: "Inspirationsbibliothek",
@@ -390,6 +397,37 @@ export const de: Dict = {
     { slug: "family-game-night-magnetic-ludo", title: "Die besten Brettspiele für den Familienabend: Warum magnetisches Ludo immer gewinnt", category: "Kaufberatung", minutes: 5, excerpt: "Fünfzehn Minuten, vier Spieler, null Bildschirme. Die Forschung dazu, warum einfache Wettspiele die stärksten Familienrituale schaffen." },
     { slug: "travel-games-screen-free", title: "Reisespiele für Kinder: Bildschirmfreier Spaß, der die Reise wirklich übersteht", category: "Erziehung", minutes: 4, excerpt: "Magnetische Figuren, Faltbretter und Spiele unter 30 Minuten — die Checkliste für Reisespielzeug, mit dem gespielt wird statt es zu verlieren." },
   ],
+  videoPage: {
+    eyebrow: "Brand film",
+    title: "Watch KIDAMI in motion",
+    sub: "A dedicated page for our brand film — share it, replay it, or start shopping the toys you just saw.",
+    ctaProducts: "Shop products",
+    ctaHome: "Back to home",
+  },
+  wholesale: {
+    eyebrow: "B2B & special requests",
+    title: "Custom designs & large-volume orders",
+    sub: "Need branded gift sets, retailer packs, or a large quantity for events and schools? We support custom SKUs and bulk fulfillment.",
+    cards: [
+      {
+        title: "Custom designs",
+        text: "Colorways, packaging, gift-box layouts and limited editions tailored to your brand or campaign.",
+        points: ["Custom paint & packaging", "Gift-ready assortments", "Seasonal / campaign editions"],
+      },
+      {
+        title: "Large-volume orders",
+        text: "Wholesale pricing and coordinated shipping for retailers, distributors, schools and corporate gifting.",
+        points: ["MOQ-friendly quotes", "Mixed cartons available", "Amazon / Walmart replenishment support"],
+      },
+    ],
+    ctaTitle: "Tell us what you need",
+    ctaText: "Email a short brief — quantity, timeline, destination market — and our team will reply with options.",
+    email: "support@kidami-ent.com",
+    emailSubject: "KIDAMI custom / bulk order inquiry",
+    orShop: "Or shop retail packs now:",
+    contactLink: "Prefer a form? Visit Contact →",
+  },
+
   products: {
     "offroad-6x6-set": {
       name: "6x6 Offroad Pull-Back Die-Cast-Autos (4er-Pack)",

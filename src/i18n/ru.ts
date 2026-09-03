@@ -31,6 +31,8 @@ export const ru: Dict = {
     discoverLearn: "STEM и обучение",
     discoverContact: "Контакты и отзывы",
     discoverFaq: "FAQ",
+    discoverWholesale: "Custom & Bulk Orders",
+    discoverVideo: "Brand Video",
     newsTitle: "Будьте в курсе",
     newsText: "Новинки, идеи для игр и советы родителям — раз в месяц, без спама.",
     newsPlaceholder: "Ваш email",
@@ -119,11 +121,16 @@ export const ru: Dict = {
       title: "Посмотрите на эти улыбки",
       sub: "Тридцать секунд непостановочной радости — снято в гостиных и на задних дворах, а не в студиях.",
       videoAlt: "Видео бренда KIDAMI — дети играют с литыми машинками и настольными играми",
+      pageCta: "Open the video page",
       captions: [
         "«Она обыгрывает брата в лудо каждый раз.» — Прия, мама двоих",
         "«Дверцы всё ещё открываются после года падений.» — Джессика, подтверждённый покупатель",
         "«Подарок, с которым играли ещё до того, как разрезали торт.» — Том и Елена",
       ],
+    },
+    gallery: {
+      eyebrow: "More moments",
+      title: "Play that looks this good",
     },
     library: {
       eyebrow: "Библиотека вдохновения",
@@ -390,6 +397,37 @@ export const ru: Dict = {
     { slug: "family-game-night-magnetic-ludo", title: "Лучшие настолки для семейного вечера: почему магнитное лудо всегда побеждает", category: "Гид покупателя", minutes: 5, excerpt: "Пятнадцать минут, четыре игрока, ноль экранов. Исследование о том, почему простые гонки создают самые крепкие семейные ритуалы." },
     { slug: "travel-games-screen-free", title: "Дорожные настолки для детей: веселье без экранов, которое переживает поездку", category: "Воспитание", minutes: 4, excerpt: "Магнитные фишки, складные поля и игры до 30 минут — чек-лист дорожных игрушек, в которые играют, а не теряют." },
   ],
+  videoPage: {
+    eyebrow: "Brand film",
+    title: "Watch KIDAMI in motion",
+    sub: "A dedicated page for our brand film — share it, replay it, or start shopping the toys you just saw.",
+    ctaProducts: "Shop products",
+    ctaHome: "Back to home",
+  },
+  wholesale: {
+    eyebrow: "B2B & special requests",
+    title: "Custom designs & large-volume orders",
+    sub: "Need branded gift sets, retailer packs, or a large quantity for events and schools? We support custom SKUs and bulk fulfillment.",
+    cards: [
+      {
+        title: "Custom designs",
+        text: "Colorways, packaging, gift-box layouts and limited editions tailored to your brand or campaign.",
+        points: ["Custom paint & packaging", "Gift-ready assortments", "Seasonal / campaign editions"],
+      },
+      {
+        title: "Large-volume orders",
+        text: "Wholesale pricing and coordinated shipping for retailers, distributors, schools and corporate gifting.",
+        points: ["MOQ-friendly quotes", "Mixed cartons available", "Amazon / Walmart replenishment support"],
+      },
+    ],
+    ctaTitle: "Tell us what you need",
+    ctaText: "Email a short brief — quantity, timeline, destination market — and our team will reply with options.",
+    email: "support@kidami-ent.com",
+    emailSubject: "KIDAMI custom / bulk order inquiry",
+    orShop: "Or shop retail packs now:",
+    contactLink: "Prefer a form? Visit Contact →",
+  },
+
   products: {
     "offroad-6x6-set": {
       name: "Внедорожники 6x6 с инерционным механизмом, литой металл (набор 4 шт.)",

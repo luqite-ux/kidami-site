@@ -31,6 +31,8 @@ export const it: Dict = {
     discoverLearn: "STEM e Apprendimento",
     discoverContact: "Contatti e feedback",
     discoverFaq: "FAQ",
+    discoverWholesale: "Custom & Bulk Orders",
+    discoverVideo: "Brand Video",
     newsTitle: "Resta aggiornato",
     newsText: "Novità, idee di gioco e consigli per genitori — una volta al mese, niente spam.",
     newsPlaceholder: "La tua email",
@@ -124,11 +126,16 @@ export const it: Dict = {
       title: "Guarda i sorrisi in azione",
       sub: "Trenta secondi di gioia senza copione — filmati in salotti e giardini, non in studi.",
       videoAlt: "Video del brand KIDAMI — bambini che giocano con auto pressofuse e giochi da tavolo",
+      pageCta: "Open the video page",
       captions: [
         "«Lei batte suo fratello a Ludo ogni singola volta.» — Priya, mamma di due",
         "«Le porte si aprono ancora dopo un anno di scontri.» — Jessica, acquirente verificata",
         "«Il regalo con cui si è giocato prima ancora di tagliare la torta.» — Tom ed Elena",
       ],
+    },
+    gallery: {
+      eyebrow: "More moments",
+      title: "Play that looks this good",
     },
     library: {
       eyebrow: "Inspiration Library",
@@ -395,6 +402,37 @@ export const it: Dict = {
     { slug: "family-game-night-magnetic-ludo", title: "I migliori giochi da tavolo per la serata in famiglia: perché il Ludo magnetico vince sempre", category: "Guida all'acquisto", minutes: 5, excerpt: "Quindici minuti, quattro giocatori, zero schermi. Ecco la ricerca sul perché i semplici giochi di corsa creano i rituali familiari più forti." },
     { slug: "travel-games-screen-free", title: "Giochi da tavolo da viaggio per bambini: divertimento senza schermi che sopravvive davvero al viaggio", category: "Genitorialità", minutes: 4, excerpt: "Pedine magnetiche, tabelloni pieghevoli e giochi sotto i 30 minuti — la checklist per i giocattoli da viaggio con cui si gioca davvero, senza perderli." },
   ],
+  videoPage: {
+    eyebrow: "Brand film",
+    title: "Watch KIDAMI in motion",
+    sub: "A dedicated page for our brand film — share it, replay it, or start shopping the toys you just saw.",
+    ctaProducts: "Shop products",
+    ctaHome: "Back to home",
+  },
+  wholesale: {
+    eyebrow: "B2B & special requests",
+    title: "Custom designs & large-volume orders",
+    sub: "Need branded gift sets, retailer packs, or a large quantity for events and schools? We support custom SKUs and bulk fulfillment.",
+    cards: [
+      {
+        title: "Custom designs",
+        text: "Colorways, packaging, gift-box layouts and limited editions tailored to your brand or campaign.",
+        points: ["Custom paint & packaging", "Gift-ready assortments", "Seasonal / campaign editions"],
+      },
+      {
+        title: "Large-volume orders",
+        text: "Wholesale pricing and coordinated shipping for retailers, distributors, schools and corporate gifting.",
+        points: ["MOQ-friendly quotes", "Mixed cartons available", "Amazon / Walmart replenishment support"],
+      },
+    ],
+    ctaTitle: "Tell us what you need",
+    ctaText: "Email a short brief — quantity, timeline, destination market — and our team will reply with options.",
+    email: "support@kidami-ent.com",
+    emailSubject: "KIDAMI custom / bulk order inquiry",
+    orShop: "Or shop retail packs now:",
+    contactLink: "Prefer a form? Visit Contact →",
+  },
+
   products: {
     "offroad-6x6-set": {
       name: "Auto fuoristrada 6x6 pull back in metallo pressofuso (confezione da 4)",

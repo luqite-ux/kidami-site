@@ -9,6 +9,12 @@ import { useReviews } from "../hooks/useSupabaseData";
 
 const beliefIcons = ["shield", "metal", "award"];
 
+const carouselImgs = [
+  "/images/carousel-kids-table.jpg",
+  "/images/carousel-kids-pegs.jpg",
+  "/images/carousel-mom-daughters.png",
+];
+
 export function Home() {
   const { lang, d } = useLang();
   const h = d.home;
@@ -107,7 +113,7 @@ export function Home() {
   ];
   const displayReviews =
     liveReviews.length > 0
-      ? liveReviews.slice(0, 4).map((r, i) => ({
+      ? liveReviews.slice(0, 8).map((r, i) => ({
           name: r.name,
           stars: r.stars,
           text: r.text,
@@ -118,12 +124,13 @@ export function Home() {
           ...r,
           photo: reviewPhotos[i % reviewPhotos.length],
         }));
+  const marqueeReviews = [...displayReviews, ...displayReviews];
   const avgRating =
     displayReviews.reduce((sum, r) => sum + r.stars, 0) / Math.max(displayReviews.length, 1);
 
   return (
     <>
-      {/* ============ HERO: slogan only — search lives in the top bar ============ */}
+      {/* ============ HERO: one horizontal slogan ============ */}
       <section className="relative overflow-hidden pt-36 pb-24 lg:pt-48 lg:pb-32">
         <img
           src="/images/scene-family-table.jpg"
@@ -134,13 +141,12 @@ export function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-brand-ink/80 via-brand-ink/45 to-brand-ink/15" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-xl">
-            <h1 className="font-display text-5xl font-extrabold leading-[1.08] tracking-tight text-white text-balance sm:text-6xl">
-              {h.hero.titleA} <span className="text-brand-yellow">{h.hero.titleB}</span>
-              <br />
+          <div className="max-w-4xl">
+            <h1 className="font-display text-3xl font-extrabold leading-snug tracking-tight text-white text-balance sm:text-4xl lg:text-5xl">
+              {h.hero.titleA} <span className="text-brand-yellow">{h.hero.titleB}</span>{" "}
               {h.hero.titleC} <span className="text-brand-yellow">{h.hero.titleD}</span>
             </h1>
-            <p className="mt-5 max-w-md text-lg leading-relaxed text-white/80">{h.hero.subtitle}</p>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/80">{h.hero.subtitle}</p>
             <StoreButtons content="home-hero" className="mt-8 max-w-md" />
           </div>
         </div>
@@ -164,8 +170,42 @@ export function Home() {
         </div>
       </section>
 
-      {/* ============ REVIEWS ============ */}
+      {/* ============ VIDEO (above reviews) ============ */}
       <section className="bg-brand-cream py-16 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="reveal mx-auto max-w-2xl text-center">
+            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-brand-orange">{h.video.eyebrow}</p>
+            <h2 className="mt-3 font-display text-4xl font-extrabold text-brand-navy sm:text-5xl text-balance">
+              {h.video.title}
+            </h2>
+            <p className="mt-4 text-brand-navy/60">{h.video.sub}</p>
+          </div>
+          <div className="reveal mx-auto mt-10 max-w-4xl overflow-hidden rounded-[2rem] bg-brand-ink shadow-lift">
+            <video
+              className="aspect-video w-full object-cover"
+              controls
+              playsInline
+              preload="metadata"
+              poster="/images/scene-family-table.jpg"
+              aria-label={h.video.videoAlt}
+            >
+              <source src="/videos/brand.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div className="reveal mt-8 text-center">
+            <Link
+              to="/video"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-brand-navy/15 px-6 py-3 font-display font-bold text-brand-navy transition-colors hover:border-brand-navy"
+            >
+              {h.video.pageCta}
+              <Icon name="arrow" className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ FLOWING REVIEWS ============ */}
+      <section className="overflow-hidden py-16 lg:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="reveal mx-auto max-w-2xl text-center">
             <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-brand-orange">{h.reviewsSec.eyebrow}</p>
@@ -176,18 +216,25 @@ export function Home() {
               {h.reviewsSec.sub} · {avgRating.toFixed(1)} / 5
             </p>
           </div>
-          <div className="reveal mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {displayReviews.map((r) => (
-              <figure key={r.name + r.product} className="flex flex-col overflow-hidden rounded-3xl border border-brand-navy/8 bg-white shadow-soft">
-                <img src={r.photo} alt="" className="h-36 w-full object-cover" loading="lazy" />
+        </div>
+        <div className="reveal mt-12">
+          <div className="flex w-max gap-5 animate-marquee hover:[animation-play-state:paused]">
+            {marqueeReviews.map((r, i) => (
+              <figure
+                key={`${r.name}-${i}`}
+                className="flex w-[320px] shrink-0 flex-col overflow-hidden rounded-3xl border border-brand-navy/8 bg-white shadow-soft sm:w-[380px]"
+              >
+                <img src={r.photo} alt="" className="h-40 w-full object-cover" loading="lazy" />
                 <div className="flex flex-1 flex-col p-6">
                   <Stars rating={r.stars} />
-                  <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-brand-navy/75">
+                  <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-brand-navy/75 line-clamp-6">
                     “{r.text}”
                   </blockquote>
                   <figcaption className="mt-5 border-t border-brand-navy/8 pt-4">
                     <p className="text-sm font-extrabold text-brand-navy">{r.name}</p>
-                    <p className="mt-0.5 text-xs text-brand-navy/50">{d.common.verified} · {r.product}</p>
+                    <p className="mt-0.5 text-xs text-brand-navy/50">
+                      {d.common.verified} · {r.product}
+                    </p>
                   </figcaption>
                 </div>
               </figure>
@@ -245,7 +292,7 @@ export function Home() {
         </div>
       </section>
 
-      {/* ============ BESTSELLERS ============ */}
+      {/* ============ BESTSELLERS — store buttons only top-right ============ */}
       <section className="bg-brand-cream py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="reveal flex flex-wrap items-end justify-between gap-6">
@@ -255,18 +302,21 @@ export function Home() {
                 {h.hot.title}
               </h2>
             </div>
-            <Link
-              to="/products"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-brand-navy/15 px-6 py-3 font-display font-bold text-brand-navy transition-colors hover:border-brand-navy"
-            >
-              {d.common.viewAll}
-              <Icon name="arrow" className="h-4 w-4" />
-            </Link>
+            <div className="flex flex-wrap items-center gap-3">
+              <StoreButtons content="home-hot" size="sm" className="w-64" />
+              <Link
+                to="/products"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-brand-navy/15 px-6 py-3 font-display font-bold text-brand-navy transition-colors hover:border-brand-navy"
+              >
+                {d.common.viewAll}
+                <Icon name="arrow" className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
           <div className="reveal mt-12 grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
             {hot.map((p, i) => (
               <div key={p.slug} className={`reveal-delay-${i + 1}`}>
-                <ProductCard product={p} />
+                <ProductCard product={p} hideBuy />
               </div>
             ))}
           </div>
@@ -295,6 +345,31 @@ export function Home() {
               {h.story.cta}
               <Icon name="arrow" className="h-4 w-4" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ BOTTOM CAROUSEL ============ */}
+      <section className="overflow-hidden bg-brand-cream py-16 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="reveal text-center text-xs font-extrabold uppercase tracking-[0.2em] text-brand-orange">
+            {h.gallery.eyebrow}
+          </p>
+          <h2 className="reveal mt-3 text-center font-display text-3xl font-extrabold text-brand-navy sm:text-4xl">
+            {h.gallery.title}
+          </h2>
+        </div>
+        <div className="reveal mt-10">
+          <div className="flex w-max gap-5 animate-marquee-reverse hover:[animation-play-state:paused]">
+            {[...carouselImgs, ...carouselImgs, ...carouselImgs].map((src, i) => (
+              <img
+                key={`${src}-${i}`}
+                src={src}
+                alt=""
+                loading="lazy"
+                className="h-56 w-[320px] shrink-0 rounded-3xl object-cover shadow-soft sm:h-72 sm:w-[420px]"
+              />
+            ))}
           </div>
         </div>
       </section>

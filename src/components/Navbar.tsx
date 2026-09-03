@@ -161,12 +161,6 @@ export function Navbar() {
 
           <div className="flex items-center gap-2">
             <SearchBox className="hidden w-40 md:flex lg:w-56" />
-            <Link
-              to="/faq"
-              className="hidden rounded-full px-3 py-2 text-sm font-extrabold text-brand-navy/70 hover:bg-brand-sky hover:text-brand-navy lg:inline-flex"
-            >
-              {d.nav.faq}
-            </Link>
             <div className="hidden sm:block">
               <LanguageMenu />
             </div>

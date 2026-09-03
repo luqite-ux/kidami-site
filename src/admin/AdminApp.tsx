@@ -14,6 +14,7 @@ import {
 } from "./hooks/useAdminData";
 import { langCodes, langNames } from "../i18n/core";
 import { supabase, TABLES } from "../lib/supabase";
+import { uploadPublicImage } from "../lib/uploadImage";
 import {
   isAdminSession,
   passwordMatches,
@@ -145,6 +146,8 @@ export default function AdminApp() {
 function ProductsPanel() {
   const { data: products, loading, create, update, remove } = useProducts();
   const [editing, setEditing] = useState<Partial<Product> | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadMsg, setUploadMsg] = useState("");
 
   const handleSave = async () => {
     if (!editing) return;
@@ -154,6 +157,20 @@ function ProductsPanel() {
       await create(editing as Omit<Product, "id">);
     }
     setEditing(null);
+  };
+
+  const handleImageUpload = async (file: File | undefined) => {
+    if (!file || !editing) return;
+    setUploading(true);
+    setUploadMsg("");
+    const { url, error } = await uploadPublicImage(file, "products");
+    setUploading(false);
+    if (error || !url) {
+      setUploadMsg(error || "上传失败。请确认 Supabase 已创建公开桶 kidami-assets。");
+      return;
+    }
+    setEditing({ ...editing, image_url: url });
+    setUploadMsg("上传成功");
   };
 
   if (loading) return <p className="text-brand-navy/50">加载中...</p>;
@@ -184,6 +201,28 @@ function ProductsPanel() {
             <input placeholder="图片 URL" value={editing.image_url || ""} onChange={(e) => setEditing({ ...editing, image_url: e.target.value })}
               className="rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
           </div>
+
+          <div className="rounded-2xl border border-dashed border-brand-navy/20 bg-brand-cream/60 p-4">
+            <p className="text-sm font-bold text-brand-navy">上传商品照片</p>
+            <p className="mt-1 text-xs text-brand-navy/50">支持 JPG / PNG / WEBP。上传后会自动填入图片 URL。</p>
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              <label className="cursor-pointer rounded-full bg-brand-blue px-5 py-2.5 text-sm font-bold text-white shadow-soft">
+                {uploading ? "上传中…" : "选择本地图片"}
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  className="hidden"
+                  disabled={uploading}
+                  onChange={(e) => handleImageUpload(e.target.files?.[0])}
+                />
+              </label>
+              {editing.image_url && (
+                <img src={editing.image_url} alt="预览" className="h-16 w-16 rounded-xl object-cover border border-brand-navy/10" />
+              )}
+              {uploadMsg && <span className="text-xs font-bold text-brand-navy/60">{uploadMsg}</span>}
+            </div>
+          </div>
+
           <textarea placeholder="一句话简介" value={editing.tagline || ""} onChange={(e) => setEditing({ ...editing, tagline: e.target.value })}
             className="w-full rounded-2xl border border-brand-navy/10 px-4 py-2.5 text-sm focus:border-brand-blue focus:outline-none" rows={2} />
           <div className="flex gap-3">

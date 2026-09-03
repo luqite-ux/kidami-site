@@ -31,6 +31,8 @@ export const ko: Dict = {
     discoverLearn: "STEM & 학습",
     discoverContact: "문의 및 피드백",
     discoverFaq: "FAQ",
+    discoverWholesale: "Custom & Bulk Orders",
+    discoverVideo: "Brand Video",
     newsTitle: "소식 받아보기",
     newsText: "신제품, 놀이 아이디어, 육아 팁 — 월 1회, 스팸 없음.",
     newsPlaceholder: "이메일 주소",
@@ -119,11 +121,16 @@ export const ko: Dict = {
       title: "미소가 움직이는 순간",
       sub: "대본 없는 30초의 기쁨 — 스튜디오가 아닌 거실과 뒷마당에서 촬영했습니다.",
       videoAlt: "KIDAMI 브랜드 영상 — 다이캐스트 자동차와 보드게임으로 노는 아이들",
+      pageCta: "Open the video page",
       captions: [
         "\"동생이 오빠를 루도에서 매번 이겨요.\" — 두 아이의 엄마 프리야",
         "\"1년간 부딪혀도 문이 여전히 열려요.\" — 인증 구매자 제시카",
         "\"케이크를 자르기 전에 이미 놀고 있던 선물.\" — 톰 & 엘레나",
       ],
+    },
+    gallery: {
+      eyebrow: "More moments",
+      title: "Play that looks this good",
     },
     library: {
       eyebrow: "인스피레이션 라이브러리",
@@ -390,6 +397,37 @@ export const ko: Dict = {
     { slug: "family-game-night-magnetic-ludo", title: "가족의 밤에 최고인 보드게임: 마그네틱 루도가 항상 이기는 이유", category: "구매 가이드", minutes: 5, excerpt: "15분, 4명, 화면 제로. 단순한 레이스 게임이 가장 강력한 가족 의식을 만든다는 연구를 소개합니다." },
     { slug: "travel-games-screen-free", title: "아이를 위한 여행 보드게임: 여행에서 진짜 살아남는 스크린 프리 재미", category: "육아", minutes: 4, excerpt: "마그네틱 말, 접이식 보드, 30분 이하 게임 — 잃어버리지 않고 진짜 노는 여행 장난감 체크리스트." },
   ],
+  videoPage: {
+    eyebrow: "Brand film",
+    title: "Watch KIDAMI in motion",
+    sub: "A dedicated page for our brand film — share it, replay it, or start shopping the toys you just saw.",
+    ctaProducts: "Shop products",
+    ctaHome: "Back to home",
+  },
+  wholesale: {
+    eyebrow: "B2B & special requests",
+    title: "Custom designs & large-volume orders",
+    sub: "Need branded gift sets, retailer packs, or a large quantity for events and schools? We support custom SKUs and bulk fulfillment.",
+    cards: [
+      {
+        title: "Custom designs",
+        text: "Colorways, packaging, gift-box layouts and limited editions tailored to your brand or campaign.",
+        points: ["Custom paint & packaging", "Gift-ready assortments", "Seasonal / campaign editions"],
+      },
+      {
+        title: "Large-volume orders",
+        text: "Wholesale pricing and coordinated shipping for retailers, distributors, schools and corporate gifting.",
+        points: ["MOQ-friendly quotes", "Mixed cartons available", "Amazon / Walmart replenishment support"],
+      },
+    ],
+    ctaTitle: "Tell us what you need",
+    ctaText: "Email a short brief — quantity, timeline, destination market — and our team will reply with options.",
+    email: "support@kidami-ent.com",
+    emailSubject: "KIDAMI custom / bulk order inquiry",
+    orShop: "Or shop retail packs now:",
+    contactLink: "Prefer a form? Visit Contact →",
+  },
+
   products: {
     "offroad-6x6-set": {
       name: "6x6 오프로드 풀백 다이캐스트 메탈 장난감 자동차(4팩)",
