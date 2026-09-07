@@ -10,7 +10,14 @@ export function Terms() {
     description:
       "KIDAMI terms of service — rules and guidelines for using our website, purchasing products, and interacting with our brand.",
     path: withLang("/terms", lang),
-    robots: "index, follow, noarchive",
+    robots: "index, follow",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "Terms of Service",
+      url: "https://kidami-ent.com/terms",
+      isPartOf: { "@type": "WebSite", name: "KIDAMI", url: "https://kidami-ent.com" },
+    },
   });
   useReveal();
 

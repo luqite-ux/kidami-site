@@ -63,18 +63,42 @@ export function Home() {
           "@type": "ContactPoint",
           contactType: "Customer Support",
           email: "support@kidami-ent.com",
-          availableLanguage: ["English", "Spanish", "Portuguese", "French", "German", "Japanese", "Russian", "Italian", "Korean"],
+          availableLanguage: ["English", "Spanish", "Portuguese", "French", "Arabic", "German", "Japanese", "Russian", "Italian", "Korean"],
         },
       },
       {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
+        additionalType: "https://schema.org/ToyStore",
         name: "KIDAMI",
-        description: "Premium die cast metal toy cars and magnetic board games for children.",
+        legalName: "KIDAMI",
+        alternateName: "KIDAMI Toys",
+        description:
+          "KIDAMI is a children's toy brand founded in 2016, specializing in die-cast metal toy cars (ages 3+) and magnetic educational board games (ages 6+). ASTM F963, CPSIA, EN71 and CPC certified.",
         url: "https://kidami-ent.com",
+        logo: "https://kidami-ent.com/logo.png",
+        image: "https://kidami-ent.com/images/cars-collection.jpg",
+        email: "support@kidami-ent.com",
+        foundingDate: "2016",
         priceRange: "$$",
         paymentAccepted: "Credit Card, PayPal, Amazon Pay",
         currenciesAccepted: "USD",
+        areaServed: { "@type": "Country", "name": "United States" },
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: "US",
+        },
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "Customer Support",
+          email: "support@kidami-ent.com",
+          url: "https://kidami-ent.com/contact",
+          availableLanguage: ["English", "Spanish", "Portuguese", "French", "Arabic", "German", "Japanese", "Russian", "Italian", "Korean"],
+        },
+        sameAs: [
+          "https://www.amazon.com/stores/KIDAMI/page/546B9750-2336-4B85-8F2F-2C57C2997542",
+          WALMART_STORE,
+        ],
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: "KIDAMI Products",
@@ -106,10 +130,10 @@ export function Home() {
 
   const hot = [products[0], products[1], products[2], products[3]];
   const reviewPhotos = [
-    "/images/scene-play-indoor.jpg",
-    "/images/scene-family-table.jpg",
-    "/images/scene-picnic.jpg",
-    "/images/scene-grandparents-gift.jpg",
+    "/images/cars-open-doors.jpg",
+    "/images/cars-6x6-set.jpg",
+    "/images/ludo-kids-play.jpg",
+    "/images/snakes-ladders.jpg",
   ];
   const displayReviews =
     liveReviews.length > 0
@@ -143,17 +167,31 @@ export function Home() {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
             <h1 className="font-display text-3xl font-extrabold leading-snug tracking-tight text-white text-balance sm:text-4xl lg:text-5xl">
-              {h.hero.titleA} <span className="text-brand-yellow">{h.hero.titleB}</span>{" "}
-              {h.hero.titleC} <span className="text-brand-yellow">{h.hero.titleD}</span>
+              {h.hero.line1}
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/80">{h.hero.subtitle}</p>
+            <p className="mt-4 font-display text-xl font-bold text-brand-yellow sm:text-2xl">
+              {h.hero.line2}
+            </p>
+            <p className="mt-3 text-lg font-bold text-white/90 sm:text-xl">{h.hero.line3}</p>
             <StoreButtons content="home-hero" className="mt-8 max-w-md" />
           </div>
         </div>
       </section>
 
-      {/* ============ BELIEF: quote + 3 pillars ============ */}
+      {/* ============ BRAND INTRO (below banner, above products) ============ */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="reveal mx-auto max-w-3xl text-center">
+          <h2 className="font-display text-3xl font-extrabold text-brand-navy sm:text-4xl text-balance">
+            {h.brandIntro.title}
+          </h2>
+          <p className="mt-6 text-lg leading-relaxed text-brand-navy/70">{h.brandIntro.p1}</p>
+          <p className="mt-4 text-lg leading-relaxed text-brand-navy/70">{h.brandIntro.p2}</p>
+          <p className="mt-5 font-display text-xl font-extrabold text-brand-navy">{h.brandIntro.p3}</p>
+        </div>
+      </section>
+
+      {/* ============ BELIEF: quote + 3 pillars ============ */}
+      <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8 lg:pb-20">
         <p className="reveal mx-auto max-w-2xl text-center font-display text-3xl font-extrabold leading-snug text-brand-navy sm:text-4xl text-balance">
           “{h.belief.quote}”
         </p>

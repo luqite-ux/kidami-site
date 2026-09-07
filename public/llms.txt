@@ -25,9 +25,12 @@
 - [Home](https://kidami-ent.com/): brand overview, categories, trust signals
 - [Products](https://kidami-ent.com/products): full catalog with age badges and specs
 - [Inspiration Library](https://kidami-ent.com/explore): shop toys by play skill — hands-on skills, outdoor adventure, early learning, family time
-- [About KIDAMI](https://kidami-ent.com/about): brand story, mission, safety commitments
+- [About / Our Story](https://kidami-ent.com/about): brand story, mission, safety commitments
+- [FAQ](https://kidami-ent.com/faq): materials, age, certificates, where to buy, returns and warranty
+- [Contact](https://kidami-ent.com/contact): email support@kidami-ent.com
+- [Privacy Policy](https://kidami-ent.com/privacy)
+- [Terms of Service](https://kidami-ent.com/terms)
 - [STEM & Learning](https://kidami-ent.com/learn): educational articles on play-based learning
-- [Contact & Feedback](https://kidami-ent.com/contact): customer feedback and FAQ
 
 ## Contact
 
@@ -36,4 +39,4 @@ Email: support@kidami-ent.com
 ## Where to buy
 
 - Amazon: https://www.amazon.com/stores/KIDAMI/page/546B9750-2336-4B85-8F2F-2C57C2997542
-- Walmart: https://www.walmart.com/ip/seort/20538824770
+- Walmart: https://www.walmart.com/seller/10003181114

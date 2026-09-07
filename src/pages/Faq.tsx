@@ -16,6 +16,17 @@ export function Faq() {
     title: f.title,
     description: f.sub,
     path: withLang("/faq", lang),
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: f.sections.flatMap((s) =>
+        s.items.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        }))
+      ),
+    },
   });
 
   const cats = [

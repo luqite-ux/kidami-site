@@ -153,7 +153,7 @@ export function ProductDetail() {
               <span className="font-extrabold text-brand-navy">{product.rating}</span>
               <span className="text-sm text-brand-navy/50">· {productReviewCount(product)} {dt.reviews}</span>
             </div>
-            <p className="mt-5 text-lg leading-relaxed text-brand-navy/70">{tagline}</p>
+            <p className="mt-5 text-xl leading-relaxed text-brand-navy/75">{tagline}</p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {badges.map((b: string) => (
@@ -203,8 +203,8 @@ export function ProductDetail() {
               {features.map((f, i) => (
                 <div key={f.label} className="rounded-2xl bg-white p-5 shadow-xs">
                   <Icon name={(product.features[i] as any)?.icon ?? "check"} className="h-6 w-6 text-brand-blue" />
-                  <h3 className="mt-2.5 font-display font-bold text-brand-navy">{f.label}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-brand-navy/60">{f.desc}</p>
+                  <h3 className="mt-2.5 font-display text-lg font-bold text-brand-navy">{f.label}</h3>
+                  <p className="mt-1.5 text-base leading-relaxed text-brand-navy/70">{f.desc}</p>
                 </div>
               ))}
             </div>
@@ -218,8 +218,8 @@ export function ProductDetail() {
             <dl className="mt-6 divide-y divide-brand-navy/8">
               {specs.map((s) => (
                 <div key={s.label} className="flex justify-between gap-6 py-3.5">
-                  <dt className="text-sm font-bold text-brand-navy/50">{s.label}</dt>
-                  <dd className="text-right text-sm font-extrabold text-brand-navy">{s.value}</dd>
+                  <dt className="text-base font-bold text-brand-navy/55">{s.label}</dt>
+                  <dd className="text-right text-base font-extrabold text-brand-navy">{s.value}</dd>
                 </div>
               ))}
             </dl>
@@ -229,7 +229,7 @@ export function ProductDetail() {
             <h2 className="mt-2 font-display text-2xl font-extrabold text-brand-navy">
               {dt.learnInside}
             </h2>
-            <p className="mt-4 leading-relaxed text-brand-navy/70">{education}</p>
+            <p className="mt-4 text-lg leading-relaxed text-brand-navy/75">{education}</p>
             <Link to="/learn" className="mt-6 inline-flex items-center gap-2 font-display font-bold text-brand-navy hover:text-brand-orange transition-colors">
               {dt.moreLearning}
               <Icon name="arrow" className="h-4 w-4" />

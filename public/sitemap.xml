@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Home -->
   <url><loc>https://kidami-ent.com/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://kidami-ent.com/es</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://kidami-ent.com/pt</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
@@ -12,71 +11,55 @@
   <url><loc>https://kidami-ent.com/it</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://kidami-ent.com/ko</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
 
-  <!-- Products listing -->
   <url><loc>https://kidami-ent.com/products</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/es/products</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/pt/products</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/fr/products</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/ar/products</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/de/products</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/ja/products</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/ru/products</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/it/products</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/ko/products</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-
-  <!-- Product detail pages -->
   <url><loc>https://kidami-ent.com/products/offroad-6x6-set</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://kidami-ent.com/products/city-heroes-collection</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://kidami-ent.com/products/classic-5-pack</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://kidami-ent.com/products/magnetic-ludo</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://kidami-ent.com/products/snakes-and-ladders</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
 
-  <!-- Explore -->
   <url><loc>https://kidami-ent.com/explore</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/es/explore</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/pt/explore</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/fr/explore</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/de/explore</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/ja/explore</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/it/explore</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-
-  <!-- About -->
-  <url><loc>https://kidami-ent.com/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://kidami-ent.com/es/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://kidami-ent.com/pt/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://kidami-ent.com/fr/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://kidami-ent.com/de/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://kidami-ent.com/ja/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://kidami-ent.com/it/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-
-  <!-- Learn -->
+  <url><loc>https://kidami-ent.com/about</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://kidami-ent.com/learn</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/es/learn</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/pt/learn</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/fr/learn</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/de/learn</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/ja/learn</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://kidami-ent.com/it/learn</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
-
-  <!-- Articles -->
   <url><loc>https://kidami-ent.com/learn/die-cast-cars-fine-motor-stem</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://kidami-ent.com/learn/family-game-night-magnetic-ludo</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://kidami-ent.com/learn/travel-games-screen-free</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/faq</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/contact</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/privacy</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://kidami-ent.com/terms</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://kidami-ent.com/wholesale</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/video</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
 
-  <!-- Contact -->
-  <url><loc>https://kidami-ent.com/contact</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://kidami-ent.com/es/contact</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://kidami-ent.com/pt/contact</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://kidami-ent.com/fr/contact</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://kidami-ent.com/de/contact</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://kidami-ent.com/ja/contact</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://kidami-ent.com/it/contact</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-
-  <!-- Privacy Policy -->
-  <url><loc>https://kidami-ent.com/privacy</loc><priority>0.3</priority><changefreq>yearly</changefreq></url>
-  <url><loc>https://kidami-ent.com/es/privacy</loc><priority>0.3</priority><changefreq>yearly</changefreq></url>
-
-  <!-- Terms of Service -->
-  <url><loc>https://kidami-ent.com/terms</loc><priority>0.3</priority><changefreq>yearly</changefreq></url>
-  <url><loc>https://kidami-ent.com/es/terms</loc><priority>0.3</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://kidami-ent.com/es/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/es/faq</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/es/contact</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/es/privacy</loc><priority>0.4</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://kidami-ent.com/es/terms</loc><priority>0.4</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://kidami-ent.com/pt/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/pt/faq</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/pt/contact</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/pt/privacy</loc><priority>0.4</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://kidami-ent.com/pt/terms</loc><priority>0.4</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://kidami-ent.com/fr/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/fr/faq</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/fr/contact</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/ar/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/ar/faq</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/ar/contact</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/de/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/de/faq</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/de/contact</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/ja/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/ja/faq</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/ja/contact</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/ru/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/ru/faq</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/ru/contact</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/it/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/it/faq</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/it/contact</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/ko/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/ko/faq</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://kidami-ent.com/ko/contact</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
 </urlset>

@@ -9,20 +9,29 @@ export function Contact() {
   const [sent, setSent] = useState(false);
 
   useSeo({
-    title: lang === "en" ? "Contact & Feedback" : c.title,
+    title: lang === "en" ? "Contact KIDAMI — Email & Support" : c.title,
     description:
       lang === "en"
-        ? "Questions about KIDAMI toys? Read our FAQ on safety, shipping and replacements — or send us feedback. Your ideas shape our next products."
+        ? "Contact KIDAMI at support@kidami-ent.com. Questions about safety, shipping, replacements or wholesale — we usually reply within 2 business days."
         : c.sub,
     path: withLang("/contact", lang),
     jsonLd: {
       "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: c.faqs.map((f) => ({
-        "@type": "Question",
-        name: f.q,
-        acceptedAnswer: { "@type": "Answer", text: f.a },
-      })),
+      "@type": "ContactPage",
+      name: "Contact KIDAMI",
+      url: "https://kidami-ent.com/contact",
+      mainEntity: {
+        "@type": "Organization",
+        name: "KIDAMI",
+        email: "support@kidami-ent.com",
+        url: "https://kidami-ent.com",
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          email: "support@kidami-ent.com",
+          url: "https://kidami-ent.com/contact",
+        },
+      },
     },
   });
 
@@ -36,6 +45,21 @@ export function Contact() {
               {c.title}
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-brand-navy/60">{c.sub}</p>
+
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              <a
+                href="mailto:support@kidami-ent.com"
+                className="rounded-2xl bg-white p-5 shadow-soft transition-transform hover:-translate-y-0.5"
+              >
+                <p className="text-xs font-extrabold uppercase tracking-wider text-brand-orange">{c.channelsTitle}</p>
+                <p className="mt-2 font-display text-lg font-extrabold text-brand-navy">support@kidami-ent.com</p>
+                <p className="mt-1 text-sm text-brand-navy/55">{c.hoursText}</p>
+              </a>
+              <div className="rounded-2xl bg-brand-navy p-5 text-white shadow-soft">
+                <p className="text-xs font-extrabold uppercase tracking-wider text-brand-yellow">{c.hoursTitle}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/75">{c.hoursText}</p>
+              </div>
+            </div>
 
             {sent ? (
               <div className="mt-10 rounded-3xl bg-brand-mint p-8 text-center">

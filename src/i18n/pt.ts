@@ -31,9 +31,9 @@ export const pt: Dict = {
     discoverStory: "Nossa História",
     discoverLearn: "STEM e Aprendizagem",
     discoverContact: "Contato e Feedback",
-    discoverFaq: "FAQ",
-    discoverWholesale: "Custom & Bulk Orders",
-    discoverVideo: "Brand Video",
+    discoverFaq: "Perguntas frequentes",
+    discoverWholesale: "Encomendas personalizadas e em volume",
+    discoverVideo: "Vídeo da marca",
     newsTitle: "Fique por dentro",
     newsText: "Lançamentos, ideias de brincadeiras e dicas para pais — uma vez por mês, sem spam.",
     newsPlaceholder: "Seu e-mail",
@@ -59,6 +59,9 @@ export const pt: Dict = {
       titleB: "Infância,",
       titleC: "Um Guardião de",
       titleD: "Memórias.",
+      line1: "Brinquedos que valem a pena guardar.",
+      line2: "Liga de zinco. Feito à mão. Feito para durar.",
+      line3: "KIDAMI — um amigo das crianças desde 2016.",
       subtitle:
         "Carrinhos de metal fundido e jogos de tabuleiro magnéticos — seguros por certificação, amados pelas crianças, confiados por mais de 110.000 famílias no mundo.",
       ctaExplore: "Explore Nosso Mundo",
@@ -77,6 +80,12 @@ export const pt: Dict = {
       "Materiais livres de BPA",
       "Inspecionados um a um",
     ],
+    brandIntro: {
+      title: "Brinquedos que valem a pena guardar.",
+      p1: "Os carros die-cast KIDAMI e os jogos de tabuleiro magnéticos são feitos de liga de zinco premium com materiais seguros e sem BPA. Para idades a partir de 3 anos, cada peça é testada segundo ASTM F963 e CPC — sem pilhas, sem atalhos, só qualidade que dura.",
+      p2: "Desde 2016 criamos brinquedos para brincar, para memórias e para uma infância que vale a pena guardar.",
+      p3: "KIDAMI — Kid + Ami. Um amigo das crianças, um guardião da infância.",
+    },
     belief: {
       quote: "Acreditamos que grandes produtos falam por si.",
       cols: [
@@ -313,6 +322,9 @@ export const pt: Dict = {
     amazonCardTitle: "A resposta mais rápida? Amazon.",
     amazonCardText: "Para status de pedidos, envios e devoluções, o atendimento da Amazon resolve a maioria dos casos em minutos — 24/7.",
     amazonCardCta: "Visitar nossa loja Amazon",
+    hoursTitle: "Respondemos depressa",
+    hoursText: "Envie e-mail a qualquer hora. Costumamos responder em 2 dias úteis, de segunda a sexta.",
+    channelsTitle: "Como falar connosco",
     faqs: [
       { q: "Os brinquedos KIDAMI são seguros para crianças pequenas?", a: "Sim. Cada produto KIDAMI atende à norma americana de segurança de brinquedos ASTM F963 e possui certificado CPC (Children's Product Certificate) de laboratórios credenciados. Os materiais são livres de BPA com bordas lisas e arredondadas. Os carrinhos de metal são para idades 3+ e os jogos de tabuleiro para 6+." },
       { q: "Onde posso comprar produtos KIDAMI?", a: "Os produtos KIDAMI são vendidos em nossa loja oficial na Amazon e na Walmart, com envio rápido na maioria das regiões. Cada botão 'Comprar na Amazon' deste site leva diretamente ao anúncio oficial." },
@@ -324,67 +336,57 @@ export const pt: Dict = {
   faqPage: {
     eyebrow: "Help Center",
     title: "FAQ",
-    sub: "Materials, size, age, after-sales, buying tips, certificates and common questions — search or browse by topic.",
+    sub: "Produtos, materiais, idade, certificados, onde comprar, devoluções e garantia.",
     searchPh: "Search materials, size, age, returns, certificates…",
     catAll: "All topics",
     noMatch: "No matching answers. Try another keyword, or shop on Amazon / Walmart.",
     shopTitle: "Need to order?",
     shopText: "Official listings with tracking and returns live on Amazon and Walmart.",
-    sections: [
+        sections: [
       {
-        key: "materials",
-        title: "Materials",
+        key: "products",
+        title: "Produtos e materiais",
         items: [
-          { q: "What are the cars made of?", a: "KIDAMI die-cast cars use zinc-alloy metal bodies with durable, BPA-free plastic details. Paint is chip-resistant for everyday play." },
-          { q: "Are the board games magnetic?", a: "Yes. Travel games use magnetic pieces and folding boards so they stay in place on planes, trains and restaurant tables." },
-        ],
-      },
-      {
-        key: "size",
-        title: "Size",
-        items: [
+          { q: "What are the cars made of?", a: "KIDAMI die-cast cars are crafted from high-quality zinc-alloy metal bodies, combined with durable, BPA-free plastic details. The paint is chip-resistant and designed to withstand everyday play, making them ideal for young collectors." },
+          { q: "Do the cars need batteries?", a: "No. Pull back, release, and they go." },
           { q: "How big are the die-cast cars?", a: "Most cars are 1:64 scale — pocket-sized for small hands, gift boxes and travel bags. Exact measurements are listed on each product page and Amazon / Walmart listing." },
+          { q: "Are the board games magnetic?", a: "Yes. Travel games use magnetic pieces and folding boards so they stay in place on planes, trains and restaurant tables." },
           { q: "Do the board games fold?", a: "Yes. Boards fold flat for backpacks and carry-on luggage." },
         ],
       },
       {
         key: "age",
-        title: "Age",
+        title: "Idade e uso",
         items: [
-          { q: "What age are the toy cars for?", a: "Die-cast cars are designed for ages 3+. Pull-back motors need no batteries." },
+          { q: "What age are the toy cars for?", a: "Die-cast cars are designed for ages 3+." },
           { q: "What age are the board games for?", a: "Magnetic games such as Ludo and Snakes & Ladders are designed for ages 6+." },
+          { q: "Cars or board games as a first gift?", a: "Ages 3–5: start with die-cast cars. Ages 6+: magnetic board games are great for travel and family nights." },
+        ],
+      },
+      {
+        key: "safety",
+        title: "Segurança e certificados",
+        items: [
+          { q: "Which safety standards do you meet?", a: "Products are tested to ASTM F963 and issued CPC certificates by accredited labs." },
+          { q: "Where can I view certificates?", a: "Email support@kidami-ent.com with the product name or Amazon / Walmart order ID and we will send the matching lab report." },
+          { q: "Are KIDAMI toys safe for young children?", a: "Absolutely. All materials are non-toxic and BPA-free. Paints are lead-free and chip-resistant. Every production batch is verified by third-party laboratories to ensure compliance with both US (ASTM F963, CPSIA) and EU (EN71) safety standards." },
+        ],
+      },
+      {
+        key: "purchase",
+        title: "Compra e canais",
+        items: [
+          { q: "Where should I buy?", a: "Buy from our official Amazon store or Walmart seller page using the buttons on this site. Official listings with tracking and returns live on both platforms." },
+          { q: "Is this the official KIDAMI site?", a: "Yes. kidami-ent.com is the official brand site. Shopping and returns happen on Amazon and Walmart." },
         ],
       },
       {
         key: "aftersales",
-        title: "After-sales",
+        title: "Pós-venda e garantia",
         items: [
           { q: "How do returns work?", a: "30-day returns via Amazon / Walmart — use the order page on the store where you purchased. Marketplace support is available 24/7 for shipping and refunds." },
           { q: "What if a toy arrives damaged?", a: "Contact Amazon or Walmart customer service for the order, or email support@kidami-ent.com. We inspect every unit before it ships." },
-        ],
-      },
-      {
-        key: "buying",
-        title: "Buying tips",
-        items: [
-          { q: "Where should I buy?", a: "Buy from the official Amazon store or Walmart seller page using the buttons on this site — that keeps tracking, returns and authentic product protection." },
-          { q: "Cars or board games as a first gift?", a: "Ages 3–5: start with die-cast cars. Ages 6+: magnetic board games are great for travel and family nights. Use the Products page to filter by type." },
-        ],
-      },
-      {
-        key: "certificates",
-        title: "Certificates",
-        items: [
-          { q: "Which safety standards do you meet?", a: "Products are tested to ASTM F963 and issued CPC certificates by accredited labs. Certificate copies can be requested at support@kidami-ent.com." },
-          { q: "Where can I view certificates?", a: "Email support@kidami-ent.com with the product name or Amazon / Walmart order ID and we will send the matching lab report." },
-        ],
-      },
-      {
-        key: "common",
-        title: "Common questions",
-        items: [
-          { q: "Do the cars need batteries?", a: "No. Pull back, release, and they go." },
-          { q: "Is this the official KIDAMI site?", a: "Yes. kidami-ent.com is the brand site. Shopping and returns happen on Amazon and Walmart." },
+          { q: "What is your warranty policy?", a: "We stand behind our quality. If a product has a manufacturing defect, contact us within 90 days of purchase with photos and proof of order. We will arrange a replacement or refund at no extra cost to you." },
         ],
       },
     ],

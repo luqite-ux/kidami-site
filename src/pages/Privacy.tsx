@@ -10,7 +10,14 @@ export function Privacy() {
     description:
       "KIDAMI privacy policy — how we collect, use and protect your personal information when you visit our website.",
     path: withLang("/privacy", lang),
-    robots: "index, follow, noarchive",
+    robots: "index, follow",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "Privacy Policy",
+      url: "https://kidami-ent.com/privacy",
+      isPartOf: { "@type": "WebSite", name: "KIDAMI", url: "https://kidami-ent.com" },
+    },
   });
   useReveal();
 

@@ -30,9 +30,9 @@ export const ja: Dict = {
     discoverStory: "私たちの物語",
     discoverLearn: "STEM・学び",
     discoverContact: "お問い合わせ・ご感想",
-    discoverFaq: "FAQ",
-    discoverWholesale: "Custom & Bulk Orders",
-    discoverVideo: "Brand Video",
+    discoverFaq: "よくある質問",
+    discoverWholesale: "カスタム・大口注文",
+    discoverVideo: "ブランド動画",
     newsTitle: "最新情報を受け取る",
     newsText: "新商品、遊びのアイデア、子育てのコツ — 月1回、スパムなし。",
     newsPlaceholder: "メールアドレス",
@@ -58,6 +58,9 @@ export const ja: Dict = {
       titleB: "友、",
       titleC: "思い出の",
       titleD: "番人。",
+      line1: "大切に残したくなるおもちゃ。",
+      line2: "亜鉛合金。手作り。長く使える品質。",
+      line3: "KIDAMI — 2016年から子どもの友だち。",
       subtitle: "ダイキャストメタルの玩具車とマグネットボードゲーム — 認証による安全性、子どもたちに愛され、世界110,000以上の家族に信頼されています。",
       ctaExplore: "私たちの世界を探す",
       ctaBrowse: "すべての商品を見る",
@@ -74,6 +77,12 @@ export const ja: Dict = {
       "BPAフリー素材",
       "1点ずつ個別検査",
     ],
+    brandIntro: {
+      title: "大切に残したくなるおもちゃ。",
+      p1: "KIDAMIのダイキャストカーとマグネットボードゲームは、プレミアムな亜鉛合金とBPAフリーの安全素材で作られています。3歳以上向け。ASTM F963とCPCに適合。電池不要、近道なし、長く使える品質です。",
+      p2: "2016年から、遊びのため、思い出のため、残したくなる子ども時代のために作っています。",
+      p3: "KIDAMI — Kid + Ami。子どもの友だちであり、子ども時代を守る存在。",
+    },
     belief: {
       quote: "素晴らしい商品は、それ自体が語ると信じています。",
       cols: [
@@ -304,6 +313,9 @@ export const ja: Dict = {
     amazonCardTitle: "最速の回答は? Amazonです。",
     amazonCardText: "注文状況、配送、返品については、Amazonカスタマーサービスがほとんどの問題を数分で解決します — 24時間365日。",
     amazonCardCta: "Amazonストアへ",
+    hoursTitle: "すぐに返信します",
+    hoursText: "いつでもメールください。通常は平日2営業日以内にご返信します。",
+    channelsTitle: "お問い合わせ方法",
     faqs: [
       { q: "KIDAMIのおもちゃは幼児に安全ですか?", a: "はい。すべてのKIDAMI商品は米国ASTM F963玩具安全基準を満たし、認定第三者機関によるCPC(児童製品証明書)認証を取得しています。素材はBPAフリーで、エッジは滑らかに丸められています。ダイキャストカーは3歳以上、ボードゲームは6歳以上が対象です。" },
       { q: "KIDAMI製品はどこで買えますか?", a: "KIDAMI製品は公式AmazonストアとWalmartで販売されており、ほとんどの地域で速い配送が可能です。このサイトのすべての「Amazonで購入」ボタンは公式リスティングに直接リンクしています。" },
@@ -315,67 +327,57 @@ export const ja: Dict = {
   faqPage: {
     eyebrow: "Help Center",
     title: "FAQ",
-    sub: "Materials, size, age, after-sales, buying tips, certificates and common questions — search or browse by topic.",
+    sub: "製品、素材、対象年齢、安全認証、購入、返品、保証。",
     searchPh: "Search materials, size, age, returns, certificates…",
     catAll: "All topics",
     noMatch: "No matching answers. Try another keyword, or shop on Amazon / Walmart.",
     shopTitle: "Need to order?",
     shopText: "Official listings with tracking and returns live on Amazon and Walmart.",
-    sections: [
+        sections: [
       {
-        key: "materials",
-        title: "Materials",
+        key: "products",
+        title: "製品と素材",
         items: [
-          { q: "What are the cars made of?", a: "KIDAMI die-cast cars use zinc-alloy metal bodies with durable, BPA-free plastic details. Paint is chip-resistant for everyday play." },
-          { q: "Are the board games magnetic?", a: "Yes. Travel games use magnetic pieces and folding boards so they stay in place on planes, trains and restaurant tables." },
-        ],
-      },
-      {
-        key: "size",
-        title: "Size",
-        items: [
+          { q: "What are the cars made of?", a: "KIDAMI die-cast cars are crafted from high-quality zinc-alloy metal bodies, combined with durable, BPA-free plastic details. The paint is chip-resistant and designed to withstand everyday play, making them ideal for young collectors." },
+          { q: "Do the cars need batteries?", a: "No. Pull back, release, and they go." },
           { q: "How big are the die-cast cars?", a: "Most cars are 1:64 scale — pocket-sized for small hands, gift boxes and travel bags. Exact measurements are listed on each product page and Amazon / Walmart listing." },
+          { q: "Are the board games magnetic?", a: "Yes. Travel games use magnetic pieces and folding boards so they stay in place on planes, trains and restaurant tables." },
           { q: "Do the board games fold?", a: "Yes. Boards fold flat for backpacks and carry-on luggage." },
         ],
       },
       {
         key: "age",
-        title: "Age",
+        title: "年齢と使い方",
         items: [
-          { q: "What age are the toy cars for?", a: "Die-cast cars are designed for ages 3+. Pull-back motors need no batteries." },
+          { q: "What age are the toy cars for?", a: "Die-cast cars are designed for ages 3+." },
           { q: "What age are the board games for?", a: "Magnetic games such as Ludo and Snakes & Ladders are designed for ages 6+." },
+          { q: "Cars or board games as a first gift?", a: "Ages 3–5: start with die-cast cars. Ages 6+: magnetic board games are great for travel and family nights." },
+        ],
+      },
+      {
+        key: "safety",
+        title: "安全と認証",
+        items: [
+          { q: "Which safety standards do you meet?", a: "Products are tested to ASTM F963 and issued CPC certificates by accredited labs." },
+          { q: "Where can I view certificates?", a: "Email support@kidami-ent.com with the product name or Amazon / Walmart order ID and we will send the matching lab report." },
+          { q: "Are KIDAMI toys safe for young children?", a: "Absolutely. All materials are non-toxic and BPA-free. Paints are lead-free and chip-resistant. Every production batch is verified by third-party laboratories to ensure compliance with both US (ASTM F963, CPSIA) and EU (EN71) safety standards." },
+        ],
+      },
+      {
+        key: "purchase",
+        title: "購入と販売チャネル",
+        items: [
+          { q: "Where should I buy?", a: "Buy from our official Amazon store or Walmart seller page using the buttons on this site. Official listings with tracking and returns live on both platforms." },
+          { q: "Is this the official KIDAMI site?", a: "Yes. kidami-ent.com is the official brand site. Shopping and returns happen on Amazon and Walmart." },
         ],
       },
       {
         key: "aftersales",
-        title: "After-sales",
+        title: "アフターサービスと保証",
         items: [
           { q: "How do returns work?", a: "30-day returns via Amazon / Walmart — use the order page on the store where you purchased. Marketplace support is available 24/7 for shipping and refunds." },
           { q: "What if a toy arrives damaged?", a: "Contact Amazon or Walmart customer service for the order, or email support@kidami-ent.com. We inspect every unit before it ships." },
-        ],
-      },
-      {
-        key: "buying",
-        title: "Buying tips",
-        items: [
-          { q: "Where should I buy?", a: "Buy from the official Amazon store or Walmart seller page using the buttons on this site — that keeps tracking, returns and authentic product protection." },
-          { q: "Cars or board games as a first gift?", a: "Ages 3–5: start with die-cast cars. Ages 6+: magnetic board games are great for travel and family nights. Use the Products page to filter by type." },
-        ],
-      },
-      {
-        key: "certificates",
-        title: "Certificates",
-        items: [
-          { q: "Which safety standards do you meet?", a: "Products are tested to ASTM F963 and issued CPC certificates by accredited labs. Certificate copies can be requested at support@kidami-ent.com." },
-          { q: "Where can I view certificates?", a: "Email support@kidami-ent.com with the product name or Amazon / Walmart order ID and we will send the matching lab report." },
-        ],
-      },
-      {
-        key: "common",
-        title: "Common questions",
-        items: [
-          { q: "Do the cars need batteries?", a: "No. Pull back, release, and they go." },
-          { q: "Is this the official KIDAMI site?", a: "Yes. kidami-ent.com is the brand site. Shopping and returns happen on Amazon and Walmart." },
+          { q: "What is your warranty policy?", a: "We stand behind our quality. If a product has a manufacturing defect, contact us within 90 days of purchase with photos and proof of order. We will arrange a replacement or refund at no extra cost to you." },
         ],
       },
     ],
