@@ -11,7 +11,7 @@ export function About() {
   const a = d.about;
 
   useSeo({
-    title: lang === "en" ? "Our Story — A Companion of Childhood, A Keeper of Memories" : a.title,
+    title: lang === "en" ? "About Us / Our Story — A Companion of Childhood, A Keeper of Memories" : a.title,
     description:
       lang === "en"
         ? "Founded in 2016, KIDAMI ('Kid' + 'Ami', French for friend) crafts premium, safe, educational toys. Discover our mission, values and the quality commitments behind every die-cast car and board game."
@@ -45,8 +45,11 @@ export function About() {
           <div>
             <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-brand-orange">{a.eyebrow}</p>
             <h1 className="mt-3 font-display text-4xl font-extrabold leading-tight text-brand-navy sm:text-5xl lg:text-6xl text-balance">
-              {a.title}
+              {lang === "en" ? "About Us / Our Story" : a.title}
             </h1>
+            {lang === "en" && (
+              <p className="mt-3 text-sm font-bold uppercase tracking-wider text-brand-navy/45">关于我们 · {a.title}</p>
+            )}
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-brand-navy/70">{a.text}</p>
           </div>
           <div className="overflow-hidden rounded-[2.5rem] shadow-lift">

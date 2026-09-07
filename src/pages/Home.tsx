@@ -1,5 +1,5 @@
 import { Link, useLang, withLang } from "../i18n/core";
-import { products, audiences, amazonCta, WALMART_STORE } from "../data/products";
+import { products, audiences, amazonCta, WALMART_STORE, articles } from "../data/products";
 import { ProductCard } from "../components/ProductCard";
 import { StoreButtons } from "../components/StoreButtons";
 import { Icon, Stars } from "../components/Icon";
@@ -123,6 +123,17 @@ export function Home() {
             },
           ],
         },
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: d.faqPage.sections.flatMap((s) =>
+          s.items.map((item) => ({
+            "@type": "Question",
+            name: item.q,
+            acceptedAnswer: { "@type": "Answer", text: item.a },
+          }))
+        ),
       },
     ],
   });
@@ -358,6 +369,45 @@ export function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ============ STEM ARTICLES (homepage links to article URLs) ============ */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-brand-green">{d.learn.eyebrow}</p>
+          <h2 className="mt-3 font-display text-3xl font-extrabold text-brand-navy sm:text-4xl text-balance">
+            {d.learn.title}
+          </h2>
+          <p className="mt-4 text-brand-navy/60">{d.learn.sub}</p>
+        </div>
+        <div className="mt-12 grid gap-7 md:grid-cols-3">
+          {d.articles.map((a, i) => {
+            const base = articles.find((b) => b.slug === a.slug);
+            return (
+              <Link
+                key={a.slug}
+                to={`/learn/${a.slug}`}
+                className={`reveal reveal-delay-${i + 1} group flex flex-col overflow-hidden rounded-3xl bg-white shadow-soft transition-all hover:-translate-y-1.5 hover:shadow-lift`}
+              >
+                <img
+                  src={base?.image ?? "/images/cars-open-doors.jpg"}
+                  alt={a.title}
+                  loading="lazy"
+                  className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="flex flex-1 flex-col p-6">
+                  <span className="text-xs font-bold text-brand-green">{a.category}</span>
+                  <h3 className="mt-2 font-display text-xl font-bold leading-snug text-brand-navy">{a.title}</h3>
+                  <p className="mt-2.5 flex-1 text-sm leading-relaxed text-brand-navy/60">{a.excerpt}</p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-brand-blue">
+                    {d.learn.readGuide}
+                    <Icon name="arrow" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 

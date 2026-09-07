@@ -20,11 +20,14 @@ export function Article() {
     jsonLd: base
       ? {
           "@context": "https://schema.org",
-          "@type": "BlogPosting",
+          "@type": ["Article", "BlogPosting"],
           headline: base.title,
           description: base.excerpt,
           image: `https://kidami-ent.com${base.image}`,
           url: `https://kidami-ent.com/learn/${base.slug}`,
+          datePublished: "2026-06-01",
+          dateModified: "2026-09-07",
+          articleBody: base.body.join(" "),
           author: { "@type": "Organization", name: "KIDAMI" },
           publisher: {
             "@type": "Organization",

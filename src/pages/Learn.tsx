@@ -30,7 +30,7 @@ export function Learn() {
         name: "KIDAMI Learning Hub",
         description: "STEM & Learning — Play Ideas Backed by Child-Development Science",
         blogPost: baseArticles.map((a) => ({
-          "@type": "BlogPosting",
+          "@type": ["Article", "BlogPosting"],
           headline: a.title,
           description: a.excerpt,
           image: `https://kidami-ent.com${a.image}`,

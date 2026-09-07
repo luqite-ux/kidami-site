@@ -63,6 +63,7 @@ export function ProductDetail() {
                 availability: "https://schema.org/InStock",
                 seller: { "@type": "Organization", name: "Amazon" },
                 priceCurrency: "USD",
+                price: productPriceHint(product).match(/\d+/)?.[0] ?? "19",
               },
               {
                 "@type": "Offer",
@@ -70,6 +71,7 @@ export function ProductDetail() {
                 availability: "https://schema.org/InStock",
                 seller: { "@type": "Organization", name: "Walmart" },
                 priceCurrency: "USD",
+                price: productPriceHint(product).match(/\d+/)?.[0] ?? "19",
               },
             ],
             review: d.reviews.slice(0, 3).map((r) => ({

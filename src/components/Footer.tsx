@@ -46,7 +46,7 @@ export function Footer() {
           <div>
             <h3 className="font-display text-sm font-bold uppercase tracking-wider text-brand-yellow">{f.discoverTitle}</h3>
             <ul className="mt-4 space-y-2.5 text-sm text-white/70">
-              <li><Link to="/about" className="hover:text-white">{f.discoverStory}</Link></li>
+              <li><Link to="/about" className="hover:text-white">{f.discoverStory} / About Us</Link></li>
               <li><Link to="/learn" className="hover:text-white">{f.discoverLearn}</Link></li>
               <li><Link to="/contact" className="hover:text-white">{f.discoverContact}</Link></li>
               <li><Link to="/faq" className="hover:text-white">{f.discoverFaq}</Link></li>
@@ -59,8 +59,8 @@ export function Footer() {
           <div>
             <h3 className="font-display text-sm font-bold uppercase tracking-wider text-brand-yellow">Legal</h3>
             <ul className="mt-4 space-y-2.5 text-sm text-white/70">
-              <li><Link to="/privacy" className="hover:text-white">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="hover:text-white">Terms of Service</Link></li>
+              <li><Link to="/privacy" className="hover:text-white">Privacy Policy · 隐私政策</Link></li>
+              <li><Link to="/terms" className="hover:text-white">Terms of Service · 服务条款</Link></li>
             </ul>
           </div>
 

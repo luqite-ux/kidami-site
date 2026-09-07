@@ -82,8 +82,8 @@ export const en = {
     ],
     brandIntro: {
       title: "Toys Worth Keeping.",
-      p1: "KIDAMI die-cast cars and magnetic board games are crafted from premium zinc-alloy with child-safe, BPA-free materials. Designed for ages 3 and above, each piece is tested to meet ASTM F963 and CPC safety standards — no batteries, no shortcuts, just quality that lasts.",
-      p2: "Since 2016, we've been creating toys for play, for memories, and for a childhood worth keeping.",
+      p1: "KIDAMI die-cast cars and magnetic board games are crafted from premium zinc-alloy with child-safe, BPA-free materials. Designed for ages 3 and above, each piece is tested to meet ASTM F963 and CPC safety standards — no batteries, no shortcuts, just quality that lasts. Pull-back cars with opening doors and 1:64 gift sets sit alongside magnetic ludo and snakes and ladders built for planes, trains and family tables.",
+      p2: "Since 2016, we've been creating toys for play, for memories, and for a childhood worth keeping. Official listings ship from Amazon and Walmart with marketplace tracking and 30-day returns.",
       p3: "KIDAMI — Kid + Ami. A friend to children, a guardian of their childhood.",
     },
     belief: {
@@ -354,18 +354,18 @@ export const en = {
         title: "Products & Materials",
         items: [
           { q: "What are the cars made of?", a: "KIDAMI die-cast cars are crafted from high-quality zinc-alloy metal bodies, combined with durable, BPA-free plastic details. The paint is chip-resistant and designed to withstand everyday play, making them ideal for young collectors." },
-          { q: "Do the cars need batteries?", a: "No. Pull back, release, and they go." },
-          { q: "How big are the die-cast cars?", a: "Most cars are 1:64 scale — pocket-sized for small hands, gift boxes and travel bags. Exact measurements are listed on each product page and Amazon / Walmart listing." },
+          { q: "Do the cars need batteries?", a: "No batteries are required. Every KIDAMI die-cast car uses a pull-back friction motor: pull the car backward, release, and it rolls forward. Play continues on trips and at home without chargers, and there is no battery compartment for small children to open." },
+          { q: "How big are the die-cast cars?", a: "Most cars are 1:64 scale — pocket-sized for small hands, gift boxes and travel bags. Exact measurements are listed on each product page and on the matching Amazon / Walmart listing." },
           { q: "Are the board games magnetic?", a: "Yes. Travel games use magnetic pieces and folding boards so they stay in place on planes, trains and restaurant tables." },
-          { q: "Do the board games fold?", a: "Yes. Boards fold flat for backpacks and carry-on luggage." },
+          { q: "Do the board games fold?", a: "Yes. KIDAMI magnetic boards fold flat so they slip into a backpack, carry-on or glove box. Combined with magnetic pieces that stay on the board, they are built for planes, trains, restaurants and hotel rooms." },
         ],
       },
       {
         key: "age",
         title: "Age & Usage",
         items: [
-          { q: "What age are the toy cars for?", a: "Die-cast cars are designed for ages 3+." },
-          { q: "What age are the board games for?", a: "Magnetic games such as Ludo and Snakes & Ladders are designed for ages 6+." },
+          { q: "What age are the toy cars for?", a: "KIDAMI die-cast metal toy cars are designed for ages 3 and up. The scale, rounded edges and certified materials match preschool hands, while older kids still enjoy collecting, racing and pretend-play city scenes." },
+          { q: "What age are the board games for?", a: "Magnetic travel board games such as Ludo and Snakes & Ladders are designed for ages 6 and up. Rules stay simple enough for early readers, and adults can play along at family game night without a separate kids version." },
           { q: "Cars or board games as a first gift?", a: "Ages 3–5: start with die-cast cars. Ages 6+: magnetic board games are great for travel and family nights." },
         ],
       },

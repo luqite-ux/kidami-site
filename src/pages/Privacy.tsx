@@ -6,7 +6,7 @@ export function Privacy() {
   const { lang } = useLang();
 
   useSeo({
-    title: "Privacy Policy",
+    title: "Privacy Policy · 隐私政策",
     description:
       "KIDAMI privacy policy — how we collect, use and protect your personal information when you visit our website.",
     path: withLang("/privacy", lang),
@@ -29,6 +29,7 @@ export function Privacy() {
           <h1 className="mt-3 font-display text-4xl font-extrabold text-brand-navy sm:text-5xl">
             Privacy Policy
           </h1>
+          <p className="mt-2 text-sm font-bold uppercase tracking-wider text-brand-navy/45">隐私政策</p>
           <p className="mt-4 text-brand-navy/50">Last updated: August 2026</p>
         </div>
 
